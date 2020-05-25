@@ -1,5 +1,0 @@
-aa     ,[ s0,a ],[ s0,a ],    Si
-bb     ,[ s0,b ],[ s1,b ],    No
-aaaaaaab     ,[ s0,a ],[ s0,a ],[ s0,a ],[ s0,a ],[ s0,a ],[ s0,a ],[ s0,a ],[ s0,b ],    Si
-aaaaaabb     ,[ s0,a ],[ s0,a ],[ s0,a ],[ s0,a ],[ s0,a ],[ s0,a ],[ s0,b ],[ s1,b ],    No
-     ,    Si

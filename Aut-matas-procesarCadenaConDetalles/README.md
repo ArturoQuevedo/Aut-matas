@@ -1,2 +1,0 @@
-# Aut-matas
-Autómatas :B
