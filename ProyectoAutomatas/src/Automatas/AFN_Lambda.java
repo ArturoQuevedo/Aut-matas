@@ -378,6 +378,7 @@ public class AFN_Lambda {
         afd.showDelta();
         boolean resultado = afd.procesarCadenaConDetalles("aaaaaabba");
 //        boolean resultado = afd.procesarCadena("b");
+//
         System.out.println(resultado);
         
     }
