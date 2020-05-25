@@ -153,8 +153,220 @@ public class AFN_Lambda {
             br.close();
 
         }
-    }
+         
 
+        int getPosEstado(String estado){
+            int val = 0;
+            for(int i=0;i<this.states.size();i++){
+//                System.out.println(this.states.get(i));
+                if(estado.equals(this.states.get(i))){
+                    val = i;
+                    break;
+                }
+            }
+            return val;
+        }
+        
+        int getPosSimbolo(String simbolo){
+            int val = 0;
+            for(int i=0;i<this.states.size();i++){
+//                System.out.println(this.states.get(i));
+                if(simbolo.equals(Character.toString(this.sigma.get(i)))){
+                    val = i;
+                    break;
+                }
+            }
+            return val;
+        }
+        
+        boolean procesarCadena(String cadena, String estado, int letra, boolean loop, boolean aceptada){
+            if(!(letra>=cadena.length())){
+                int i;
+            
+                String estadoActual;
+                String estadoAnterior;
+                String simbolo;
+                String lambda = "$";
+
+
+                int posicionEstado;
+                int posicionSimbolo;
+                int posicionLambda = getPosSimbolo("$");
+
+                int letraActual = letra;
+
+                estadoActual = estado;
+                estadoAnterior = estadoActual;
+
+//                System.out.println("letra: "+letraActual);
+                simbolo = Character.toString(cadena.charAt(letraActual));
+
+                posicionEstado = getPosEstado(estadoActual);
+                posicionSimbolo = getPosSimbolo(simbolo);
+//                System.out.println("Estado: "+estadoActual+":"+simbolo);
+                if(!this.delta[posicionEstado][posicionLambda].isEmpty()){
+                    if(!loop){
+                        for(i = 0;i<this.delta[posicionEstado][posicionLambda].size();i++){
+//                            System.out.println(this.delta[posicionEstado][posicionLambda]);
+                            if(letraActual< cadena.length()){
+                                estadoActual = this.delta[posicionEstado][posicionLambda].get(i);
+//                                System.out.println("Estado: "+estadoActual+">"+lambda);
+                                if(estadoAnterior == estadoActual)
+                                    aceptada = procesarCadena(cadena, estadoActual, letraActual, true, true);
+                                else
+                                    aceptada = procesarCadena(cadena, estadoActual, letraActual, false, true);
+                            }
+                        }
+                    }else{
+//                        System.out.println("procesamiento abortado");
+                        aceptada = false;
+                        return aceptada;
+                    }
+                }
+                if(aceptada)
+                    estadoActual = estadoAnterior;
+                if(!this.delta[posicionEstado][posicionSimbolo].isEmpty()){
+                    for(i = 0;i<this.delta[posicionEstado][posicionSimbolo].size();i++){
+//                        System.out.println(estadoActual+": " +simbolo + ">" + this.delta[posicionEstado][posicionSimbolo]);
+                        if(letraActual< cadena.length()){
+                            ++letraActual;
+                            estadoActual = this.delta[posicionEstado][posicionSimbolo].get(i);
+//                            System.out.println("Estado: "+estadoActual+">"+simbolo);
+                            aceptada = procesarCadena(cadena, estadoActual, letraActual, false, true);
+                        }else{
+//                            System.out.println("Cadena rechazada");
+                            aceptada = false;
+                            return aceptada;
+                        }
+                    }
+                }else{
+//                    System.out.println("procesamiento abortado");
+                    aceptada = aceptada || false;
+                    return aceptada;
+                }
+
+                if(aceptada)
+                    aceptada = (verify(letraActual, cadena, estadoActual, i) || aceptada);
+            }
+            return aceptada;
+        }
+        
+        
+        boolean procesarCadenaConDetalles(String cadena, String estado, int letra, boolean loop, boolean aceptada){
+            if(!(letra>=cadena.length())){
+                int i;
+            
+                String estadoActual;
+                String estadoAnterior;
+                String simbolo;
+                String lambda = "$";
+
+
+                int posicionEstado;
+                int posicionSimbolo;
+                int posicionLambda = getPosSimbolo("$");
+
+                int letraActual = letra;
+
+                estadoActual = estado;
+                estadoAnterior = estadoActual;
+
+                System.out.println("letra: "+letraActual);
+                simbolo = Character.toString(cadena.charAt(letraActual));
+
+                posicionEstado = getPosEstado(estadoActual);
+                posicionSimbolo = getPosSimbolo(simbolo);
+                System.out.println("Estado: "+estadoActual+":"+simbolo);
+                if(aceptada)
+                    estadoActual = estadoAnterior;
+                if(!this.delta[posicionEstado][posicionSimbolo].isEmpty()){
+                    for(i = 0;i<this.delta[posicionEstado][posicionSimbolo].size();i++){
+                        System.out.println(estadoActual+": " +simbolo + ">" + this.delta[posicionEstado][posicionSimbolo]);
+                        if(letraActual< cadena.length()){
+                            ++letraActual;
+                            estadoActual = this.delta[posicionEstado][posicionSimbolo].get(i);
+                            System.out.println("Estado: "+estadoActual+">"+simbolo);
+                            aceptada = procesarCadenaConDetalles(cadena, estadoActual, letraActual, false, true);
+                        }else{
+                            System.out.println("Cadena rechazada");
+                            aceptada = false;
+                            return aceptada;
+                        }
+                    }
+                }
+                
+                
+                if(!this.delta[posicionEstado][posicionLambda].isEmpty()){
+                    if(!loop){
+                        for(i = 0;i<this.delta[posicionEstado][posicionLambda].size();i++){
+                            System.out.println(this.delta[posicionEstado][posicionLambda]);
+                            if(letraActual< cadena.length()){
+                                estadoActual = this.delta[posicionEstado][posicionLambda].get(i);
+                                System.out.println("Estado: "+estadoActual+">"+lambda);
+                                if(estadoAnterior == estadoActual)
+                                    aceptada = procesarCadenaConDetalles(cadena, estadoActual, letraActual, true, true);
+                                else
+                                    aceptada = procesarCadenaConDetalles(cadena, estadoActual, letraActual, false, true);
+                            }
+                        }
+                    }else{
+                        System.out.println("procesamiento abortado");
+                        aceptada = false;
+                        return aceptada;
+                    }
+                }else{
+                    System.out.println("procesamiento abortado");
+                    aceptada = aceptada || false;
+                    return aceptada;
+                }
+
+                if(aceptada)
+                    aceptada = (verifyConDetalles(letraActual, cadena, estadoActual, i) || aceptada);
+                else
+                    System.out.println("Cadena rechazada");
+            }
+            return aceptada;
+        }
+        
+        boolean procesarCadenaConDetalles(String cadena){
+            return procesarCadenaConDetalles(cadena, this.q, 0, false, true);
+        }
+        
+        boolean procesarCadena(String cadena){
+            return procesarCadena(cadena, this.q, 0, false, true);
+        }
+        
+        boolean verify(int letraActual, String cadena, String estadoActual, int i){
+//            System.out.println("Voy en la letra "+letraActual + " y el size de la cadena es "+ cadena.length()+" Estado actual "+ estadoActual);
+            if(letraActual == cadena.length()){
+                for(i = 0; i< this.finalStates.size(); i++){
+                    if(estadoActual.equals(this.finalStates.get(i))){
+//                        System.out.println("Cadena Aceptada");
+                        return true;
+                    }
+                }
+//                System.out.println("Cadena Rechazada");
+                return false;
+            }
+            return true;
+        }
+        
+        boolean verifyConDetalles(int letraActual, String cadena, String estadoActual, int i){
+//            System.out.println("Voy en la letra "+letraActual + " y el size de la cadena es "+ cadena.length()+" Estado actual "+ estadoActual);
+            if(letraActual == cadena.length()){
+                for(i = 0; i< this.finalStates.size(); i++){
+                    if(estadoActual.equals(this.finalStates.get(i))){
+                        System.out.println("Cadena Aceptada");
+                        return true;
+                    }
+                }
+//                System.out.println("Cadena Rechazada");
+                return false;
+            }
+            return true;
+        }
+    }   
+    
     public static void main(String[] args) throws Exception {
 
         Automata afd = new Automata();
@@ -164,7 +376,10 @@ public class AFN_Lambda {
         afd.showInitialState();
         afd.showFinalStates();
         afd.showDelta();
-
+        boolean resultado = afd.procesarCadena("aaaaaabba");
+//        boolean resultado = afd.procesarCadena("b");
+        System.out.println(resultado);
+        
     }
 
 }
