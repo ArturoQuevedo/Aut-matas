@@ -277,25 +277,6 @@ public class AFN_Lambda {
                 posicionEstado = getPosEstado(estadoActual);
                 posicionSimbolo = getPosSimbolo(simbolo);
                 System.out.println("Estado: "+estadoActual+":"+simbolo);
-                if(aceptada)
-                    estadoActual = estadoAnterior;
-                if(!this.delta[posicionEstado][posicionSimbolo].isEmpty()){
-                    for(i = 0;i<this.delta[posicionEstado][posicionSimbolo].size();i++){
-                        System.out.println(estadoActual+": " +simbolo + ">" + this.delta[posicionEstado][posicionSimbolo]);
-                        if(letraActual< cadena.length()){
-                            ++letraActual;
-                            estadoActual = this.delta[posicionEstado][posicionSimbolo].get(i);
-                            System.out.println("Estado: "+estadoActual+">"+simbolo);
-                            aceptada = procesarCadenaConDetalles(cadena, estadoActual, letraActual, false, true);
-                        }else{
-                            System.out.println("Cadena rechazada");
-                            aceptada = false;
-                            return aceptada;
-                        }
-                    }
-                }
-                
-                
                 if(!this.delta[posicionEstado][posicionLambda].isEmpty()){
                     if(!loop){
                         for(i = 0;i<this.delta[posicionEstado][posicionLambda].size();i++){
@@ -314,6 +295,23 @@ public class AFN_Lambda {
                         aceptada = false;
                         return aceptada;
                     }
+                }
+                if(aceptada)
+                    estadoActual = estadoAnterior;
+                if(!this.delta[posicionEstado][posicionSimbolo].isEmpty()){
+                    for(i = 0;i<this.delta[posicionEstado][posicionSimbolo].size();i++){
+                        System.out.println(estadoActual+": " +simbolo + ">" + this.delta[posicionEstado][posicionSimbolo]);
+                        if(letraActual< cadena.length()){
+                            ++letraActual;
+                            estadoActual = this.delta[posicionEstado][posicionSimbolo].get(i);
+                            System.out.println("Estado: "+estadoActual+">"+simbolo);
+                            aceptada = procesarCadenaConDetalles(cadena, estadoActual, letraActual, false, true);
+                        }else{
+                            System.out.println("Cadena rechazada");
+                            aceptada = false;
+                            return aceptada;
+                        }
+                    }
                 }else{
                     System.out.println("procesamiento abortado");
                     aceptada = aceptada || false;
@@ -322,8 +320,6 @@ public class AFN_Lambda {
 
                 if(aceptada)
                     aceptada = (verifyConDetalles(letraActual, cadena, estadoActual, i) || aceptada);
-                else
-                    System.out.println("Cadena rechazada");
             }
             return aceptada;
         }
@@ -376,7 +372,7 @@ public class AFN_Lambda {
         afd.showInitialState();
         afd.showFinalStates();
         afd.showDelta();
-        boolean resultado = afd.procesarCadenaConDetalles("aaaaaabba");
+        boolean resultado = afd.procesarCadenaConDetalles("aaaaaaba");
 //        boolean resultado = afd.procesarCadena("b");
 //
         System.out.println(resultado);
