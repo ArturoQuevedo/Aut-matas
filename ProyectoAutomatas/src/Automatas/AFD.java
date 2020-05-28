@@ -1,4 +1,4 @@
-package afd;
+package Automatas;
 
 /**
  * @author Arthur
@@ -337,17 +337,18 @@ public class AFD {
         Automata afd = new Automata();
         afd.initializeAFD();
         //El autómata que lee acepta cadenas con un numero par de de a Y b
-        afd.processStringWithDetails("abababa");
+        
+        //afd.processStringWithDetails("abababa");
 
-//        ArrayList<String> prueba = new ArrayList<>();
-//        prueba.add("aa");
-//        prueba.add("bb");
-//        prueba.add("aba");
-//        prueba.add("baba");
-//        prueba.add("abba");
-//        prueba.add("");
-//        prueba.add("b");
-//        afd.processStringList(prueba, false);
+        ArrayList<String> prueba = new ArrayList<>();
+        prueba.add("aa");
+        prueba.add("bb");
+        prueba.add("aba");
+        prueba.add("baba");
+        prueba.add("abba");
+        prueba.add("");
+        prueba.add("b");
+        afd.processStringList(prueba, true);
     }
 
 }
