@@ -182,7 +182,7 @@ public class AFN_Lambda {
         boolean procesarCadena(String cadena, String estado, int letra, boolean loop, boolean aceptada){
             if(!(letra>=cadena.length())){
                 int i;
-            
+                aceptada = false;
                 String estadoActual;
                 String estadoAnterior;
                 String simbolo;
@@ -191,7 +191,7 @@ public class AFN_Lambda {
 
                 int posicionEstado;
                 int posicionSimbolo;
-                int posicionLambda = getPosSimbolo("$");
+                int posicionLambda = getPosSimbolo(lambda);
 
                 int letraActual = letra;
 
@@ -212,9 +212,9 @@ public class AFN_Lambda {
                                 estadoActual = this.delta[posicionEstado][posicionLambda].get(i);
 //                                System.out.println("Estado: "+estadoActual+">"+lambda);
                                 if(estadoAnterior == estadoActual)
-                                    aceptada = procesarCadena(cadena, estadoActual, letraActual, true, true);
+                                    aceptada = procesarCadena(cadena, estadoActual, letraActual, true, aceptada);
                                 else
-                                    aceptada = procesarCadena(cadena, estadoActual, letraActual, false, true);
+                                    aceptada = procesarCadena(cadena, estadoActual, letraActual, false, aceptada ) || aceptada;
                             }
                         }
                     }else{
@@ -223,8 +223,7 @@ public class AFN_Lambda {
                         return aceptada;
                     }
                 }
-                if(aceptada)
-                    estadoActual = estadoAnterior;
+                estadoActual = estadoAnterior;
                 if(!this.delta[posicionEstado][posicionSimbolo].isEmpty()){
                     for(i = 0;i<this.delta[posicionEstado][posicionSimbolo].size();i++){
 //                        System.out.println(estadoActual+": " +simbolo + ">" + this.delta[posicionEstado][posicionSimbolo]);
@@ -232,7 +231,7 @@ public class AFN_Lambda {
                             ++letraActual;
                             estadoActual = this.delta[posicionEstado][posicionSimbolo].get(i);
 //                            System.out.println("Estado: "+estadoActual+">"+simbolo);
-                            aceptada = procesarCadena(cadena, estadoActual, letraActual, false, true);
+                            aceptada = procesarCadena(cadena, estadoActual, letraActual, false, (aceptada)) || aceptada;
                         }else{
 //                            System.out.println("Cadena rechazada");
                             aceptada = false;
@@ -245,8 +244,8 @@ public class AFN_Lambda {
                     return aceptada;
                 }
 
-                if(aceptada)
-                    aceptada = (verify(letraActual, cadena, estadoActual, i) || aceptada);
+                if(!aceptada)
+                    aceptada = (verify(letraActual, cadena, estadoActual, i, aceptada)) || aceptada;
             }
             return aceptada;
         }
@@ -255,7 +254,7 @@ public class AFN_Lambda {
         boolean procesarCadenaConDetalles(String cadena, String estado, int letra, boolean loop, boolean aceptada){
             if(!(letra>=cadena.length())){
                 int i;
-            
+                aceptada = false;
                 String estadoActual;
                 String estadoAnterior;
                 String simbolo;
@@ -264,7 +263,7 @@ public class AFN_Lambda {
 
                 int posicionEstado;
                 int posicionSimbolo;
-                int posicionLambda = getPosSimbolo("$");
+                int posicionLambda = getPosSimbolo(lambda);
 
                 int letraActual = letra;
 
@@ -285,9 +284,9 @@ public class AFN_Lambda {
                                 estadoActual = this.delta[posicionEstado][posicionLambda].get(i);
                                 System.out.println("Estado: "+estadoActual+">"+lambda);
                                 if(estadoAnterior == estadoActual)
-                                    aceptada = procesarCadenaConDetalles(cadena, estadoActual, letraActual, true, true);
+                                    aceptada = procesarCadenaConDetalles(cadena, estadoActual, letraActual, true, aceptada);
                                 else
-                                    aceptada = procesarCadenaConDetalles(cadena, estadoActual, letraActual, false, true);
+                                    aceptada = procesarCadenaConDetalles(cadena, estadoActual, letraActual, false, aceptada ) || aceptada;
                             }
                         }
                     }else{
@@ -296,8 +295,7 @@ public class AFN_Lambda {
                         return aceptada;
                     }
                 }
-                if(aceptada)
-                    estadoActual = estadoAnterior;
+                estadoActual = estadoAnterior;
                 if(!this.delta[posicionEstado][posicionSimbolo].isEmpty()){
                     for(i = 0;i<this.delta[posicionEstado][posicionSimbolo].size();i++){
                         System.out.println(estadoActual+": " +simbolo + ">" + this.delta[posicionEstado][posicionSimbolo]);
@@ -305,7 +303,7 @@ public class AFN_Lambda {
                             ++letraActual;
                             estadoActual = this.delta[posicionEstado][posicionSimbolo].get(i);
                             System.out.println("Estado: "+estadoActual+">"+simbolo);
-                            aceptada = procesarCadenaConDetalles(cadena, estadoActual, letraActual, false, true);
+                            aceptada = procesarCadenaConDetalles(cadena, estadoActual, letraActual, false, (aceptada)) || aceptada;
                         }else{
                             System.out.println("Cadena rechazada");
                             aceptada = false;
@@ -318,8 +316,8 @@ public class AFN_Lambda {
                     return aceptada;
                 }
 
-                if(aceptada)
-                    aceptada = (verifyConDetalles(letraActual, cadena, estadoActual, i) || aceptada);
+                if(!aceptada)
+                    aceptada = (verifyConDetalles(letraActual, cadena, estadoActual, i, aceptada)) || aceptada;
             }
             return aceptada;
         }
@@ -332,7 +330,7 @@ public class AFN_Lambda {
             return procesarCadena(cadena, this.q, 0, false, true);
         }
         
-        boolean verify(int letraActual, String cadena, String estadoActual, int i){
+        boolean verify(int letraActual, String cadena, String estadoActual, int i, boolean aceptada){
 //            System.out.println("Voy en la letra "+letraActual + " y el size de la cadena es "+ cadena.length()+" Estado actual "+ estadoActual);
             if(letraActual == cadena.length()){
                 for(i = 0; i< this.finalStates.size(); i++){
@@ -344,10 +342,10 @@ public class AFN_Lambda {
 //                System.out.println("Cadena Rechazada");
                 return false;
             }
-            return true;
+            return aceptada;
         }
         
-        boolean verifyConDetalles(int letraActual, String cadena, String estadoActual, int i){
+        boolean verifyConDetalles(int letraActual, String cadena, String estadoActual, int i, boolean aceptada){
 //            System.out.println("Voy en la letra "+letraActual + " y el size de la cadena es "+ cadena.length()+" Estado actual "+ estadoActual);
             if(letraActual == cadena.length()){
                 for(i = 0; i< this.finalStates.size(); i++){
@@ -356,10 +354,10 @@ public class AFN_Lambda {
                         return true;
                     }
                 }
-//                System.out.println("Cadena Rechazada");
+                System.out.println("Cadena Rechazada");
                 return false;
             }
-            return true;
+            return aceptada;
         }
     }   
     
@@ -372,7 +370,7 @@ public class AFN_Lambda {
         afd.showInitialState();
         afd.showFinalStates();
         afd.showDelta();
-        boolean resultado = afd.procesarCadenaConDetalles("aaaaaaba");
+        boolean resultado = afd.procesarCadena("babaabb");
 //        boolean resultado = afd.procesarCadena("b");
 //
         System.out.println(resultado);
