@@ -21,7 +21,7 @@ public class PCAFD {
     public boolean processString(AFD afd, String string, boolean imprimir) { //Procesar string con o sin detalles
 
         if (imprimir == true) {
-            System.out.print(string + "\t");
+            System.out.print(string + "\n");
         }
         String actualState;// este es el estado actual
         int actualStateP;//fila del estado actual
@@ -40,7 +40,7 @@ public class PCAFD {
                 string = "";
             }
             if (imprimir == true) {
-                System.out.print("[" + actualState + "," + actualSymbol + "] ");
+                System.out.print("[" + actualState + "," + actualSymbol +string + "]->");
             }
 
             actualSymbolP = afd.getColumn(actualSymbol);//buscamos la posición de ese simbolo en nuestra matriz(es algun lugar de la primera fila)
@@ -59,11 +59,11 @@ public class PCAFD {
 
         for (int k = 0; k < afd.getFinalStates().size(); k++) {
             if (actualState.equals(afd.getFinalStates().get(k))) {
-                System.out.print("Aceptada\n");
+                System.out.print("Aceptación\n");
                 return true;
             }
         }
-        System.out.print("No aceptada\n");
+        System.out.print("No aceptación\n");
         return false;
 
     }
@@ -103,9 +103,9 @@ public class PCAFD {
             String string = stringList.remove(0);
 
             if (imprimirPantalla) {
-                System.out.print(string + "\t");
+                System.out.print(string + "\n");
             }
-            bw.write(string + "\t");
+            bw.write(string + "\n");
 
             String actualState;// este es el estado actual
             int actualStateP;//fila del estado actual
@@ -126,10 +126,10 @@ public class PCAFD {
                 }
 
                 if (imprimirPantalla) {
-                    System.out.print("[" + actualState + "," + actualSymbol + "] ");
+                    System.out.print("[" + actualState + "," + actualSymbol +string + "]->");
                 }
 
-                bw.write("[" + actualState + "," + actualSymbol + "] ");
+                bw.write("[" + actualState + "," + actualSymbol +string + "]->");
                 actualSymbolP = afd.getColumn(actualSymbol);//buscamos la posición de ese simbolo en nuestra matriz(es algun lugar de la primera fila)
 
                 if (!afd.getDelta()[actualStateP][actualSymbolP].get(0).isEmpty()) {
@@ -151,16 +151,16 @@ public class PCAFD {
 
                 if (actualState.equals(afd.getFinalStates().get(k))) {
                     if (imprimirPantalla) {
-                        System.out.print("Sí\n");
+                        System.out.print("Aceptación\n");
                     }
-                    bw.write("Sí\n");
+                    bw.write("Aceptación\n");
                     break;
                 }
                 if (k == afd.getFinalStates().size() - 1) {//si esto ocurre entonces NO encontro ningun estado coincidente
                     if (imprimirPantalla) {
-                        System.out.print("No\n");
+                        System.out.print("No Aceptación\n");
                     }
-                    bw.write("No\n");
+                    bw.write("No Aceptación\n");
                     break;
                 }
             }
@@ -186,7 +186,8 @@ public class PCAFD {
         prueba.add("abba");
         prueba.add("");
         prueba.add("b");
-        procesador.processStringList(afd,prueba, true);
+        //procesador.processStringWithDetails(afd, "abbbba");
+        procesador.processStringList(afd,prueba, false);
     }
     
 }
