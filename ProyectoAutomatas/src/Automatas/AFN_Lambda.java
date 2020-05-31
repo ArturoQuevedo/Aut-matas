@@ -477,9 +477,10 @@ public class AFN_Lambda {
         afd.showInitialState();
         afd.showFinalStates();
         afd.showDelta();
-//boolean resultado = afd.procesarCadena("babaabb");
-//        boolean resultado = afd.procesarCadena("b");
-//
+        boolean resultado = afd.procesarCadenaConDetalles("bbbbbbb");
+        //booleanresultado = afd.procesarCadena("b");
+        
+       
         //afd.printLambdaClausura("s4");
         ArrayList<String> estados = new ArrayList<>();
         estados.add("s1");
