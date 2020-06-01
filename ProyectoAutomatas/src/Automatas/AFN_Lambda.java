@@ -575,8 +575,13 @@ public class AFN_Lambda {
             String salida = "";
             int indice = 0;
             boolean resultado = computarTodosLosProcesamientos(cadena, this.q, 0, false, true, salida, indice);
-            
-            return this.globalito.size();
+            this.filtro();
+            int total = 0;
+            for(int i=0;i<globalito.size();i++){
+                if(!globalito.get(i).isEmpty()) total++;
+                else break;
+            }
+            return total;
         }
         
         boolean verifyComputarTodosLosProcesamientos(int letraActual, String cadena, String estadoActual, int i, boolean aceptada, int indice){
@@ -599,7 +604,7 @@ public class AFN_Lambda {
         
         int respuesta(String cadena){
             switch (cadena) {
-                case "Cadena abortada":
+                case "Procesamiento abortado":
                     return 0;
                 case "Cadena rechazada":
                     return 1;
@@ -610,12 +615,49 @@ public class AFN_Lambda {
             }
         }
         
+        void obtenerLista(ArrayList<String> lista, int inicio, int ultimo, ArrayList<String> objetivo){
+            for(int i=0;i<lista.size();i++){
+                if(i >= inicio && i<= ultimo){
+                    objetivo.add(lista.get(i));
+                }
+                if(i>ultimo) break;
+            }
+        }
+        
         void filtro(){
             for(int i=0;i<globalito.size();i++){
+                int proceso = 0;
                 for(int j=0;j<globalito.get(i).size();j++){
-                    System.out.println("nicolas es gei");
+                    
+                    int resp = this.respuesta(globalito.get(i).get(j));
+                    switch (resp) {
+                        case 0:
+                            if(proceso==0)
+                                obtenerLista(globalito.get(i), proceso, j, abortada);
+                            else
+                                obtenerLista(globalito.get(i), proceso+1, j, abortada);
+                            proceso = j;
+                            break;
+                        case 1:
+                            if(proceso==0)
+                                obtenerLista(globalito.get(i), proceso, j, rechazada);
+                            else
+                                obtenerLista(globalito.get(i), proceso+1, j, rechazada);
+                            proceso = j;
+                            break;
+                        case 2:
+                            if(proceso==0)
+                                obtenerLista(globalito.get(i), proceso, j, aceptada);
+                            else
+                                obtenerLista(globalito.get(i), proceso+1, j, aceptada);
+                            proceso = j;
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
+            System.out.println("recorri todo.");
         }
         
         
@@ -650,8 +692,18 @@ public class AFN_Lambda {
             System.out.println("---------------------");
         }
         
-        afd.filtro();
         
+        for(int i=0;i<afd.abortada.size();i++){
+            System.out.println(afd.abortada.get(i));
+        }
+        System.out.println("//////////////////////////////"); 
+        for(int i=0;i<afd.rechazada.size();i++){
+            System.out.println(afd.rechazada.get(i));
+        }
+        System.out.println("//////////////////////////////"); 
+        for(int i=0;i<afd.aceptada.size();i++){
+            System.out.println(afd.aceptada.get(i));
+        }
         
         
         //afd.printLambdaClausura("s4");
