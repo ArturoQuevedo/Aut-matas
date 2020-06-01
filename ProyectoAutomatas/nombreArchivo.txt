@@ -1,7 +1,0 @@
-aa	[q0,a] [q1,a] [q0]	Sí
-bb	[q0,b] [q2,b] [q0]	Sí
-aba	[q0,a] [q1,b] [q3,a] [q2]	No
-baba	[q0,b] [q2,a] [q3,b] [q1,a] [q0]	Sí
-abba	[q0,a] [q1,b] [q3,b] [q1,a] [q0]	Sí
-	[q0]	Sí
-b	[q0,b] [q2]	No

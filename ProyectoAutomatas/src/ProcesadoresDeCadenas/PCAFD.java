@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * @author Equipo
  */
 public class PCAFD {
-    
+
     public boolean processString(AFD afd, String string, boolean imprimir) { //Procesar string con o sin detalles
 
         if (imprimir == true) {
@@ -40,7 +40,7 @@ public class PCAFD {
                 string = "";
             }
             if (imprimir == true) {
-                System.out.print("[" + actualState + "," + actualSymbol +string + "]->");
+                System.out.print("[" + actualState + "," + actualSymbol + string + "]->");
             }
 
             actualSymbolP = afd.getColumn(actualSymbol);//buscamos la posición de ese simbolo en nuestra matriz(es algun lugar de la primera fila)
@@ -70,26 +70,28 @@ public class PCAFD {
 
     public boolean processString(AFD afd, String string) {//Procesar string SIN detalles
 
-        return processString(afd,string, false);
+        return processString(afd, string, false);
     }
 
     public boolean processStringWithDetails(AFD afd, String string) {//Procesar string CON detalles
 
-        return processString(afd,string, true);
+        return processString(afd, string, true);
     }
 
-    public void processStringList(AFD afd, ArrayList<String> stringList, boolean imprimirPantalla) throws IOException {
+    public void processStringList(AFD afd, ArrayList<String> stringList, String nombreArchivo, boolean imprimirPantalla) throws IOException {
 
         //Verificar si "nombreArchivo.txt" ya existe
         int i = 1;
-        String ruta = "nombreArchivo.txt";//aqui cambienlo por la ruta en donde quieran que se cree el archivo (lo ultimo es le nombre)
+        String ruta = nombreArchivo + ".txt";//aqui cambienlo por la ruta en donde quieran que se cree el archivo (lo ultimo es le nombre)
         File archivo = new File(ruta);
         BufferedWriter bw;
         while (true) {
             if (archivo.exists()) {
-                ruta = "nombreArchivo" + i + ".txt";; //aqui lo mismo
+
+                ruta = "AFD_Generado" + i + ".txt";; //aqui lo mismo
                 archivo = new File(ruta);
                 i++;
+
             } else {
                 bw = new BufferedWriter(new FileWriter(archivo));
                 break;
@@ -126,10 +128,10 @@ public class PCAFD {
                 }
 
                 if (imprimirPantalla) {
-                    System.out.print("[" + actualState + "," + actualSymbol +string + "]->");
+                    System.out.print("[" + actualState + "," + actualSymbol + string + "]->");
                 }
 
-                bw.write("[" + actualState + "," + actualSymbol +string + "]->");
+                bw.write("[" + actualState + "," + actualSymbol + string + "]->");
                 actualSymbolP = afd.getColumn(actualSymbol);//buscamos la posición de ese simbolo en nuestra matriz(es algun lugar de la primera fila)
 
                 if (!afd.getDelta()[actualStateP][actualSymbolP].get(0).isEmpty()) {
@@ -169,13 +171,13 @@ public class PCAFD {
         System.out.println("Se creó el archivo con el procesamiento de las cadenas");
 
     }
-    
+
     public static void main(String[] args) throws Exception {
 
         AFD afd = new AFD();
         afd.initializeAFD("file.txt");
-        
-        PCAFD procesador=new PCAFD();
+
+        PCAFD procesador = new PCAFD();
         //procesador.processStringWithDetails(afd, "abababab");        
 
         ArrayList<String> prueba = new ArrayList<>();
@@ -187,7 +189,7 @@ public class PCAFD {
         prueba.add("");
         prueba.add("b");
         //procesador.processStringWithDetails(afd, "abbbba");
-        procesador.processStringList(afd,prueba, false);
+        procesador.processStringList(afd, prueba, "ProbandoLa1", true);
     }
-    
+
 }

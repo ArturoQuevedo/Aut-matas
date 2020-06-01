@@ -201,19 +201,19 @@ public class AFN_Lambda {
                 estadoActual = estado;
                 estadoAnterior = estadoActual;
 
-                System.out.println("letra: "+letraActual);
+                //System.out.println("letra: "+letraActual);
                 simbolo = Character.toString(cadena.charAt(letraActual));
 
                 posicionEstado = getPosEstado(estadoActual);
                 posicionSimbolo = getPosSimbolo(simbolo);
-                System.out.println("Estado: "+estadoActual+":"+simbolo);
+                //System.out.println("Estado: "+estadoActual+":"+simbolo);
                 if(!this.delta[posicionEstado][posicionLambda].isEmpty()){
                     if(!loop){
                         for(i = 0;i<this.delta[posicionEstado][posicionLambda].size();i++){
-                            System.out.println(this.delta[posicionEstado][posicionLambda]);
+                            //System.out.println(this.delta[posicionEstado][posicionLambda]);
                             if(letraActual< cadena.length()){
                                 estadoActual = this.delta[posicionEstado][posicionLambda].get(i);
-                                System.out.println("Estado: "+estadoActual+">"+lambda);
+                                //System.out.println("Estado: "+estadoActual+">"+lambda);
                                 if(estadoAnterior.equals(estadoActual)){
                                     loop = true;
                                     aceptada = procesarCadena(cadena, estadoActual, letraActual, true, aceptada);
@@ -223,7 +223,7 @@ public class AFN_Lambda {
                             }
                         }
                     }else{
-                        System.out.println("procesamiento abortado");
+                        //System.out.println("procesamiento abortado");
                         aceptada = false;
                         return aceptada;
                     }
@@ -231,20 +231,20 @@ public class AFN_Lambda {
                 estadoActual = estadoAnterior;
                 if(!this.delta[posicionEstado][posicionSimbolo].isEmpty()){
                     for(i = 0;i<this.delta[posicionEstado][posicionSimbolo].size();i++){
-                        System.out.println(estadoActual+": " +simbolo + ">" + this.delta[posicionEstado][posicionSimbolo]);
+                        //System.out.println(estadoActual+": " +simbolo + ">" + this.delta[posicionEstado][posicionSimbolo]);
                         if(letraActual< cadena.length()){
                             ++letraActual;
                             estadoActual = this.delta[posicionEstado][posicionSimbolo].get(i);
-                            System.out.println("Estado: "+estadoActual+">"+simbolo);
+                            //System.out.println("Estado: "+estadoActual+">"+simbolo);
                             aceptada = procesarCadena(cadena, estadoActual, letraActual, false, (aceptada)) || aceptada;
                         }else{
-                            System.out.println("Cadena rechazada");
+                            //System.out.println("Cadena rechazada");
                             aceptada = false;
                             return aceptada;
                         }
                     }
                 }else{
-                    System.out.println("procesamiento abortado");
+                    //System.out.println("procesamiento abortado");
                     aceptada = aceptada || false;
                     return aceptada;
                 }
@@ -275,19 +275,19 @@ public class AFN_Lambda {
                 estadoActual = estado;
                 estadoAnterior = estadoActual;
 
-                System.out.println("letra: "+letraActual);
+                //System.out.println("letra: "+letraActual);
                 simbolo = Character.toString(cadena.charAt(letraActual));
 
                 posicionEstado = getPosEstado(estadoActual);
                 posicionSimbolo = getPosSimbolo(simbolo);
-                System.out.println("Estado: "+estadoActual+":"+simbolo);
+                //System.out.println("Estado: "+estadoActual+":"+simbolo);
                 if(!this.delta[posicionEstado][posicionLambda].isEmpty()){
                     if(!loop){
                         for(i = 0;i<this.delta[posicionEstado][posicionLambda].size();i++){
                             System.out.println(this.delta[posicionEstado][posicionLambda]);
                             if(letraActual< cadena.length()){
                                 estadoActual = this.delta[posicionEstado][posicionLambda].get(i);
-                                System.out.println("Estado: "+estadoActual+">"+lambda);
+                                //System.out.println("Estado: "+estadoActual+">"+lambda);
                                 if(estadoAnterior.equals(estadoActual)){
                                     loop = true;
                                     aceptada = procesarCadenaConDetalles(cadena, estadoActual, letraActual, true, aceptada);
@@ -297,7 +297,7 @@ public class AFN_Lambda {
                             }
                         }
                     }else{
-                        System.out.println("procesamiento abortado");
+                        //System.out.println("procesamiento abortado");
                         aceptada = false;
                         return aceptada;
                     }
@@ -305,20 +305,20 @@ public class AFN_Lambda {
                 estadoActual = estadoAnterior;
                 if(!this.delta[posicionEstado][posicionSimbolo].isEmpty()){
                     for(i = 0;i<this.delta[posicionEstado][posicionSimbolo].size();i++){
-                        System.out.println(estadoActual+": " +simbolo + ">" + this.delta[posicionEstado][posicionSimbolo]);
+                        //System.out.println(estadoActual+": " +simbolo + ">" + this.delta[posicionEstado][posicionSimbolo]);
                         if(letraActual< cadena.length()){
                             ++letraActual;
                             estadoActual = this.delta[posicionEstado][posicionSimbolo].get(i);
-                            System.out.println("Estado: "+estadoActual+">"+simbolo);
+                            //System.out.println("Estado: "+estadoActual+">"+simbolo);
                             aceptada = procesarCadenaConDetalles(cadena, estadoActual, letraActual, false, (aceptada)) || aceptada;
                         }else{
-                            System.out.println("Cadena rechazada");
+                            //System.out.println("Cadena rechazada");
                             aceptada = false;
                             return aceptada;
                         }
                     }
                 }else{
-                    System.out.println("procesamiento abortado");
+                    //System.out.println("procesamiento abortado");
                     aceptada = aceptada || false;
                     return aceptada;
                 }
@@ -357,11 +357,11 @@ public class AFN_Lambda {
             if(letraActual == cadena.length()){
                 for(i = 0; i< this.finalStates.size(); i++){
                     if(estadoActual.equals(this.finalStates.get(i))){
-                        System.out.println("Cadena Aceptada");
+                        //System.out.println("Cadena Aceptada");
                         return true;
                     }
                 }
-                System.out.println("Cadena Rechazada");
+                //System.out.println("Cadena Rechazada");
                 return false;
             }
             return aceptada;
@@ -475,6 +475,8 @@ public class AFN_Lambda {
         ArrayList<String> abortada = new ArrayList<>();
         
         boolean computarTodosLosProcesamientos(String cadena, String estado, int letra, boolean loop, boolean aceptada, String salida, int indice){
+            
+
             if(!(letra>=cadena.length())){
                 int i;
                 aceptada = false;
@@ -503,7 +505,7 @@ public class AFN_Lambda {
                 String temp = String.format("[%s, %s]", estadoActual, cadena.substring(letraActual, cadena.length()));
                 
                 this.globalito.get(indice).add(temp);
-                System.out.println(temp);
+                //System.out.println(temp);
                 if(!this.delta[posicionEstado][posicionLambda].isEmpty()){
                     if(!loop){
                         for(i = 0;i<this.delta[posicionEstado][posicionLambda].size();i++){
@@ -529,10 +531,10 @@ public class AFN_Lambda {
                         }
                     }else{
                         temp = String.format("[%s, %s]", estadoActual, cadena.substring(letraActual, cadena.length()));
-                        System.out.println(temp);
+                        //System.out.println(temp);
                         this.globalito.get(indice).add(temp);
-                        this.globalito.get(indice).add("Procesamiento abortado");
-                        System.out.println("Procesamiento abortado");
+                        this.globalito.get(indice).add("Abortado");
+                        //System.out.println("Procesamiento abortado");
                         aceptada = false;
                         return aceptada;
                     }
@@ -547,19 +549,19 @@ public class AFN_Lambda {
 //                            System.out.println("Estado: "+estadoActual+">"+simbolo);
                             aceptada = computarTodosLosProcesamientos(cadena, estadoActual, letraActual, false, (aceptada), salida, indice) || aceptada;                            
                         }else{
-                            this.globalito.get(indice).add("Cadena rechazada");
+                            this.globalito.get(indice).add("No aceptacion");
                             indice++;
-                            System.out.println("Cadena rechazada");
+                            //System.out.println("Cadena rechazada");
                             aceptada = false;
                             return aceptada;
                         }
                     }
                 }else{
                     temp = String.format("[%s, %s]", estadoActual, cadena.substring(letraActual, cadena.length()));
-                    System.out.println(temp);
+                    //System.out.println(temp);
                     this.globalito.get(indice).add(temp);
-                    this.globalito.get(indice).add("Procesamiento abortado");
-                    System.out.println("Procesamiento abortado");
+                    this.globalito.get(indice).add("Abortado");
+                    //System.out.println("Procesamiento abortado");
                     aceptada = aceptada || false;
                     return aceptada;
                 }
@@ -571,7 +573,7 @@ public class AFN_Lambda {
             return aceptada;
         }
         
-        int computarTodosLosProcesamientos(String cadena){
+        int computarTodosLosProcesamientos(String cadena,String nombreArchivo) throws IOException{
             String salida = "";
             int indice = 0;
             boolean resultado = computarTodosLosProcesamientos(cadena, this.q, 0, false, true, salida, indice);
@@ -581,6 +583,140 @@ public class AFN_Lambda {
                 if(!globalito.get(i).isEmpty()) total++;
                 else break;
             }
+            
+        //Cadenas Aceptadas    
+        int i = 1; // todas van a manejar el mismo numero al final
+        String ruta = nombreArchivo + "Aceptadas.txt" ;
+        String ruta2 = nombreArchivo + "Rechazadas.txt";
+        String ruta3 = nombreArchivo + "Abortadas.txt";
+        File archivo = new File(ruta);
+        File archivo2 = new File(ruta2);
+        File archivo3 = new File(ruta3);
+        BufferedWriter bw;
+        BufferedWriter bw2;
+        BufferedWriter bw3;
+        while (true) {
+            if (archivo.exists()) {
+
+                ruta = nombreArchivo + "Aceptadas"+i+".txt"; 
+                ruta2 = nombreArchivo + "Rechazadas"+i+".txt"; 
+                ruta3 = nombreArchivo + "Abortadas"+i+".txt"; 
+                archivo = new File(ruta);
+                archivo2 = new File(ruta2);
+                archivo3 = new File(ruta3);
+                i++;
+
+            } else {
+
+                bw = new BufferedWriter(new FileWriter(archivo));
+                bw2 = new BufferedWriter(new FileWriter(archivo2));
+                bw3 = new BufferedWriter(new FileWriter(archivo3));
+                break;
+            }
+        }
+        //escribiendo en el documento de aceptadas con el formato adecuado  
+        int j = 0;
+        bw.write(cadena+"\n");
+        System.out.println(cadena);
+        if(aceptada.isEmpty()){
+            System.out.println("No hay procesamientos aceptados");
+        }else{
+        while(true){
+            
+            if(j == aceptada.size()){
+                System.out.println("");
+                break;
+            }
+            
+            if(aceptada.get(j).equals("Aceptacion")){
+                bw.write(aceptada.get(j)+"\n");
+                System.out.print(aceptada.get(j));
+                System.out.println("");
+                j++;
+            }else{
+                
+                 bw.write(aceptada.get(j)+"->");
+                 System.out.print(aceptada.get(j)+"->");
+                 j++;
+                
+            }
+            
+            
+   
+        }
+        }
+         
+        
+        //escribiendo en el documento de Rechazadas con el formato adecuado  
+        j = 0; 
+        bw2.write(cadena+"\n");
+        if(rechazada.isEmpty()){
+            System.out.println("No hay procesamientos rechazados");
+        }else{
+        while(true){
+            
+            if(j == rechazada.size()){
+                System.out.println("");
+                break;
+            }
+            
+            if(rechazada.get(j).equals("No aceptacion")){
+                bw2.write(rechazada.get(j)+"\n");
+                System.out.print(rechazada.get(j));
+                System.out.println("");
+                j++;
+            }else{
+                
+                 bw2.write(rechazada.get(j)+"->");
+                 System.out.print(rechazada.get(j)+"->");
+                 j++;
+                
+            }
+            
+            
+            
+   
+        }
+        }
+         
+        //escribiendo en el documento de Abortadas con el formato adecuado  
+        j = 0; 
+        bw3.write(cadena+"\n");
+        if(abortada.isEmpty()){
+            System.out.println("No hay procesamientos abortados");
+        }else{
+        while(true){
+            
+            if(j == abortada.size()){
+                System.out.println("");
+                break;
+            }
+            
+            if(abortada.get(j).equals("Abortado")){
+                bw3.write(abortada.get(j)+"\n");
+                System.out.print(abortada.get(j));
+                System.out.println("");
+                j++;
+            }else{
+                
+                 bw3.write(abortada.get(j)+"->");
+                 System.out.print(abortada.get(j)+"->");
+                 j++;
+                
+            }
+            
+            
+   
+        }
+        }
+            bw.close();
+            bw2.close();
+            bw3.close();
+            
+           
+            
+            
+            System.out.println("Numero de procesamientos realizados : "+ total);
             return total;
         }
         
@@ -589,13 +725,13 @@ public class AFN_Lambda {
             if(letraActual == cadena.length()){
                 for(i = 0; i< this.finalStates.size(); i++){
                     if(estadoActual.equals(this.finalStates.get(i))){
-                        this.globalito.get(indice).add("Cadena aceptada");
-                        System.out.println("Cadena Aceptada");
+                        this.globalito.get(indice).add("Aceptacion");
+                        //System.out.println("Cadena Aceptada");
                         return true;
                     }
                 }
-                this.globalito.get(indice).add("Cadena rechazada");
-                System.out.println("Cadena rechazada");
+                this.globalito.get(indice).add("No aceptacion");
+                //System.out.println("Cadena rechazada");
                 return false;
             }
             return aceptada;
@@ -604,11 +740,11 @@ public class AFN_Lambda {
         
         int respuesta(String cadena){
             switch (cadena) {
-                case "Procesamiento abortado":
+                case "Abortado":
                     return 0;
-                case "Cadena rechazada":
+                case "No aceptacion":
                     return 1;
-                case "Cadena aceptada":
+                case "Aceptacion":
                     return 2;
                 default:
                     return 3;
@@ -657,54 +793,267 @@ public class AFN_Lambda {
                     }
                 }
             }
-            System.out.println("recorri todo.");
+            //System.out.println("recorri todo.");
+        }
+        
+        void procesarListaCadenas(ArrayList<String> cadenas, String nombreArchivo, boolean imprimirPantalla ) throws IOException{
+           
+            
+            //Verificar si "nombreArchivo.txt" ya existe
+            int i = 1;
+            String ruta = nombreArchivo + ".txt";
+            File archivo = new File(ruta);
+            BufferedWriter bw;
+            while (true) {
+                if (archivo.exists()) {
+
+                    ruta = "AFN_LambdaGenerado" + i + ".txt";
+                    archivo = new File(ruta);
+                    i++;
+
+                } else {
+                    bw = new BufferedWriter(new FileWriter(archivo));
+                    break;
+                }
+            }
+            
+            while(!cadenas.isEmpty()){
+                String cadena = cadenas.remove(0);
+                String salida = "";
+                int indice = 0;
+                boolean resultado = computarTodosLosProcesamientos(cadena, this.q, 0, false, true, salida, indice);
+                this.filtro();
+                int total = 0;
+                for(i=0;i<globalito.size();i++){
+                    if(!globalito.get(i).isEmpty()) total++;
+                    else break;
+                }
+           
+                     
+                    if(!aceptada.isEmpty()){
+                        
+                        ArrayList<String> a = new ArrayList<>();
+                        ArrayList<String> b = new ArrayList<>();
+                        a = aceptacionMasCorto(); 
+                        b = noAceptacionMasCorto();
+
+                        int pAceptados = Integer.valueOf(a.get(0));
+                        int pNoAceptados = Integer.valueOf(b.get(0));
+                        if(imprimirPantalla) System.out.println(cadena);
+                        bw.write("\n"+cadena + "\n");
+
+                        for(i = 1; i < (a.size()-1);i++ ){
+                            
+                            if(imprimirPantalla)System.out.print(a.get(i)+"->");
+                            bw.write(a.get(i)+"->");
+                            
+                        }
+                        if(imprimirPantalla)System.out.print(a.get(a.size()-1)+ "\n");
+                        bw.write(a.get(a.size()-1)+ "\n");
+                        if(imprimirPantalla)System.out.println("En total hay " + total + " procesamientos posibles.");
+                        bw.write("\n"+"En total hay " + total + " procesamientos posibles.");
+                        if(imprimirPantalla)System.out.println("En total hay " + pAceptados + " procesamientos aceptados.");
+                        bw.write("\n"+"En total hay " + pAceptados + " procesamientos aceptados.");
+                        if(imprimirPantalla)System.out.println("En total hay " + pNoAceptados + " procesamientos rechazados.");
+                        bw.write("\n"+"En total hay " + pNoAceptados + " procesamientos rechazados.");
+                        if(imprimirPantalla)System.out.println("En total hay " + (total-(pAceptados+pNoAceptados)) + " procesamientos abortados.");
+                        bw.write("\n"+"En total hay " + (total-(pAceptados+pNoAceptados)) + " procesamientos abortados.");
+                        if(imprimirPantalla)System.out.println("Si");
+                        bw.write("\n"+"Si");
+                        
+                        
+                    }else if(!rechazada.isEmpty()){
+                        
+                        ArrayList<String> b = new ArrayList<>();
+                        b = noAceptacionMasCorto();
+                        int pAceptados = 0;
+                        int pNoAceptados = Integer.valueOf(b.get(0));
+                        if(imprimirPantalla) System.out.println(cadena);
+                        bw.write("\n"+cadena + "\n");
+                        for(i = 1; i < b.size();i++ ){
+                            
+                            if(imprimirPantalla)System.out.print(b.get(i)+"->");
+                            bw.write(b.get(i)+"->");
+                            
+                        }
+                        if(imprimirPantalla)System.out.println("En total hay " + total + " procesamientos posibles.");
+                        bw.write("\n"+"En total hay " + total + " procesamientos posibles.");
+                        if(imprimirPantalla)System.out.println("En total hay " + total + " procesamientos posibles.");
+                        bw.write("\n"+"En total hay " + total + " procesamientos posibles.");
+                        if(imprimirPantalla)System.out.println("En total hay " + pAceptados + " procesamientos aceptados.");
+                        bw.write("\n"+"En total hay " + pAceptados + " procesamientos aceptados.");
+                        if(imprimirPantalla)System.out.println("En total hay " + pNoAceptados + " procesamientos rechazados.");
+                        bw.write("\n"+"En total hay " + pNoAceptados + " procesamientos rechazados.");
+                        if(imprimirPantalla)System.out.println("En total hay " + (total-(pAceptados+pNoAceptados)) + " procesamientos abortados.");
+                        bw.write("\n"+"En total hay " + (total-(pAceptados+pNoAceptados)) + " procesamientos abortados.");
+                        if(imprimirPantalla)System.out.println("No");
+                        bw.write("\n"+"No");
+                        
+                    }else System.out.println("Esto no es un atomata :c"); // esto es cuando no tiene ninguna aceptada ni rechazada
+                    
+                    //Limpiando todo para sel siguiente ciclo
+                globalito.clear();
+                aceptada.clear();
+                rechazada.clear();
+                abortada.clear();
+                for(int o=0;o<250;o++){
+                    ArrayList<String> a = new ArrayList<>();
+                    globalito.add(a);
+                }
+                    
+                    
+            }
+            bw.close();
         }
         
         
         
         
-    }   
+        ArrayList<String> aceptacionMasCorto(){
+        
+            ArrayList<String> corto = new ArrayList<>();
+            int in = 0;  //el indice mas corto hasta hora
+            int fin = 0; // el indice mas largo hasta hora
+            int temin = 0; // lo mismo de arriba pero temporal para ir comparando
+            int temfin = 0; // same
+            int longitud = 0; //la resta de fin con in 
+            int numero = 0;//numero de procesamientos
+            int j  = 0; //contador
+            if(aceptada.isEmpty()){
+                corto.add(0,Integer.toString(numero));
+                return corto;
+                
+            }else{
+                
+                while(true){
+                    
+                    if(j == aceptada.size()){
+                    break;
+            }
+            
+            if(aceptada.get(j).equals("Aceptacion")){
+                numero++;
+                temfin = j;
+                if((temfin-temin) > longitud){
+                    in = temin;
+                    fin = temfin;
+                    longitud = (temfin-temin);
+                }
+                temin = j+1;
+                j++;
+            }else j++;
+                    
+                }
+                for(int k = 0;k <= longitud;k++){
+                    corto.add(aceptada.get(in));
+                    in++;
+                }
+
+            }
+            corto.add(0,Integer.toString(numero));
+            return corto;
+            
+        }
+        ArrayList<String> noAceptacionMasCorto(){
+        
+            ArrayList<String> corto = new ArrayList<>();
+            int in = 0;  //el indice mas corto hasta hora
+            int fin = 0; // el indice mas largo hasta hora
+            int temin = 0; // lo mismo de arriba pero temporal para ir comparando
+            int temfin = 0; // same
+            int longitud = 0; //la resta de fin con in
+            int numero = 0;//numero de procesamientos
+            int j  = 0; //contador
+            
+            if(rechazada.isEmpty()){
+                corto.add(0,Integer.toString(numero));
+                return corto;
+                
+            }else{
+                
+                while(true){
+                    
+                    if(j == rechazada.size()){
+                    break;
+            }
+            
+            if(rechazada.get(j).equals("No aceptacion")){
+                numero++;
+                temfin = j;
+                if((temfin-temin) > longitud){
+                    in = temin;
+                    fin = temfin;
+                    longitud = (temfin-temin);
+                }
+                temin = j+1;
+                j++;
+            }else j++;
+                    
+                }
+                
+                for(int k = 0;k <= longitud;k++){
+                    corto.add(rechazada.get(in));
+                    in++;
+                }
+                
+            }
+            corto.add(0,Integer.toString(numero));
+            return corto;
+            
+        }
+        
+        
+        boolean procesarCadenaConDetalles2(String cadena){
+            
+            
+
+                String salida = "";
+                int indice = 0;
+                boolean resultado = computarTodosLosProcesamientos(cadena, this.q, 0, false, true, salida, indice);
+                this.filtro();      
+                    if(!aceptada.isEmpty()){
+                        
+                        ArrayList<String> a = new ArrayList<>();
+                        a = aceptacionMasCorto(); 
+                        System.out.println(cadena);
+                        for(int i = 1; i < (a.size()-1);i++ ){ 
+                            System.out.print(a.get(i)+"->");  
+                        }
+                        System.out.print(a.get(a.size()-1)+"\n");
+                        return true;
+                        
+                        
+            
+            
+  
+                    }else {
+                        System.out.println("No hay procesamientos aceptados");
+                     return false;
+                    }
+        }
+    }
+    
     
     public static void main(String[] args) throws Exception {
 
         Automata afd = new Automata();
         afd.initializeAFD();
-        afd.showSigma();
-        afd.showStates();
-        afd.showInitialState();
-        afd.showFinalStates();
-        afd.showDelta();        
-        
-        for(int i=0;i<500;i++){
+        for(int i=0;i<250;i++){
             ArrayList<String> a = new ArrayList<>();
             afd.globalito.add(a);
         }
         
-        int resultado = afd.computarTodosLosProcesamientos("aaaaaaaaaaa");
-//        boolean resultado = afd.procesarCadena("abba");
-        System.out.println(resultado);
-       
-        System.out.println("//////////////////////////////"); 
-        for(int i=0;i<afd.globalito.size();i++){
-            for (String palabra : afd.globalito.get(i)) {
-                System.out.println(palabra);
-            }
-            System.out.println("---------------------");
-        }
+        //int resultado = afd.computarTodosLosProcesamientos("abab", "ProbandoAFN_Lambda");
+        ArrayList<String> prueba = new ArrayList<>();
+        prueba.add("abab");
+        prueba.add("ab");
+        prueba.add("aaaaaaa");
+        //afd.procesarCadena("abab");
+        //afd.procesarCadenaConDetalles2("ababaaaa");
+            
+        //afd.procesarListaCadenas(prueba, "PruebaOp", false);
         
-        
-        for(int i=0;i<afd.abortada.size();i++){
-            System.out.println(afd.abortada.get(i));
-        }
-        System.out.println("//////////////////////////////"); 
-        for(int i=0;i<afd.rechazada.size();i++){
-            System.out.println(afd.rechazada.get(i));
-        }
-        System.out.println("//////////////////////////////"); 
-        for(int i=0;i<afd.aceptada.size();i++){
-            System.out.println(afd.aceptada.get(i));
-        }
-        
+     
         
         //afd.printLambdaClausura("s4");
 //        ArrayList<String> estados = new ArrayList<>();
@@ -714,7 +1063,7 @@ public class AFN_Lambda {
 //        afd.calcularMuchasLambdaClausura(estados);
 //        
         
-        
+       
     }
 
 }
