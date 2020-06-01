@@ -201,27 +201,29 @@ public class AFN_Lambda {
                 estadoActual = estado;
                 estadoAnterior = estadoActual;
 
-//                System.out.println("letra: "+letraActual);
+                System.out.println("letra: "+letraActual);
                 simbolo = Character.toString(cadena.charAt(letraActual));
 
                 posicionEstado = getPosEstado(estadoActual);
                 posicionSimbolo = getPosSimbolo(simbolo);
-//                System.out.println("Estado: "+estadoActual+":"+simbolo);
+                System.out.println("Estado: "+estadoActual+":"+simbolo);
                 if(!this.delta[posicionEstado][posicionLambda].isEmpty()){
                     if(!loop){
                         for(i = 0;i<this.delta[posicionEstado][posicionLambda].size();i++){
-//                            System.out.println(this.delta[posicionEstado][posicionLambda]);
+                            System.out.println(this.delta[posicionEstado][posicionLambda]);
                             if(letraActual< cadena.length()){
                                 estadoActual = this.delta[posicionEstado][posicionLambda].get(i);
-//                                System.out.println("Estado: "+estadoActual+">"+lambda);
-                                if(estadoAnterior == estadoActual)
+                                System.out.println("Estado: "+estadoActual+">"+lambda);
+                                if(estadoAnterior.equals(estadoActual)){
+                                    loop = true;
                                     aceptada = procesarCadena(cadena, estadoActual, letraActual, true, aceptada);
+                                }
                                 else
-                                    aceptada = procesarCadena(cadena, estadoActual, letraActual, false, aceptada ) || aceptada;
+                                    aceptada = procesarCadena(cadena, estadoActual, letraActual, loop, aceptada ) || aceptada;
                             }
                         }
                     }else{
-//                        System.out.println("procesamiento abortado");
+                        System.out.println("procesamiento abortado");
                         aceptada = false;
                         return aceptada;
                     }
@@ -229,20 +231,20 @@ public class AFN_Lambda {
                 estadoActual = estadoAnterior;
                 if(!this.delta[posicionEstado][posicionSimbolo].isEmpty()){
                     for(i = 0;i<this.delta[posicionEstado][posicionSimbolo].size();i++){
-//                        System.out.println(estadoActual+": " +simbolo + ">" + this.delta[posicionEstado][posicionSimbolo]);
+                        System.out.println(estadoActual+": " +simbolo + ">" + this.delta[posicionEstado][posicionSimbolo]);
                         if(letraActual< cadena.length()){
                             ++letraActual;
                             estadoActual = this.delta[posicionEstado][posicionSimbolo].get(i);
-//                            System.out.println("Estado: "+estadoActual+">"+simbolo);
+                            System.out.println("Estado: "+estadoActual+">"+simbolo);
                             aceptada = procesarCadena(cadena, estadoActual, letraActual, false, (aceptada)) || aceptada;
                         }else{
-//                            System.out.println("Cadena rechazada");
+                            System.out.println("Cadena rechazada");
                             aceptada = false;
                             return aceptada;
                         }
                     }
                 }else{
-//                    System.out.println("procesamiento abortado");
+                    System.out.println("procesamiento abortado");
                     aceptada = aceptada || false;
                     return aceptada;
                 }
@@ -467,7 +469,12 @@ public class AFN_Lambda {
         return muchasLambdaClausuras;
         }
         
-        boolean computarTodosLosProcesamientos(String cadena, String estado, int letra, boolean loop, boolean aceptada, String salida){
+        ArrayList<ArrayList<String>> globalito = new ArrayList<ArrayList<String>>();
+        ArrayList<String> aceptada = new ArrayList<>();
+        ArrayList<String> rechazada = new ArrayList<>();
+        ArrayList<String> abortada = new ArrayList<>();
+        
+        boolean computarTodosLosProcesamientos(String cadena, String estado, int letra, boolean loop, boolean aceptada, String salida, int indice){
             if(!(letra>=cadena.length())){
                 int i;
                 aceptada = false;
@@ -492,8 +499,11 @@ public class AFN_Lambda {
                 posicionEstado = getPosEstado(estadoActual);
                 posicionSimbolo = getPosSimbolo(simbolo);
 //                System.out.println("Estado: "+estadoActual+":"+simbolo);
-//                salida = String.format("[%s, %s]", estadoActual, cadena.substring(letraActual, cadena.length()));
-//                System.out.println(salida);
+                
+                String temp = String.format("[%s, %s]", estadoActual, cadena.substring(letraActual, cadena.length()));
+                
+                this.globalito.get(indice).add(temp);
+                System.out.println(temp);
                 if(!this.delta[posicionEstado][posicionLambda].isEmpty()){
                     if(!loop){
                         for(i = 0;i<this.delta[posicionEstado][posicionLambda].size();i++){
@@ -501,14 +511,28 @@ public class AFN_Lambda {
                             if(letraActual< cadena.length()){
                                 estadoActual = this.delta[posicionEstado][posicionLambda].get(i);
 //                                System.out.println("Estado: "+estadoActual+">"+lambda);
-                                if(estadoAnterior.equals(estadoActual))
-                                    aceptada = computarTodosLosProcesamientos(cadena, estadoActual, letraActual, true, aceptada, salida);
-                                else
-                                    aceptada = computarTodosLosProcesamientos(cadena, estadoActual, letraActual, false, aceptada, salida ) || aceptada;
+                                if(estadoAnterior.equals(estadoActual)){
+                                    loop = true;
+                                    aceptada = computarTodosLosProcesamientos(cadena, estadoActual, letraActual, true, aceptada, salida, indice);
+                                    indice++;
+                                    temp = String.format("[%s, %s]", this.q, cadena);
+                                    this.globalito.get(indice).add(temp);
+                                }
+                                else{
+                                    aceptada = computarTodosLosProcesamientos(cadena, estadoActual, letraActual, loop, aceptada, salida, indice) || aceptada;
+                                    indice++;
+                                    temp = String.format("[%s, %s]", this.q, cadena);
+                                    this.globalito.get(indice).add(temp);
+                                }
+                                    
                             }
                         }
                     }else{
-//                        System.out.println("procesamiento abortado");
+                        temp = String.format("[%s, %s]", estadoActual, cadena.substring(letraActual, cadena.length()));
+                        System.out.println(temp);
+                        this.globalito.get(indice).add(temp);
+                        this.globalito.get(indice).add("Procesamiento abortado");
+                        System.out.println("Procesamiento abortado");
                         aceptada = false;
                         return aceptada;
                     }
@@ -521,29 +545,80 @@ public class AFN_Lambda {
                             ++letraActual;
                             estadoActual = this.delta[posicionEstado][posicionSimbolo].get(i);
 //                            System.out.println("Estado: "+estadoActual+">"+simbolo);
-                            aceptada = computarTodosLosProcesamientos(cadena, estadoActual, letraActual, false, (aceptada), salida) || aceptada;
+                            aceptada = computarTodosLosProcesamientos(cadena, estadoActual, letraActual, false, (aceptada), salida, indice) || aceptada;                            
                         }else{
-//                            System.out.println("Cadena rechazada");
+                            this.globalito.get(indice).add("Cadena rechazada");
+                            indice++;
+                            System.out.println("Cadena rechazada");
                             aceptada = false;
                             return aceptada;
                         }
                     }
                 }else{
-//                    System.out.println("procesamiento abortado");
+                    temp = String.format("[%s, %s]", estadoActual, cadena.substring(letraActual, cadena.length()));
+                    System.out.println(temp);
+                    this.globalito.get(indice).add(temp);
+                    this.globalito.get(indice).add("Procesamiento abortado");
+                    System.out.println("Procesamiento abortado");
                     aceptada = aceptada || false;
                     return aceptada;
                 }
 
-                if(!aceptada)
-                    aceptada = (verify(letraActual, cadena, estadoActual, i, aceptada)) || aceptada;
+                if(!aceptada){
+                    aceptada = (verifyComputarTodosLosProcesamientos(letraActual, cadena, estadoActual, i, aceptada, indice)) || aceptada;
+                }
             }
             return aceptada;
         }
         
-        boolean computarTodosLosProcesamientos(String cadena){
+        int computarTodosLosProcesamientos(String cadena){
             String salida = "";
-            return computarTodosLosProcesamientos(cadena, this.q, 0, false, true, salida);
+            int indice = 0;
+            boolean resultado = computarTodosLosProcesamientos(cadena, this.q, 0, false, true, salida, indice);
+            
+            return this.globalito.size();
         }
+        
+        boolean verifyComputarTodosLosProcesamientos(int letraActual, String cadena, String estadoActual, int i, boolean aceptada, int indice){
+//            System.out.println("Voy en la letra "+letraActual + " y el size de la cadena es "+ cadena.length()+" Estado actual "+ estadoActual);
+            if(letraActual == cadena.length()){
+                for(i = 0; i< this.finalStates.size(); i++){
+                    if(estadoActual.equals(this.finalStates.get(i))){
+                        this.globalito.get(indice).add("Cadena aceptada");
+                        System.out.println("Cadena Aceptada");
+                        return true;
+                    }
+                }
+                this.globalito.get(indice).add("Cadena rechazada");
+                System.out.println("Cadena rechazada");
+                return false;
+            }
+            return aceptada;
+        }
+        
+        
+        int respuesta(String cadena){
+            switch (cadena) {
+                case "Cadena abortada":
+                    return 0;
+                case "Cadena rechazada":
+                    return 1;
+                case "Cadena aceptada":
+                    return 2;
+                default:
+                    return 3;
+            }
+        }
+        
+        void filtro(){
+            for(int i=0;i<globalito.size();i++){
+                for(int j=0;j<globalito.get(i).size();j++){
+                    System.out.println("nicolas es gei");
+                }
+            }
+        }
+        
+        
         
         
     }   
@@ -556,17 +631,36 @@ public class AFN_Lambda {
         afd.showStates();
         afd.showInitialState();
         afd.showFinalStates();
-        afd.showDelta();
-//        boolean resultado = afd.computarTodosLosProcesamientos("abba");
-        boolean resultado = afd.procesarCadenaConDetalles("aaa");
+        afd.showDelta();        
+        
+        for(int i=0;i<500;i++){
+            ArrayList<String> a = new ArrayList<>();
+            afd.globalito.add(a);
+        }
+        
+        int resultado = afd.computarTodosLosProcesamientos("aaaaaaaaaaa");
+//        boolean resultado = afd.procesarCadena("abba");
         System.out.println(resultado);
        
+        System.out.println("//////////////////////////////"); 
+        for(int i=0;i<afd.globalito.size();i++){
+            for (String palabra : afd.globalito.get(i)) {
+                System.out.println(palabra);
+            }
+            System.out.println("---------------------");
+        }
+        
+        afd.filtro();
+        
+        
+        
         //afd.printLambdaClausura("s4");
-        ArrayList<String> estados = new ArrayList<>();
-        estados.add("s1");
-        estados.add("s2");
-        estados.add("s3");
-        afd.calcularMuchasLambdaClausura(estados);
+//        ArrayList<String> estados = new ArrayList<>();
+//        estados.add("s1");
+//        estados.add("s2");
+//        estados.add("s3");
+//        afd.calcularMuchasLambdaClausura(estados);
+//        
         
         
     }
