@@ -147,7 +147,7 @@ public class AFN_Lambda {
                     case ("#transitions"):
 
                         while ((line = br.readLine()) != null) {
-                            tokenizer = new StringTokenizer(line, " :>,");
+                            tokenizer = new StringTokenizer(line, " :>;");
 
                             String currentState = tokenizer.nextToken();
                             Character currentChar = tokenizer.nextToken().charAt(0);
