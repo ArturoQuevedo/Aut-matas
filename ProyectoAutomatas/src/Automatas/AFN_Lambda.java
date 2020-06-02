@@ -356,7 +356,7 @@ public class AFN_Lambda {
             return procesarCadenaConDetalles(cadena, this.q, 0, false, true, this.q);
         }
         
-        boolean procesarCadena(String cadena){
+        public boolean procesarCadena(String cadena){
             return procesarCadena(cadena, this.q, 0, false, true, this.q);
         }
         
