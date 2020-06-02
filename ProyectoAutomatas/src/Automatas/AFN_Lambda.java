@@ -6,7 +6,6 @@ import java.io.*;
 
 public class AFN_Lambda {
 
-    public static class Automata {
 
         private ArrayList<Character> sigma;
         private ArrayList<String> states;
@@ -21,7 +20,7 @@ public class AFN_Lambda {
         
          
 
-        public Automata() {
+        public AFN_Lambda() {
             this.sigma = new ArrayList<>();
             this.states = new ArrayList<>();
             this.finalStates = new ArrayList<>();
@@ -176,7 +175,7 @@ public class AFN_Lambda {
         }
          
 
-        int getPosEstado(String estado){
+        public int getPosEstado(String estado){
             int val = -1; // aqui se asignan posiciones a estados que no existen, posible solución es hacer val = -1 pero no se si afecte el codigo de cesar
             for(int i=0;i<this.states.size();i++){
 //                System.out.println(this.states.get(i));
@@ -188,7 +187,7 @@ public class AFN_Lambda {
             return val;
         }
         
-        int getPosSimbolo(String simbolo){
+        public int getPosSimbolo(String simbolo){
             int val = -1;
             for(int i=0;i<this.sigma.size();i++){
 //                System.out.println(this.states.get(i));
@@ -200,7 +199,7 @@ public class AFN_Lambda {
             return val;
         }
         
-        boolean procesarCadena(String cadena, String estado, int letra, boolean loop, boolean aceptada){
+        public boolean procesarCadena(String cadena, String estado, int letra, boolean loop, boolean aceptada){
             if(!(letra>=cadena.length())){
                 int i;
                 aceptada = false;
@@ -274,7 +273,7 @@ public class AFN_Lambda {
         }
         
         
-        boolean procesarCadenaConDetalles(String cadena, String estado, int letra, boolean loop, boolean aceptada){
+        public boolean procesarCadenaConDetalles(String cadena, String estado, int letra, boolean loop, boolean aceptada){
             if(!(letra>=cadena.length())){
                 int i;
                 aceptada = false;
@@ -347,15 +346,15 @@ public class AFN_Lambda {
             return aceptada;
         }
         
-        boolean procesarCadenaConDetalles(String cadena){
+        public boolean procesarCadenaConDetalles(String cadena){
             return procesarCadenaConDetalles(cadena, this.q, 0, false, true);
         }
         
-        boolean procesarCadena(String cadena){
+        public boolean procesarCadena(String cadena){
             return procesarCadena(cadena, this.q, 0, false, true);
         }
         
-        boolean verify(int letraActual, String cadena, String estadoActual, int i, boolean aceptada){
+        public boolean verify(int letraActual, String cadena, String estadoActual, int i, boolean aceptada){
 //            System.out.println("Voy en la letra "+letraActual + " y el size de la cadena es "+ cadena.length()+" Estado actual "+ estadoActual);
             if(letraActual == cadena.length()){
                 for(i = 0; i< this.finalStates.size(); i++){
@@ -370,7 +369,7 @@ public class AFN_Lambda {
             return aceptada;
         }
         
-        boolean verifyConDetalles(int letraActual, String cadena, String estadoActual, int i, boolean aceptada){
+        public boolean verifyConDetalles(int letraActual, String cadena, String estadoActual, int i, boolean aceptada){
 //            System.out.println("Voy en la letra "+letraActual + " y el size de la cadena es "+ cadena.length()+" Estado actual "+ estadoActual);
             if(letraActual == cadena.length()){
                 for(i = 0; i< this.finalStates.size(); i++){
@@ -385,7 +384,7 @@ public class AFN_Lambda {
             return aceptada;
         }
         
-        ArrayList<String> calcularLambdaClausura(String estado){
+        public ArrayList<String> calcularLambdaClausura(String estado){
         
             ArrayList<String> visitedStates = new ArrayList<>();//Los estados que ya visitamos para evitar caer en bucles
             ArrayList<String> statesToVisit = new ArrayList<>();//los estados que tenemos que visitar (solo entran los que no estan en el array de arriba)
@@ -452,7 +451,7 @@ public class AFN_Lambda {
         
         };
         
-        ArrayList<String> printLambdaClausura(String estado){
+        public ArrayList<String> printLambdaClausura(String estado){
         
             ArrayList<String> lambdaClausura = new ArrayList<>();
             lambdaClausura = calcularLambdaClausura(estado);
@@ -472,7 +471,7 @@ public class AFN_Lambda {
             
         }
         
-        ArrayList<ArrayList<String>> calcularMuchasLambdaClausura (ArrayList<String> estados){
+        public ArrayList<ArrayList<String>> calcularMuchasLambdaClausura (ArrayList<String> estados){
         
         ArrayList<ArrayList<String>> muchasLambdaClausuras = new ArrayList<>();
         
@@ -489,7 +488,7 @@ public class AFN_Lambda {
         
 
         
-        boolean computarTodosLosProcesamientos(String cadena, String estado, int letra, boolean loop, boolean aceptada, String salida, int indice){
+        public boolean computarTodosLosProcesamientos(String cadena, String estado, int letra, boolean loop, boolean aceptada, String salida, int indice){
             
 
             if(!(letra>=cadena.length())){
@@ -588,7 +587,7 @@ public class AFN_Lambda {
             return aceptada;
         }
         
-        int computarTodosLosProcesamientos(String cadena,String nombreArchivo) throws IOException{
+        public int computarTodosLosProcesamientos(String cadena,String nombreArchivo) throws IOException{
             String salida = "";
             int indice = 0;
             boolean resultado = computarTodosLosProcesamientos(cadena, this.q, 0, false, true, salida, indice);
@@ -735,7 +734,7 @@ public class AFN_Lambda {
             return total;
         }
         
-        boolean verifyComputarTodosLosProcesamientos(int letraActual, String cadena, String estadoActual, int i, boolean aceptada, int indice){
+        public boolean verifyComputarTodosLosProcesamientos(int letraActual, String cadena, String estadoActual, int i, boolean aceptada, int indice){
 //            System.out.println("Voy en la letra "+letraActual + " y el size de la cadena es "+ cadena.length()+" Estado actual "+ estadoActual);
             if(letraActual == cadena.length()){
                 for(i = 0; i< this.finalStates.size(); i++){
@@ -753,7 +752,7 @@ public class AFN_Lambda {
         }
         
         
-        int respuesta(String cadena){
+        public int respuesta(String cadena){
             switch (cadena) {
                 case "Abortado":
                     return 0;
@@ -766,7 +765,7 @@ public class AFN_Lambda {
             }
         }
         
-        void obtenerLista(ArrayList<String> lista, int inicio, int ultimo, ArrayList<String> objetivo){
+        public void obtenerLista(ArrayList<String> lista, int inicio, int ultimo, ArrayList<String> objetivo){
             for(int i=0;i<lista.size();i++){
                 if(i >= inicio && i<= ultimo){
                     objetivo.add(lista.get(i));
@@ -775,7 +774,7 @@ public class AFN_Lambda {
             }
         }
         
-        void filtro(){
+        public void filtro(){
             for(int i=0;i<globalito.size();i++){
                 int proceso = 0;
                 for(int j=0;j<globalito.get(i).size();j++){
@@ -811,7 +810,7 @@ public class AFN_Lambda {
             //System.out.println("recorri todo.");
         }
         
-        void procesarListaCadenas(ArrayList<String> cadenas, String nombreArchivo, boolean imprimirPantalla ) throws IOException{
+        public void procesarListaCadenas(ArrayList<String> cadenas, String nombreArchivo, boolean imprimirPantalla ) throws IOException{
            
             
             //Verificar si "nombreArchivo.txt" ya existe
@@ -924,7 +923,7 @@ public class AFN_Lambda {
         
         
         
-        ArrayList<String> aceptacionMasCorto(){
+        public ArrayList<String> aceptacionMasCorto(){
         
             ArrayList<String> corto = new ArrayList<>();
             int in = 0;  //el indice mas corto hasta hora
@@ -969,7 +968,7 @@ public class AFN_Lambda {
             return corto;
             
         }
-        ArrayList<String> noAceptacionMasCorto(){
+        public ArrayList<String> noAceptacionMasCorto(){
         
             ArrayList<String> corto = new ArrayList<>();
             int in = 0;  //el indice mas corto hasta hora
@@ -1018,7 +1017,7 @@ public class AFN_Lambda {
         }
         
         
-        boolean procesarCadenaConDetalles2(String cadena){
+        public boolean procesarCadenaConDetalles2(String cadena){
             
             
 
@@ -1046,13 +1045,17 @@ public class AFN_Lambda {
                      return false;
                     }
         }
-    }
+
     
     
     public static void main(String[] args) throws Exception {
 
-        Automata afd = new Automata();
-        afd.initializeAFD("file.txt"); // Aqui se debe poner el nombre del archivo que se desea leer
+        AFN_Lambda afd = new AFN_Lambda();
+        afd.initializeAFD("AFNLambda1.txt"); // Aqui se debe poner el nombre del archivo que se desea leer
+        //afd.computarTodosLosProcesamientos("aba", "ProbandoLambda");
+        afd.procesarCadena("aba");
+        afd.procesarCadenaConDetalles2("aba");
+   
 
         /*Los metodos que se DEBEN USAR para obtener resultados son los siguientes : 
         afd.calcularLambdaClausura(estado);

@@ -1,0 +1,11 @@
+ab
+[s0, aba]->[s2, aba]->[s3, aba]->[s3, ba]->[s4, a]->[s4, a]->Abortado
+[s0, aba]->[s2, aba]->Abortado
+[s0, aba]->[s5, aba]->[s5, ba]->[s5, ba]->Abortado
+[s0, aba]->[s2, a]->Abortado
+[s0, aba]->[s2, aba]->[s3, aba]->[s3, ba]->[s4, a]->[s4, a]->Abortado
+[s0, aba]->[s2, aba]->Abortado
+[s0, aba]->[s5, aba]->[s5, ba]->[s5, ba]->Abortado
+[s0, ab]->[s2, ab]->Abortado
+[s0, ab]->[s5, ab]->[s5, b]->[s5, b]->Abortado
+[s0, aba]->[s2, a]->Abortado

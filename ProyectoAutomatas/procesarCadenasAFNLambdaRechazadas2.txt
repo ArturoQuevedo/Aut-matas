@@ -1,0 +1,4 @@
+ab
+[s0, aba]->[s1, ba]->[s2, a]->[s3, a]->No aceptacion
+[s0, aba]->[s1, ba]->[s2, a]->[s3, a]->No aceptacion
+[s0, ab]->[s1, b]->No aceptacion

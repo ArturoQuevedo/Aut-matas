@@ -1,0 +1,2 @@
+ab
+[s0, ab]->[s2, ab]->[s3, ab]->[s3, b]->Aceptacion

@@ -1,0 +1,3 @@
+ab
+[s0, ab]->[s2, ab]->Abortado
+[s0, ab]->[s5, ab]->[s5, b]->[s5, b]->Abortado
