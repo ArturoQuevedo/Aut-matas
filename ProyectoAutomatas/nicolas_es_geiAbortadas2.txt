@@ -1,0 +1,128 @@
+abbaaaa
+[s1, abbaaaa]->[s2, abbaaaa]->[s3, bbaaaa]->[s1, bbaaaa]->[s1, bbaaaa]->Abortado
+[s1, abbaaaa]->[s4, bbaaaa]->[s4, bbaaaa]->Abortado
+[s1, abbaaaa]->[s3, abbaaaa]->[s1, abbaaaa]->[s1, abbaaaa]->Abortado
+[s1, abbaaaa]->[s2, baaaa]->[s4, aaaa]->[s3, aaaa]->[s3, aaaa]->Abortado
+[s1, abbaaaa]->[s4, abbaaaa]->[s4, abbaaaa]->Abortado
+[s1, abbaaaa]->[s1, bbaaaa]->[s2, bbaaaa]->[s4, baaaa]->[s3, baaaa]->[s1, baaaa]->[s2, baaaa]->[s4, aaaa]->[s3, aaaa]->[s1, aaaa]->[s2, aaaa]->[s3, aaa]->[s1, aaa]->[s1, aaa]->Abortado
+[s1, abbaaaa]->[s2, aaa]->[s3, aa]->[s1, aa]->[s2, aa]->[s3, a]->[s1, a]->[s1, a]->Abortado
+[s1, abbaaaa]->[s3, abbaaaa]->Abortado
+[s1, abbaaaa]->[s4, aaa]->[s4, aaa]->Abortado
+[s1, abbaaaa]->[s3, aaaa]->[s1, aaaa]->[s1, aaaa]->Abortado
+[s1, abbaaaa]->[s4, aaaa]->[s3, aaaa]->[s3, aaaa]->Abortado
+[s1, abbaaaa]->[s2, aaa]->[s3, aa]->[s1, aa]->[s2, aa]->[s3, a]->[s1, a]->[s1, a]->Abortado
+[s1, abbaaaa]->[s3, baaaa]->[s1, baaaa]->[s1, baaaa]->Abortado
+[s1, abbaaaa]->[s4, baaaa]->[s3, baaaa]->[s3, baaaa]->Abortado
+[s1, abbaaaa]->[s4, baaaa]->Abortado
+[s1, abbaaaa]->[s3, bbaaaa]->[s1, bbaaaa]->[s1, bbaaaa]->Abortado
+[s1, abbaaaa]->[s4, a]->[s4, a]->Abortado
+[s1, abbaaaa]->[s3, aa]->[s1, aa]->[s1, aa]->Abortado
+[s1, abbaaaa]->[s4, aa]->[s3, aa]->[s3, aa]->Abortado
+[s1, abbaaaa]->[s3, aaa]->Abortado
+[s1, abbaaaa]->[s4, aaaa]->[s4, aaaa]->Abortado
+[s1, abbaaaa]->[s1, aaa]->[s2, aaa]->[s3, aa]->[s1, aa]->[s1, aa]->Abortado
+[s1, abbaaaa]->[s2, aaa]->[s3, aa]->[s1, aa]->[s2, aa]->[s3, a]->[s1, a]->[s1, a]->Abortado
+[s1, abbaaaa]->[s3, aaaa]->Abortado
+[s1, abbaaaa]->[s4, a]->[s4, a]->Abortado
+[s1, abbaaaa]->[s3, aa]->[s1, aa]->[s1, aa]->Abortado
+[s1, abbaaaa]->[s4, aa]->[s3, aa]->[s3, aa]->Abortado
+[s1, abbaaaa]->[s4, baaaa]->[s4, baaaa]->Abortado
+[s1, abbaaaa]->[s1, baaaa]->Abortado
+[s1, abbaaaa]->[s3, baaaa]->Abortado
+[s1, abbaaaa]->[s2, aaaa]->[s3, aaa]->[s1, aaa]->[s2, aaa]->[s3, aa]->[s1, aa]->[s1, aa]->Abortado
+[s1, abbaaaa]->[s4, bbaaaa]->[s4, bbaaaa]->Abortado
+[s1, abbaaaa]->[s1, bbaaaa]->Abortado
+[s1, abbaaaa]->[s3, a]->Abortado
+[s1, abbaaaa]->[s4, aa]->[s4, aa]->Abortado
+[s1, abbaaaa]->[s3, aa]->Abortado
+[s1, abbaaaa]->[s3, aaaa]->Abortado
+[s1, abbaaaa]->[s4, aa]->[s4, aa]->Abortado
+[s1, abbaaaa]->[s3, aaa]->[s1, aaa]->[s1, aaa]->Abortado
+[s1, abbaaaa]->[s4, a]->[s4, a]->Abortado
+[s1, abbaaaa]->[s3, aa]->[s1, aa]->[s1, aa]->Abortado
+[s1, abbaaaa]->[s4, aa]->[s3, aa]->[s3, aa]->Abortado
+[s1, abbaaaa]->[s3, a]->Abortado
+[s1, abbaaaa]->[s4, aa]->[s4, aa]->Abortado
+[s1, abbaaaa]->[s3, aa]->Abortado
+[s1, abbaaaa]->[s2, aaaa]->[s3, aaa]->[s1, aaa]->[s2, aaa]->[s3, aa]->[s1, aa]->[s1, aa]->Abortado
+[s1, abbaaaa]->[s4, aa]->[s4, aa]->Abortado
+[s1, abbaaaa]->[s3, aaa]->[s1, aaa]->[s1, aaa]->Abortado
+[s1, abbaaaa]->[s4, aaa]->[s3, aaa]->[s3, aaa]->Abortado
+[s1, abbaaaa]->[s2, baaaa]->[s4, aaaa]->[s3, aaaa]->[s3, aaaa]->Abortado
+[s1, abbaaaa]->[s3, aa]->Abortado
+[s1, abbaaaa]->[s3, a]->[s1, a]->[s1, a]->Abortado
+[s1, abbaaaa]->[s3, aa]->Abortado
+[s1, abbaaaa]->[s4, aaa]->[s4, aaa]->Abortado
+[s1, abbaaaa]->[s1, aa]->[s2, aa]->[s3, a]->[s1, a]->[s1, a]->Abortado
+[s1, abbaaaa]->[s3, a]->Abortado
+[s1, abbaaaa]->[s4, aa]->[s4, aa]->Abortado
+[s1, abbaaaa]->[s3, aa]->Abortado
+[s1, abbaaaa]->[s3, aa]->Abortado
+[s1, abbaaaa]->[s3, a]->[s1, a]->[s1, a]->Abortado
+[s1, abbaaaa]->[s4, aa]->[s4, aa]->Abortado
+[s1, abbaaaa]->[s3, aaa]->[s1, aaa]->[s1, aaa]->Abortado
+[s1, abbaaaa]->[s4, aaa]->[s3, aaa]->[s3, aaa]->Abortado
+[s1, abbaaaa]->[s3, aa]->Abortado
+[s1, abbaaaa]->[s4, aaa]->[s4, aaa]->Abortado
+[s1, abbaaaa]->[s1, aa]->[s2, aa]->[s3, a]->[s1, a]->[s1, a]->Abortado
+[s1, abbaaaa]->[s3, aaa]->Abortado
+[s1, abbaaaa]->[s2, aaa]->[s3, aa]->[s1, aa]->[s2, aa]->[s3, a]->[s1, a]->[s1, a]->Abortado
+[s1, abbaaaa]->[s4, a]->[s4, a]->Abortado
+[s1, abbaaaa]->[s3, aaa]->Abortado
+[s1, abbaaaa]->[s4, a]->[s4, a]->Abortado
+[s1, abbaaaa]->[s3, aa]->[s1, aa]->[s1, aa]->Abortado
+[s1, abbaaaa]->[s3, aa]->Abortado
+[s1, abbaaaa]->[s3, a]->[s1, a]->[s1, a]->Abortado
+[s1, abbaaaa]->[s4, a]->[s4, a]->Abortado
+[s1, abbaaaa]->[s3, aa]->Abortado
+[s1, abbaaaa]->[s4, aaa]->[s4, aaa]->Abortado
+[s1, abbaaaa]->[s1, aa]->[s2, aa]->[s3, a]->[s1, a]->[s1, a]->Abortado
+[s1, abbaaaa]->[s3, aaa]->Abortado
+[s1, abbaaaa]->[s3, aaa]->Abortado
+[s1, abbaaaa]->[s4, a]->[s4, a]->Abortado
+[s1, abbaaaa]->[s3, aa]->[s1, aa]->[s1, aa]->Abortado
+[s1, abbaaaa]->[s3, a]->[s1, a]->[s1, a]->Abortado
+[s1, abbaaaa]->[s4, a]->[s3, a]->[s3, a]->Abortado
+[s1, abbaaaa]->[s4, a]->[s4, a]->Abortado
+[s1, abbaaaa]->[s3, aa]->[s1, aa]->[s1, aa]->Abortado
+[s1, abbaaaa]->[s4, aa]->[s3, aa]->[s3, aa]->Abortado
+[s1, abbaaaa]->[s3, a]->Abortado
+[s1, abbaaaa]->[s3, a]->Abortado
+[s1, abbaaaa]->[s4, aa]->[s4, aa]->Abortado
+[s1, abbaaaa]->[s4, a]->[s4, a]->Abortado
+[s1, abbaaaa]->[s3, a]->Abortado
+[s1, abbaaaa]->[s3, aaa]->Abortado
+[s1, abbaaaa]->[s4, a]->[s4, a]->Abortado
+[s1, abbaaaa]->[s3, aa]->[s1, aa]->[s1, aa]->Abortado
+[s1, abbaaaa]->[s3, a]->[s1, a]->[s1, a]->Abortado
+[s1, abbaaaa]->[s4, a]->[s3, a]->[s3, a]->Abortado
+[s1, abbaaaa]->[s3, a]->Abortado
+[s1, abbaaaa]->[s4, aa]->[s4, aa]->Abortado
+[s1, abbaaaa]->[s4, a]->[s4, a]->Abortado
+[s1, abbaaaa]->[s3, a]->Abortado
+[s1, abbaaaa]->[s3, a]->Abortado
+[s1, abbaaaa]->[s4, aa]->[s4, aa]->Abortado
+[s1, abbaaaa]->[s3, aa]->Abortado
+[s1, abbaaaa]->[s3, aa]->Abortado
+[s1, abbaaaa]->[s3, a]->[s1, a]->[s1, a]->Abortado
+[s1, abbaaaa]->[s3, a]->Abortado
+[s1, abbaaaa]->[s3, a]->Abortado
+[s1, abbaaaa]->[s4, aa]->[s4, aa]->Abortado
+[s1, abbaaaa]->[s4, a]->[s4, a]->Abortado
+[s1, abbaaaa]->[s3, a]->Abortado
+[s1, abbaaaa]->[s3, aa]->Abortado
+[s1, abbaaaa]->[s3, a]->[s1, a]->[s1, a]->Abortado
+[s1, abbaaaa]->[s3, a]->Abortado
+[s1, abbaaaa]->[s3, aa]->Abortado
+[s1, abbaaaa]->[s3, a]->[s1, a]->[s1, a]->Abortado
+[s1, abbaaaa]->[s4, a]->[s4, a]->Abortado
+[s1, abbaaaa]->[s3, aa]->Abortado
+[s1, abbaaaa]->[s3, a]->[s1, a]->[s1, a]->Abortado
+[s1, abbaaaa]->[s3, a]->Abortado
+[s1, abbaaaa]->[s4, a]->[s4, a]->Abortado
+[s1, abbaaaa]->[s4, a]->[s4, a]->Abortado
+[s1, abbaaaa]->[s3, a]->Abortado
+[s1, abbaaaa]->[s4, a]->[s4, a]->Abortado
+[s1, abbaaaa]->[s3, a]->Abortado
+[s1, abbaaaa]->[s3, a]->Abortado
+[s1, abbaaaa]->[s3, a]->Abortado

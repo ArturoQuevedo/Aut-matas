@@ -1,0 +1,6 @@
+abba
+[s1, abba]->[s2, a]->No aceptacion
+[s1, abba]->[s2, a]->No aceptacion
+[s1, abba]->[s2, a]->No aceptacion
+[s1, abba]->[s2, a]->No aceptacion
+[s1, abba]->[s2, a]->No aceptacion

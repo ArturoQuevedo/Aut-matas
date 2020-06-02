@@ -1,0 +1,12 @@
+abbaaaa
+[s1, abbaaaa]->Aceptacion
+[s1, abbaaaa]->Aceptacion
+[s1, abbaaaa]->Aceptacion
+[s1, abbaaaa]->Aceptacion
+[s1, abbaaaa]->Aceptacion
+[s1, abbaaaa]->Aceptacion
+[s1, abbaaaa]->Aceptacion
+[s1, abbaaaa]->Aceptacion
+[s1, abbaaaa]->Aceptacion
+[s1, abbaaaa]->Aceptacion
+[s1, abbaaaa]->Aceptacion
