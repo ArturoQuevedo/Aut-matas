@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package ProcesadoresDeCadenas;
 
-/**
- *
- * @author Equipo
- */
+package ProcesadoresDeCadenas;
+import Automatas.AFN_Lambda;
+import java.util.*;
+import java.io.*;
+
+
 public class PCAFN_Lambda {
     
 }
