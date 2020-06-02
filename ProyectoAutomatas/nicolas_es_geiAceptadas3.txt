@@ -1,3 +1,0 @@
-aba
-[s1, aba]->Aceptacion
-[s1, aba]->Aceptacion
