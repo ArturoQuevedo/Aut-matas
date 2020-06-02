@@ -1,0 +1,38 @@
+abba
+[s1, abba]->[s1, abba]->[s1, abba]->Abortado
+[s1, abba]->[s2, abba]->[s3, bba]->[s1, bba]->[s1, bba]->[s1, bba]->Abortado
+[s1, abba]->[s2, bba]->[s4, ba]->[s3, ba]->[s1, ba]->[s1, ba]->[s1, ba]->Abortado
+[s1, abba]->[s3, bba]->[s3, bba]->Abortado
+[s1, abba]->[s3, abba]->[s3, abba]->Abortado
+[s1, abba]->[s2, ba]->[s4, a]->[s3, a]->[s1, a]->[s1, a]->[s1, a]->Abortado
+[s1, abba]->[s3, ba]->[s3, ba]->Abortado
+[s1, abba]->[s4, ba]->Abortado
+[s1, abba]->[s3, bba]->[s3, bba]->Abortado
+[s1, abba]->[s4, bba]->[s4, bba]->Abortado
+[s1, abba]->[s1, bba]->[s1, bba]->[s1, bba]->Abortado
+[s1, abba]->[s3, a]->[s3, a]->Abortado
+[s1, abba]->[s3, ba]->[s3, ba]->Abortado
+[s1, abba]->[s4, ba]->[s4, ba]->Abortado
+[s1, abba]->[s1, bba]->Abortado
+[s1, abba]->[s2, ba]->[s4, a]->[s3, a]->[s1, a]->[s1, a]->[s1, a]->Abortado
+[s1, abba]->[s2, bba]->[s4, ba]->[s3, ba]->[s1, ba]->[s1, ba]->[s1, ba]->Abortado
+[s1, abba]->[s3, a]->[s3, a]->Abortado
+[s1, abba]->[s4, a]->[s4, a]->Abortado
+[s1, abba]->[s1, ba]->Abortado
+[s1, abba]->[s3, a]->[s3, a]->Abortado
+[s1, abba]->[s2, ba]->[s4, a]->[s3, a]->[s1, a]->[s1, a]->[s1, a]->Abortado
+[s1, abba]->[s3, ba]->[s3, ba]->Abortado
+[s1, abba]->[s4, ba]->Abortado
+[s1, abba]->[s3, bba]->[s3, bba]->Abortado
+[s1, abba]->[s3, a]->Abortado
+[s1, abba]->[s3, a]->[s3, a]->Abortado
+[s1, abba]->[s4, a]->[s4, a]->Abortado
+[s1, abba]->[s3, a]->[s3, a]->Abortado
+[s1, abba]->[s3, ba]->[s3, ba]->Abortado
+[s1, abba]->[s4, ba]->[s4, ba]->Abortado
+[s1, abba]->[s1, bba]->Abortado
+[s1, abba]->[s3, a]->Abortado
+[s1, abba]->[s3, a]->[s3, a]->Abortado
+[s1, abba]->[s4, a]->[s4, a]->Abortado
+[s1, abba]->[s1, ba]->Abortado
+[s1, abba]->[s3, a]->Abortado
