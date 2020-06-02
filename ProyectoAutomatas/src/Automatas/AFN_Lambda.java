@@ -13,6 +13,10 @@ public class AFN_Lambda {
         private String q;
         private ArrayList<String> finalStates;
         private ArrayList<String>[][] delta;
+        public ArrayList<ArrayList<String>> globalito = new ArrayList<ArrayList<String>>();
+        public ArrayList<String> aceptada ;
+        public ArrayList<String> rechazada;
+        public ArrayList<String> abortada;
         
         
          
@@ -21,6 +25,15 @@ public class AFN_Lambda {
             this.sigma = new ArrayList<>();
             this.states = new ArrayList<>();
             this.finalStates = new ArrayList<>();
+            this.aceptada = new ArrayList<>();
+            this.rechazada = new ArrayList<>();
+            this.abortada = new ArrayList<>();
+            
+            for(int i=0;i<250;i++){
+                ArrayList<String> a = new ArrayList<>();
+                this.globalito.add(a);
+            }
+            
         }
 
         public void initializeDelta(int sizeOfStates, int sizeofSigma) {
@@ -68,9 +81,14 @@ public class AFN_Lambda {
             System.out.println("Initial state: " + this.q);
         }
 
-        public void initializeAFD() throws FileNotFoundException, IOException {
+        public void initializeAFD(String fileRoute) throws FileNotFoundException, IOException {
 
-            File file = new File("file.txt");
+            File file = new File(fileRoute);
+
+            if (!file.exists()) {
+                System.out.println("NO SE ENCONTRO EL ARCHIVO");
+                System.exit(1);
+            }
             BufferedReader br = new BufferedReader(new FileReader(file));
             StringTokenizer tokenizer;
 
@@ -159,7 +177,7 @@ public class AFN_Lambda {
          
 
         int getPosEstado(String estado){
-            int val = 0; // aqui se asignan posiciones a estados que no existen, posible solución es hacer val = -1 pero no se si afecte el codigo de cesar
+            int val = -1; // aqui se asignan posiciones a estados que no existen, posible solución es hacer val = -1 pero no se si afecte el codigo de cesar
             for(int i=0;i<this.states.size();i++){
 //                System.out.println(this.states.get(i));
                 if(estado.equals(this.states.get(i))){
@@ -171,7 +189,7 @@ public class AFN_Lambda {
         }
         
         int getPosSimbolo(String simbolo){
-            int val = 0;
+            int val = -1;
             for(int i=0;i<this.sigma.size();i++){
 //                System.out.println(this.states.get(i));
                 if(simbolo.equals(Character.toString(this.sigma.get(i)))){
@@ -469,10 +487,7 @@ public class AFN_Lambda {
         return muchasLambdaClausuras;
         }
         
-        ArrayList<ArrayList<String>> globalito = new ArrayList<ArrayList<String>>();
-        ArrayList<String> aceptada = new ArrayList<>();
-        ArrayList<String> rechazada = new ArrayList<>();
-        ArrayList<String> abortada = new ArrayList<>();
+
         
         boolean computarTodosLosProcesamientos(String cadena, String estado, int letra, boolean loop, boolean aceptada, String salida, int indice){
             
@@ -807,7 +822,7 @@ public class AFN_Lambda {
             while (true) {
                 if (archivo.exists()) {
 
-                    ruta = "AFN_LambdaGenerado" + i + ".txt";
+                    ruta = nombreArchivo + i + ".txt";
                     archivo = new File(ruta);
                     i++;
 
@@ -1037,31 +1052,27 @@ public class AFN_Lambda {
     public static void main(String[] args) throws Exception {
 
         Automata afd = new Automata();
-        afd.initializeAFD();
-        for(int i=0;i<250;i++){
-            ArrayList<String> a = new ArrayList<>();
-            afd.globalito.add(a);
-        }
+        afd.initializeAFD("file.txt"); // Aqui se debe poner el nombre del archivo que se desea leer
+
+        /*Los metodos que se DEBEN USAR para obtener resultados son los siguientes : 
+        afd.calcularLambdaClausura(estado);
+        afd.calcularMuchasLambdaClausura(estados);
+        afd.procesarCadena(cadena);
+        afd.procesarCadenaConDetalles2(cadena);
+        afd.computarTodosLosProcesamientos(cadena, nombreArchivo);
+        afd.procesarListaCadenas(cadenas, nombreArchivo, true);
+        Cualquier otro metodo con nombre similar no dara el resultado esperado.
+        NOTAS : 
+        -Todas las "listas" (denotadas como "cadenas") recibidas deben ser ArrayList
+        -Todos los parametros "nombreArchivo" van sin la extensión .txt y en caso de ya existir se les dara un nombre generico que :
+            en caso de ser en el metodo "procesarListaCadenas" sera : nombreArchivoi.txt en donde "nombreArchivo" es el nombre que se ingreso y  la "i" representa un numero entero disponible.
+            en caso de ser en el metodo "computarTodosLosProcesamientos" seran : nombreArchivoiAceptadas.txt,nombreArchivoiRechazadas.txt,nombreArchivoiAbortadas.txt en donde "nombreArchivo" es el nombre que se ingreso y  la "i" representa un numero entero disponible.
+       
+        */
         
-        //int resultado = afd.computarTodosLosProcesamientos("abab", "ProbandoAFN_Lambda");
-        ArrayList<String> prueba = new ArrayList<>();
-        prueba.add("abab");
-        prueba.add("ab");
-        prueba.add("aaaaaaa");
-        //afd.procesarCadena("abab");
-        //afd.procesarCadenaConDetalles2("ababaaaa");
-            
-        //afd.procesarListaCadenas(prueba, "PruebaOp", false);
         
-     
         
-        //afd.printLambdaClausura("s4");
-//        ArrayList<String> estados = new ArrayList<>();
-//        estados.add("s1");
-//        estados.add("s2");
-//        estados.add("s3");
-//        afd.calcularMuchasLambdaClausura(estados);
-//        
+        
         
        
     }
