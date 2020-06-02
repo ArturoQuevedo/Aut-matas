@@ -6,8 +6,6 @@ import java.util.StringTokenizer;
 
 public class AFN {
 
-    public static class Automata {
-
         private ArrayList<Character> sigma;
         private ArrayList<String> states;
         private String q;
@@ -18,7 +16,7 @@ public class AFN {
         public ArrayList<String> Rechazadas;
         public ArrayList<String> Abortadas;
 
-        public Automata() {
+        public AFN() {
             this.sigma = new ArrayList<>();
             this.states = new ArrayList<>();
             this.finalStates = new ArrayList<>();
@@ -227,16 +225,14 @@ public class AFN {
 
                     if (estado.equals(this.finalStates.get(i))) {
 
-                        System.out.println(">>>>>>Cadena Aceptada");
-                        Aceptadas.add(acc);
+                        Aceptadas.add(acc+"Aceptada");
                         return true;
                     }
 
                 }
 
                 //si supera el for
-                System.out.println(">>>>>>Cadena No Aceptada");
-                Rechazadas.add(acc);
+                Rechazadas.add(acc+"Rechazada");
                 return false;
             }
             return false;
@@ -687,32 +683,9 @@ public class AFN {
             }
 
         }
-    }
+    
 
-        public static void main(String[] args) throws Exception {
-
-            Automata afd = new Automata();
-            afd.initializeAFN(); // esto deberia tirarnos error a los que no tenemos el txt de Arturo
-            afd.showSigma();
-            afd.showStates();
-            afd.showInitialState();
-            afd.showFinalStates();
-            afd.showDelta();
-            //por el momento todo lo que esta arriba se tiene que ejecutar para llenar el automata con todo, si lo desactivan ps se muere
-            ArrayList<String> prueba = new ArrayList<>();
-            prueba.add("aa");
-            prueba.add("bb");
-            prueba.add("aaaaaaab");
-            prueba.add("$");
-            prueba.add("");
-            afd.computarTodosLosProcesamientos("abb", "nombreArchivo");
-            afd.procesarCadena("abb");
-            afd.procesarCadenaConDetalles("abb");
-            //afd.processStringList(prueba, "abb", false);
-            //afd.processStringList(prueba,true);
-            //afd.processStringList(prueba,true);
-
-        }
+        
 
     
 }
