@@ -1,2 +1,0 @@
-ab
-[s0, ab]->[s1, b]->No aceptacion
