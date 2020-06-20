@@ -486,10 +486,38 @@ public class AFN_Lambda {
             muchasLambdaClausuras.add(printLambdaClausura(estados.get(i)));
             
         }
-        
-        
-        
+
         return muchasLambdaClausuras;
+        }
+        
+        public ArrayList<String> calcularMuchasLambdaClausuraSinImprimir(ArrayList<String> estados){
+        
+            ArrayList<String> muchasLambdaClausuras = new ArrayList<>();
+            ArrayList<String> temporal = new ArrayList<>();
+            
+            for(int i = 0; i < estados.size(); i++){
+                
+                temporal = calcularLambdaClausura(estados.get(i));
+                if(!temporal.isEmpty()){
+                    
+                    for(int j = 0;j < temporal.size();j++){
+                      
+                        if(!muchasLambdaClausuras.contains(temporal.get(j))){
+                        
+                            muchasLambdaClausuras.add(temporal.get(j));
+                            
+                        }
+                        
+                    }
+                    
+                    
+                }
+                
+            }
+        
+            
+            
+            return muchasLambdaClausuras;
         }
         
 
@@ -1047,7 +1075,29 @@ public class AFN_Lambda {
                         System.out.println("No hay procesamientos aceptados");
                      return false;
                     }
+                    
+                    
+                    
+                    
+                    
+                    
+                    
         }
+
+    public ArrayList<String> getStates() {
+        return states;
+    }
+
+    public ArrayList<String>[][] getDelta() {
+        return delta;
+    }
+
+    public ArrayList<Character> getSigma() {
+        return sigma;
+    }
+    
+    
+    
 
     
     
