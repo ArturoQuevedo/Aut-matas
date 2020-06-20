@@ -17,6 +17,85 @@ import java.util.ArrayList;
  * @author Equipo
  */
 public class ClasePrueba {
+    
+    //AFN a AFD ----------------------------------------------------------------
+    
+    public int getRow(String state, ArrayList<String> states) {
+        //esta función es para obtener la fila en la que se encuentra un estado (se asume columna 0)
+        for (int i = 0; i < states.size(); i++) {
+            //solo nos interesa la los elementos de la primera columna entonces por eso la fijamos en [j][0]
+            if (state.equals(states.get(i))) {
+                return i;
+            }
+
+        }
+        return -1; // esto nunca deberia pasar a no se que pas eun error de digitación
+    }
+    
+    public String concatStates(ArrayList<String> delta){
+        String newState = "{";
+        for (int i = 0; i < delta.size(); i++) {
+            newState = newState.concat(delta.get(i) + ",");
+        }
+        newState = newState.concat("}");
+        return newState;
+    }
+    
+    public boolean containsF (ArrayList<String> delta, ArrayList<String> finalStates){
+        boolean bool = false;
+        for (int i = 0; i < delta.size(); i++) {
+            if(finalStates.contains(delta.get(i))){
+                bool = true;
+                break;
+            }
+        }
+        return bool;
+    }
+    
+    public AFD AFNtoAFD(AFN afn){
+        //se almacena localmente el AFN para ser editado
+        ArrayList<String>[][] delta = afn.getDelta();
+        ArrayList<Character> sigma = afn.getSigma();
+        ArrayList<String> states = afn.getStates();
+        ArrayList<String> finalStates = afn.getFinalStates();
+        String q = afn.getQ();
+        String newState;
+        //tamaño original de la lista de estados
+        int StatesSize = states.size();
+        //busca si hay uno o mas estados en el delta y añade la concatenacion de estos a la lista de estados
+        for (int i = 0; i < StatesSize; i++) {
+            for (int j = 0; j < sigma.size(); j++) {
+                if(delta[i][j].size()>1){
+                    newState = concatStates(delta[i][j]);
+                    states.add(newState);
+                    if(containsF(delta[i][j],finalStates)){
+                        finalStates.add(newState);
+                    }
+                }
+            }
+        }
+        
+        //--- EN PROCESO ---
+        //función que busque los deltas de los nuevos estados añadidos
+        //busca ahora si los estados creados anteriormente producen nuevos estados
+        int statesToCheck = states.size()-StatesSize;
+        
+
+        //creacion de la matriz delta usada para añadir solo los estados alcanzables desde q0
+        ArrayList<String>[][] testDelta = new ArrayList[states.size()][sigma.size()];
+        for (int i = 0; i < states.size(); i++) {
+            for (int j = 0; j < sigma.size(); j++) {
+                testDelta[i][j] = new ArrayList<String>();
+            }
+        }
+        //verificar si son alcanzables
+        
+        
+        //----------------------------------------------------------------
+        
+        AFD afd = new AFD();
+        return afd;
+    }
 
     public static void probarAFD(String fileRoute) throws IOException {
         AFD afd = new AFD();

@@ -24,6 +24,47 @@ public class AFN {
         this.Rechazadas = new ArrayList<>();
         this.Abortadas = new ArrayList<>();
     }
+    
+    
+    public ArrayList<Character> getSigma() {
+        return sigma;
+    }
+
+    public void setSigma(ArrayList<Character> sigma) {
+        this.sigma = sigma;
+    }
+
+    public ArrayList<String> getStates() {
+        return states;
+    }
+
+    public void setStates(ArrayList<String> states) {
+        this.states = states;
+    }
+
+    public String getQ() {
+        return q;
+    }
+
+    public void setQ(String q) {
+        this.q = q;
+    }
+
+    public ArrayList<String> getFinalStates() {
+        return finalStates;
+    }
+
+    public void setFinalStates(ArrayList<String> finalStates) {
+        this.finalStates = finalStates;
+    }
+
+    public ArrayList<String>[][] getDelta() {
+        return delta;
+    }
+
+    public void setDelta(ArrayList<String>[][] delta) {
+        this.delta = delta;
+    }
 
     public void initializeDelta(int sizeOfStates, int sizeofSigma) {
         this.delta = new ArrayList[sizeOfStates][sizeofSigma];
