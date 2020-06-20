@@ -17,9 +17,8 @@ import java.util.ArrayList;
  * @author Equipo
  */
 public class ClasePrueba {
-    
+
     //AFN a AFD ----------------------------------------------------------------
-    
     public int getRow(String state, ArrayList<String> states) {
         //esta función es para obtener la fila en la que se encuentra un estado (se asume columna 0)
         for (int i = 0; i < states.size(); i++) {
@@ -27,32 +26,36 @@ public class ClasePrueba {
             if (state.equals(states.get(i))) {
                 return i;
             }
-
         }
         return -1; // esto nunca deberia pasar a no se que pas eun error de digitación
     }
-    
-    public String concatStates(ArrayList<String> delta){
+
+    public String concatStates(ArrayList<String> delta) {
+        //se concatenan los estados
         String newState = "{";
         for (int i = 0; i < delta.size(); i++) {
-            newState = newState.concat(delta.get(i) + ",");
+            newState = newState.concat(delta.get(i) + ";");
         }
         newState = newState.concat("}");
         return newState;
     }
-    
-    public boolean containsF (ArrayList<String> delta, ArrayList<String> finalStates){
+
+    public boolean containsF(ArrayList<String> delta, ArrayList<String> finalStates) {
         boolean bool = false;
         for (int i = 0; i < delta.size(); i++) {
-            if(finalStates.contains(delta.get(i))){
+            if (finalStates.contains(delta.get(i))) {
                 bool = true;
                 break;
             }
         }
         return bool;
     }
-    
-    public AFD AFNtoAFD(AFN afn){
+
+    public void findNewStates() {
+
+    }
+
+    public AFD AFNtoAFD(AFN afn) {
         //se almacena localmente el AFN para ser editado
         ArrayList<String>[][] delta = afn.getDelta();
         ArrayList<Character> sigma = afn.getSigma();
@@ -62,24 +65,66 @@ public class ClasePrueba {
         String newState;
         //tamaño original de la lista de estados
         int StatesSize = states.size();
-        //busca si hay uno o mas estados en el delta y añade la concatenacion de estos a la lista de estados
-        for (int i = 0; i < StatesSize; i++) {
-            for (int j = 0; j < sigma.size(); j++) {
-                if(delta[i][j].size()>1){
-                    newState = concatStates(delta[i][j]);
-                    states.add(newState);
-                    if(containsF(delta[i][j],finalStates)){
-                        finalStates.add(newState);
+        //estados del AFD producido
+        ArrayList<String> AFDStates = new ArrayList<>();
+        ArrayList<String> AFDfinalStates = new ArrayList<>();
+        AFDStates.add(q);
+        //se crea un arreglo de ArrayList temporal con su index para obtener los estados individuales de un estado concatenado
+        ArrayList<String>[] tempStates = new ArrayList[StatesSize * 2];
+        int tempIndex = 0;
+        int tempJ = 0;
+        //recorre cada uno de los estados alcanzables por el AFD
+        for (int i = 0; i < AFDStates.size(); i++) {
+            //evalua si el estado pertenece a los estados del AFN original
+            if (getRow(AFDStates.get(i), states) >= 0) {
+                //Verificar usando la matriz delta
+                //index para usar en la matriz delta del AFN
+                int index = getRow(AFDStates.get(i), states);
+                for (int j = 0; j < sigma.size(); j++) {
+                    //busca si hay uno o mas estados en el delta y añade la concatenacion de estos a la lista de estados
+                    if (delta[index][j].size() > 1) {
+                        newState = concatStates(delta[index][j]);
+                        //si este estado producto de la concatenación no esta registrado ya
+                        if (!AFDStates.contains(newState)) {
+                            tempStates[tempIndex] = delta[index][j];
+                            tempIndex++;
+                            AFDStates.add(newState);
+                            if (containsF(delta[index][j], finalStates)) {
+                                AFDfinalStates.add(newState);
+                            }
+                        }
+                    } //si el estado pertenece a los estados del AFN original y no esta en los del AFD, se añade
+                    else if (delta[index][j].size() == 1 && !AFDStates.contains(delta[index][j].get(0))) {
+                        AFDStates.add(delta[index][j].get(0));
                     }
                 }
+                //Si el estado es uno de los estados concatenados
+            } else {
+                //encontrar a los estados que puede saltar
+                ArrayList<String> newStates = new ArrayList<>();
+                //se ubica en una letra de sigma
+                for (int j = 0; j < sigma.size(); j++) {
+                    //se mueve por los diferentes Arraylist que contienen los estados que componen el estado
+                    for (int k = 0; k < tempStates[tempJ].size(); k++) {
+                        int index = getRow(tempStates[tempJ].get(k), states);
+                        for (int l = 0; l <delta[index][j].size(); l++) {
+                            if(getRow(delta[index][j].get(l), newStates) >= 0){
+                                newStates.add(delta[index][j].get(l));
+                            }
+                        }    
+                    }
+                    //se concatena el nuevo estado
+                    newState = concatStates(newStates);
+                    
+                }
+                tempJ++;
             }
         }
-        
+
         //--- EN PROCESO ---
         //función que busque los deltas de los nuevos estados añadidos
         //busca ahora si los estados creados anteriormente producen nuevos estados
-        int statesToCheck = states.size()-StatesSize;
-        
+        int statesToCheck = AFDStates.size() - StatesSize;
 
         //creacion de la matriz delta usada para añadir solo los estados alcanzables desde q0
         ArrayList<String>[][] testDelta = new ArrayList[states.size()][sigma.size()];
@@ -89,10 +134,8 @@ public class ClasePrueba {
             }
         }
         //verificar si son alcanzables
-        
-        
+
         //----------------------------------------------------------------
-        
         AFD afd = new AFD();
         return afd;
     }
@@ -128,37 +171,36 @@ public class ClasePrueba {
     public static void probarAFN(String fileRoute) throws IOException {
         AFN afn = new AFN();
         afn.initializeAFN("AFN.txt");
-        
+
         System.out.println("\nCOMPUTAR TODOS LOS PROCESAMIENTOS:");
         afn.computarTodosLosProcesamientos("aab", "procesarCadenasAFN");
-        
+
         System.out.println("\nPROCESAR CADENA SIN DETALLES :");
         afn.procesarCadena("aab");
-        
+
         System.out.println("\nPROCESAR CADENA CON DETALLES :");
         afn.procesarCadenaConDetalles("abb");
-        
+
         //Agregar cadenas a una lista
         ArrayList<String> prueba = new ArrayList<>();
         prueba.add("aa");
         prueba.add("bb");
-        prueba.add("baba");        
+        prueba.add("baba");
         prueba.add("babab");
         System.out.println("\nPROCESAR LISTA DE CADENAS:");
-        afn.processStringList(prueba, "procesarListaCadenasAFN", true);  
+        afn.processStringList(prueba, "procesarListaCadenasAFN", true);
 
     }
 
     public static void probarAFNLambda(String fileRoute) throws IOException {
-        
+
         AFN_Lambda afd = new AFN_Lambda();
         afd.initializeAFD("AFNLambda1.txt"); // Aqui se debe poner el nombre del archivo que se desea leer
 
         //Los metodos que se DEBEN USAR para obtener resultados son los siguientes :
-        
         System.out.println("\nLAMBDA CLAUSURA");
         afd.printLambdaClausura("s1");
-        
+
         System.out.println("\nLAMBDA CLAUSURA DE VARIOS ESTADOS");
         ArrayList<String> pruebasEstados = new ArrayList<String>();
         pruebasEstados.add("s1");
@@ -166,16 +208,16 @@ public class ClasePrueba {
         pruebasEstados.add("s3");
         pruebasEstados.add("s4");
         afd.calcularMuchasLambdaClausura(pruebasEstados);
-        
+
         System.out.println("\nPROCESAR CADENA SIN DETALLES:");
         afd.procesarCadena("aba");
 
         System.out.println("\nPROCESAR CADENA CON DETALLES:");
         afd.procesarCadenaConDetalles2("aba");
-        
+
         System.out.println("\nCOMPUTAR TODOS LOS PROCESAMIENTOS:");
         afd.computarTodosLosProcesamientos("aba", "procesarCadenasAFNLambda");
-        
+
         ArrayList<String> pruebasCadenas = new ArrayList<String>();
         pruebasCadenas.add("aaaaaa");
         pruebasCadenas.add("aba");
@@ -192,8 +234,7 @@ public class ClasePrueba {
             en caso de ser en el metodo "computarTodosLosProcesamientos" seran : nombreArchivoiAceptadas.txt,nombreArchivoiRechazadas.txt,nombreArchivoiAbortadas.txt en donde "nombreArchivo" es el nombre que se ingreso y  la "i" representa un numero entero disponible.
        
          */
-        
-        
+
     }
 
     public static void main(String[] args) throws Exception {
