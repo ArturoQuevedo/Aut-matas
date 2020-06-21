@@ -24,6 +24,15 @@ public class AFN {
         this.Rechazadas = new ArrayList<>();
         this.Abortadas = new ArrayList<>();
     }
+    
+        public void showAllTipeOfStates(){
+        showSigma();
+        showStates();
+        showInitialState();
+        //aqui estados inalcanzables
+        showFinalStates();
+        showDelta();
+    }
 
     public void initializeDelta(int sizeOfStates, int sizeofSigma) {
         this.delta = new ArrayList[sizeOfStates][sizeofSigma];

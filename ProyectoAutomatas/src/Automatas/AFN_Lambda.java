@@ -80,6 +80,13 @@ public class AFN_Lambda {
             System.out.println("Initial state: " + this.q);
         }
 
+        public void showAllTipeOfStates(){
+        showSigma();
+        showStates();
+        showInitialState();
+        showFinalStates();
+        showDelta();
+    }
         public void initializeAFD(String fileRoute) throws FileNotFoundException, IOException {
 
             File file = new File(fileRoute);

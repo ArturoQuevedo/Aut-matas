@@ -76,36 +76,24 @@ public class Automatas {
     }
     
     public void showAFDData(){
-        afd.showSigma();
-        afd.showStates();
-        afd.showInitialState();
-        afd.showFinalStates();
-        afd.showDelta();
+            afd.showSigma();
+            afd.showStates();
+            afd.showInitialState();
+            afd.showFinalStates();
+            afd.showDelta();
     }
     
-    public void showAFNData(){
-        afn.showSigma();
-        afn.showStates();
-        afn.showInitialState();
-        afn.showFinalStates();
-        afn.showDelta();
-    }
+
        
-    public void showAFN_LambdaData(){
-        afn_lambda.showSigma();
-        afn_lambda.showStates();
-        afn_lambda.showInitialState();
-        afn_lambda.showFinalStates();
-        afn_lambda.showDelta();
-    }
+
     
     public void showAutomataData(){
         if(this.TipoAuntomata.equals("AFD")){
-            showAFDData();
+            afd.showAllTipeOfStates();
         }else if(this.TipoAuntomata.equals("AFN")){
-            showAFNData();
+            afn.showAllTipeOfStates();
         }else if(this.TipoAuntomata.equals("AFN$")){
-            showAFN_LambdaData();
+            afn_lambda.showAllTipeOfStates();
         }else{
             System.out.println("El automata seleccionado no existe");
         }
@@ -135,6 +123,13 @@ public class Automatas {
         afn_lambda.procesarListaCadenas(prueba,"procesarLstaCadenasAFNLambda", true);
     }
     
+    public AFD TransformAFNtoAFD(AFN afn){
+        AFD newAfd = new AFD();
+        
+        
+    return newAfd;
+    }
+    
     /**
      * @param args the command line arguments
      * @throws java.io.IOException
@@ -154,8 +149,8 @@ public class Automatas {
         prueba.add("abba");
         prueba.add("");
         prueba.add("b");
-        
-        automata.ProcessStringAutomata(prueba);
+        automata.afd.findLimboStates();
+        //automata.ProcessStringAutomata(prueba);
     }
     
 }
