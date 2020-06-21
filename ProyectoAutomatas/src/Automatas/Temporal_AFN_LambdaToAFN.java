@@ -176,6 +176,12 @@ public class Temporal_AFN_LambdaToAFN {
     public static String[][] simplificacionAutomataAFD(AFD afdinput, ArrayList<String> accesibles){
         String[][] triangular = new String[accesibles.size()][accesibles.size()];
         
+        for(int i=0;i<triangular.length;i++){
+            for(int j=i+1;j<triangular.length;j++){
+                triangular[i][j] = "E";
+            }
+        }
+        
         for (int i = 0; i < accesibles.size(); i++) {
             for (int j = i+1; j < accesibles.size(); j++) {
                 String p = accesibles.get(j);
@@ -184,8 +190,7 @@ public class Temporal_AFN_LambdaToAFN {
                 boolean qAceptacion = afdinput.getFinalStates().contains(q);
                 if(!(pAceptacion == qAceptacion)){
                     triangular[i][j] = "1";
-                }else
-                    triangular[i][j] = "0";
+                }
             }
         }
         
@@ -222,40 +227,58 @@ public class Temporal_AFN_LambdaToAFN {
                     indice++;
             }
         }
+                        
+        for(int i = 0;i< tabular.length;i++){
+            for(int j = 0;j< tabular[i].length;j++){
+                if(!(tabular[i][j] == null)){
+                    String p = tabular[i][j].get(0);
+                    String q = tabular[i][j].get(1);
+                    
+                    boolean pAceptacion = afdinput.getFinalStates().contains(p);
+                    boolean qAceptacion = afdinput.getFinalStates().contains(q);
+                    
+                    if(!(pAceptacion == qAceptacion)){
+                        tabular[i][j].add("2");
+                    }
+                }                
+            }
+        }       
+        
+        copyPos = (ArrayList<Integer>) posiciones.clone();
+
+            for (int i = 0; i < tabular.length; i++) {
+                if(!copyPos.isEmpty()){
+                    int posEstadoP = accesibles.indexOf(afdinput.getStates().get(copyPos.remove(0)));
+                    int posEstadoQ = accesibles.indexOf(afdinput.getStates().get(copyPos.remove(0)));
+
+                    for (int j = 0; j < tabular[i].length; j++) {
+                        if (!(tabular[i][j] == null)) {
+                            if (tabular[i][j].contains("2")) {
+                                triangular[posEstadoQ][posEstadoP] = "2";
+                            }
+                        }
+                    }
+                }
+            }
+        
+        
         
         for(int i = 0;i<tabular.length;i++){
             for(int j = 0;j<tabular[i].length;j++){
-                if(!(tabular[i][j] == null))
-                for (String string : tabular[i][j]) {
+                if(!(tabular[i][j] == null)){
+                    for (String string : tabular[i][j]) {
                     System.out.print(string + ",");
                 }
                 System.out.println("");
+                }
             }
         }
         
-//        int indiceTabularI = 0;
-//        int indiceTabularJ = 0;
-//        for (int i = 0; i < triangular.length; i++) {
-//            indiceTabularI = i;
-//            indiceTabularJ = 0;
-//            for (int j = i+1; j < triangular.length; j++) {
-//                for (String string : tabular[indiceTabularI][indiceTabularJ]) {
-//                    System.out.print(string + ",");
-//                }
-//                
-//                
-//                String p = accesibles.get(j);
-//                boolean pAceptacion = afdinput.getFinalStates().contains(p);
-//                String q = accesibles.get(i);
-//                boolean qAceptacion = afdinput.getFinalStates().contains(q);
-//                if(!(pAceptacion == qAceptacion)){
-//                    triangular[i][j] = "1";
-//                }else
-//                    triangular[i][j] = "0";
-//                
-//                indiceTabularJ++;
-//            }
-//        }
+        for(int i=0;i<triangular.length;i++){
+            for(int j=i+1;j<triangular.length;j++){
+                System.out.println(triangular[i][j]);
+            }
+        }
         
     }
     
@@ -263,7 +286,7 @@ public class Temporal_AFN_LambdaToAFN {
         ArrayList<Integer> posiciones = new ArrayList<>();
         for(int i=0;i<triangular.length;i++){
             for(int j=i+1;j<triangular.length;j++){
-                if(triangular[i][j].equals("0")){
+                if(triangular[i][j].equals("E")){
                     int indexP = afdinput.getStates().indexOf(accesibles.get(j));
                     int indexQ = afdinput.getStates().indexOf(accesibles.get(i));
                     System.out.println("index P = " + indexP + " index Q = " + indexQ);
