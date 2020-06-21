@@ -64,8 +64,8 @@ public class TemporalAFNtoAFD {
         ArrayList<String> AFDfinalStates = new ArrayList<>();
         AFDStates.add(q);
         //se crea una matriz de ArrayList para el AFD
-        ArrayList<String>[][] AFDdelta = new ArrayList[StatesSize * 2][sigma.size()];
-        for (int i = 0; i < StatesSize*2; i++) {
+        ArrayList<String>[][] AFDdelta = new ArrayList[StatesSize * 3][sigma.size()];
+        for (int i = 0; i < StatesSize*3; i++) {
             for (int j = 0; j < sigma.size(); j++) {
                 AFDdelta[i][j] = new ArrayList<String>();
             }
@@ -194,7 +194,7 @@ public class TemporalAFNtoAFD {
     public static void main(String[] args) throws Exception {
         
         AFN afn = new AFN();
-        afn.initializeAFN("AFNtest.txt"); // Aqui se debe poner el nombre del archivo que se desea leer
+        afn.initializeAFN("AFNtest2.txt"); // Aqui se debe poner el nombre del archivo que se desea leer
         AFNtoAFD(afn);
 
     }
