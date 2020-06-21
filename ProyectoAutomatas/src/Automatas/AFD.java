@@ -204,19 +204,6 @@ public class AFD {
         return -1; // esto nunca deberia pasar a no se que pase un error de digitación
     }   
 
-    public static void main(String[] args) throws Exception {
 
-        AFD afd = new AFD();
-        afd.initializeAFD("file.txt");
-        //El autómata que lee acepta cadenas con un numero par de de a Y b
-        //afd.processStringWithDetails("abababa");
-
-      
-        afd.showSigma();
-        afd.showStates();
-        afd.showInitialState();
-        afd.showFinalStates();
-        afd.showDelta();        
-    }
 
 }

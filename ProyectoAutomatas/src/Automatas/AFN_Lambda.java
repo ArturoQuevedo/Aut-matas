@@ -1051,7 +1051,7 @@ public class AFN_Lambda {
 
     
     
-    public static void main(String[] args) throws Exception {
+  /*  public static void main(String[] args) throws Exception {
 
 
         AFN_Lambda afd = new AFN_Lambda();
@@ -1059,7 +1059,7 @@ public class AFN_Lambda {
         //afd.computarTodosLosProcesamientos("aba", "ProbandoLambda");
 
 
-        /*Los metodos que se DEBEN USAR para obtener resultados son los siguientes : 
+        Los metodos que se DEBEN USAR para obtener resultados son los siguientes : 
         afd.calcularLambdaClausura(estado);
         afd.calcularMuchasLambdaClausura(estados);
         afd.procesarCadena(cadena);
@@ -1073,7 +1073,7 @@ public class AFN_Lambda {
             en caso de ser en el metodo "procesarListaCadenas" sera : nombreArchivoi.txt en donde "nombreArchivo" es el nombre que se ingreso y  la "i" representa un numero entero disponible.
             en caso de ser en el metodo "computarTodosLosProcesamientos" seran : nombreArchivoiAceptadas.txt,nombreArchivoiRechazadas.txt,nombreArchivoiAbortadas.txt en donde "nombreArchivo" es el nombre que se ingreso y  la "i" representa un numero entero disponible.
        
-        */
+       
         
         
         
@@ -1081,5 +1081,6 @@ public class AFN_Lambda {
         
        
     }
+*/
 
 }

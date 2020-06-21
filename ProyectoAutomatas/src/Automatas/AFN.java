@@ -692,7 +692,7 @@ public class AFN {
 
     }
 
-    public static void main(String[] args) throws Exception {
+    /*public static void main(String[] args) throws Exception {
 
         AFN afd = new AFN();
         afd.initializeAFN("AFN.txt");
@@ -706,7 +706,7 @@ public class AFN {
         afd.procesarCadena("aab");
         afd.procesarCadenaConDetalles("abb");
         //afd.processStringList(prueba, "abb", true);
-    }
+    }*/
 
    
 
