@@ -29,7 +29,7 @@ public class AFD {
     }
 
     public String getQ() {
-        return q;
+        return this.q;
     }
 
     public ArrayList<String> getFinalStates() {
@@ -207,7 +207,7 @@ public class AFD {
     public static void main(String[] args) throws Exception {
 
         AFD afd = new AFD();
-        afd.initializeAFD("file.txt");
+        afd.initializeAFD("AFD1.txt");
         //El autómata que lee acepta cadenas con un numero par de de a Y b
         //afd.processStringWithDetails("abababa");
 
