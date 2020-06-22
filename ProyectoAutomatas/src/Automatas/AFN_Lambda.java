@@ -87,10 +87,20 @@ public class AFN_Lambda {
             System.out.println("Initial state: " + this.q);
         }
 
-        public void showAllTipeOfStates(){
+    public void ShowInaccessibleStates(){
+    int i,j,k;
+        System.out.println("Inaccesible States:");
+        for(i=0;i<this.inaccessibleStates.size();i++){
+            System.out.println(this.inaccessibleStates.get(i));
+        }
+    }
+    
+    public void showAllTipeOfStates(){
+        hallarEstadosInaccesibles();
         showSigma();
         showStates();
         showInitialState();
+        ShowInaccessibleStates();
         showFinalStates();
         showDelta();
     }

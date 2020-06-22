@@ -84,22 +84,32 @@ public class AFD {
     }
 
     public void showInitialState() {
-        System.out.println("Initial state: " + this.q);
+        System.out.println("Initial state: ");
+        System.out.println(this.q);
     }
 
     public void showLimboStates(){
         int i,j,k;
         System.out.println("Limbo states:");
         for(i=0;i<this.limboStates.size();i++){
-            System.out.println(this.limboStates);
+            System.out.println(this.limboStates.get(i));
+        }
+    }
+    
+    public void ShowInaccessibleStates(){
+    int i,j,k;
+        System.out.println("Inaccesible States:");
+        for(i=0;i<this.inaccessibleStates.size();i++){
+            System.out.println(this.inaccessibleStates.get(i));
         }
     }
     
     public void showAllTipeOfStates(){
+        hallarEstadosInaccesibles();
         findLimboStates();
         showInitialState();
         showFinalStates();
-        //aqui van los estados inalcanzables
+        ShowInaccessibleStates();
         showLimboStates();
         showDelta();
     } 

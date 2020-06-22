@@ -34,14 +34,7 @@ public class AFN {
         return sigma;
     }
     
-        public void showAllTipeOfStates(){
-        showSigma();
-        showStates();
-        showInitialState();
-        //aqui estados inalcanzables
-        showFinalStates();
-        showDelta();
-    }
+
 
     public void setSigma(ArrayList<Character> sigma) {
         this.sigma = sigma;
@@ -122,6 +115,24 @@ public class AFN {
 
     public void showInitialState() {
         System.out.println("Initial state: " + this.q);
+    }
+    
+       public void ShowInaccessibleStates(){
+    int i,j,k;
+        System.out.println("Inaccesible States:");
+        for(i=0;i<this.inaccessibleStates.size();i++){
+            System.out.println(this.inaccessibleStates);
+        }
+    }
+       
+        public void showAllTipeOfStates(){
+        hallarEstadosInaccesibles();
+        showSigma();
+        showStates();
+        showInitialState();
+        ShowInaccessibleStates();
+        showFinalStates();
+        showDelta();
     }
 
     public void initializeAFN(String route) throws FileNotFoundException, IOException {
@@ -767,8 +778,6 @@ public class AFN {
         procesadorAFD.processStringList(afd, stringList, nombreArchivo, imprimirPantalla);
     }
     
-    
- 
     
     public void hallarEstadosInaccesibles() {
 
