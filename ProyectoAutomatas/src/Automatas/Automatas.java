@@ -51,12 +51,15 @@ public class Automatas {
             while ((line = br.readLine()) != null) {
 
                 switch (line) {
-                    case ("#automata"):
-                         while (!(line = br.readLine()).startsWith("#")) {
-                         this.TipoAuntomata = line;
-                         }
-                   
-
+                    case ("#!AFD"):
+                        this.TipoAuntomata = "AFD";
+                        break;
+                     case ("#!AFN"):
+                         this.TipoAuntomata = "AFN";
+                         break;
+                     case ("#!AFNE"):
+                         this.TipoAuntomata = "AFNE";
+                         break;
                 }
             }
             br.close();
@@ -134,7 +137,7 @@ public class Automatas {
         prueba.add("abba");
         prueba.add("");
         prueba.add("b");
-        automata.afd.findLimboStates();
+        System.out.println(automata.TipoAuntomata);
         //automata.ProcessStringAutomata(prueba);
     }
     

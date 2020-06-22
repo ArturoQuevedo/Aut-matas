@@ -32,7 +32,7 @@ public class AFD {
     }
 
     public String getQ() {
-        return q;
+        return this.q;
     }
 
     public ArrayList<String> getFinalStates() {
@@ -356,7 +356,7 @@ public class AFD {
     public static void main(String[] args) throws Exception {
 
         AFD afd = new AFD();
-        afd.initializeAFD("AFNtest4.txt");
+        afd.initializeAFD("AFD1.txt");
         afd.hallarEstadosInaccesibles(); // ejecutando esta función los estados inaccesibles quedan dentro del atributo (de la clase)InacessibleStates
         System.out.println(afd.getInaccessibleStates().get(0)); 
         //El autómata que lee acepta cadenas con un numero par de de a Y b

@@ -114,14 +114,15 @@ public class AFN {
     }
 
     public void showInitialState() {
-        System.out.println("Initial state: " + this.q);
+        System.out.println("Initial state: ");
+        System.out.println(this.q);
     }
     
        public void ShowInaccessibleStates(){
     int i,j,k;
         System.out.println("Inaccesible States:");
         for(i=0;i<this.inaccessibleStates.size();i++){
-            System.out.println(this.inaccessibleStates);
+            System.out.println(this.inaccessibleStates.get(i));
         }
     }
        

@@ -5,6 +5,7 @@
  */
 package Pruebas;
 
+import Cartesiano.ProductCartesiano;
 import Automatas.AFD;
 import Automatas.AFN;
 import Automatas.AFN_Lambda;
@@ -114,11 +115,29 @@ public class ClasePrueba {
          */
 
     }
+    
+    public static void probarProductoCartesiano(String fileRoute1, String fileRoute2, String type) throws IOException{
+        AFD afd1 = new AFD();
+        afd1.initializeAFD(fileRoute1);
+
+        AFD afd2 = new AFD();
+        afd2.initializeAFD(fileRoute2);
+        
+        ProductCartesiano pc = new ProductCartesiano();
+
+        pc.hallarProductoCartesiano(afd1, afd2, type);
+        
+        
+    }
+    
 
     public static void main(String[] args) throws Exception {
         //probarAFD("AFD1.txt");
-        //probarAFN("AFN.txt");
-        probarAFNLambda("AFNLambda2.txt");
+        //probarAFN("AFN.txt");        
+        //probarAFNLambda("AFNLambda2.txt");
+        probarProductoCartesiano("AFD1.txt","AFD2.txt","diferencia simetrica");
+        
+        
 
     }
 
