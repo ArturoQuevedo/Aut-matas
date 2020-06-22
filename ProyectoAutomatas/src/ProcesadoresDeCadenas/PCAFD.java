@@ -18,6 +18,10 @@ import java.util.ArrayList;
  */
 public class PCAFD {
 
+    public PCAFD() {
+    }
+    
+
     public boolean processString(AFD afd, String string, boolean imprimir) { //Procesar string con o sin detalles
 
         if (imprimir == true) {

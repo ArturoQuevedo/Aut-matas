@@ -33,6 +33,15 @@ public class AFN {
     public ArrayList<Character> getSigma() {
         return sigma;
     }
+    
+        public void showAllTipeOfStates(){
+        showSigma();
+        showStates();
+        showInitialState();
+        //aqui estados inalcanzables
+        showFinalStates();
+        showDelta();
+    }
 
     public void setSigma(ArrayList<Character> sigma) {
         this.sigma = sigma;

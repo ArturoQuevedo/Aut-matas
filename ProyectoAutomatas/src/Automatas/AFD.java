@@ -13,12 +13,14 @@ public class AFD {
     private String q;
     private ArrayList<String> finalStates;
     private ArrayList<String>[][] delta;
+    private ArrayList<String> limboStates;
     private ArrayList<String> inaccessibleStates = new ArrayList<>();
 
     public AFD() {
         this.sigma = new ArrayList<>();
         this.states = new ArrayList<>();
         this.finalStates = new ArrayList<>();
+        this.limboStates = new ArrayList<>();
     }
 
     public ArrayList<Character> getSigma() {
@@ -40,7 +42,6 @@ public class AFD {
     public ArrayList<String>[][] getDelta() {
         return delta;
     }
-
     public void initializeDelta(int sizeOfStates, int sizeofSigma) {
         this.delta = new ArrayList[sizeOfStates][sizeofSigma];
         for (int i = 0; i < sizeOfStates; i++) {
@@ -86,6 +87,23 @@ public class AFD {
         System.out.println("Initial state: " + this.q);
     }
 
+    public void showLimboStates(){
+        int i,j,k;
+        System.out.println("Limbo states:");
+        for(i=0;i<this.limboStates.size();i++){
+            System.out.println(this.limboStates);
+        }
+    }
+    
+    public void showAllTipeOfStates(){
+        findLimboStates();
+        showInitialState();
+        showFinalStates();
+        //aqui van los estados inalcanzables
+        showLimboStates();
+        showDelta();
+    } 
+            
     public void initializeAFD(String fileRoute) throws FileNotFoundException, IOException {
 
         File file = new File(fileRoute);
@@ -250,6 +268,35 @@ public class AFD {
 
         }
         return -1; // esto nunca deberia pasar a no se que pase un error de digitación
+    }
+    
+    public void findLimboStates(){
+        int i,j,k;
+        int count;
+        boolean isLimbo = false;
+        for(i=0;i<this.states.size();i++){
+            count = 0;
+            isLimbo = false;
+            for (j = 0; j < this.sigma.size(); j++) {
+                if(this.delta[i][j].isEmpty()){
+                    count++;
+                }
+               
+            }
+            if(count==this.sigma.size()){
+                    isLimbo = true;
+                for(j=0;j<this.finalStates.size();j++){
+                    if(this.states.get(i).equals(this.finalStates.get(j))){
+                         isLimbo = false;
+                    }
+                }
+                if(isLimbo){
+                    this.limboStates.add(this.states.get(i));
+                }
+            }
+            
+        }
+    }
     }   
     
     public void hallarEstadosInaccesibles() {
