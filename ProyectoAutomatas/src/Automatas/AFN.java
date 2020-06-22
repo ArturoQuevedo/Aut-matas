@@ -4,6 +4,7 @@ import static Automatas.TemporalAFNtoAFD.AFNtoAFD;
 import ProcesadoresDeCadenas.PCAFD;
 import java.util.ArrayList;
 import java.io.*;
+import java.util.Collections;
 import java.util.StringTokenizer;
 
 public class AFN {
@@ -17,6 +18,7 @@ public class AFN {
     public ArrayList<String> Aceptadas;
     public ArrayList<String> Rechazadas;
     public ArrayList<String> Abortadas;
+    private ArrayList<String> inaccessibleStates = new ArrayList<>();
 
     public AFN() {
         this.sigma = new ArrayList<>();
@@ -755,13 +757,112 @@ public class AFN {
         PCAFD procesadorAFD = new PCAFD();
         procesadorAFD.processStringList(afd, stringList, nombreArchivo, imprimirPantalla);
     }
+    
+    
+ 
+    
+    public void hallarEstadosInaccesibles() {
+
+        ArrayList<String> accesibles = new ArrayList<>();
+        this.inaccessibleStates.clear();
+
+        accesibles.add(this.getQ());
+
+        for (int j = 0; j < this.getDelta().length; j++) {
+            String estadoActual = this.getStates().get(j);
+            for (int k = 0; k < this.getDelta()[j].length; k++) {
+                if (this.getDelta()[j][k].isEmpty()) {
+                    continue;
+                } else {
+                    for (String transicion : this.getDelta()[j][k]) {
+                        if (!estadoActual.equals(transicion)) {
+                            if (accesibles.contains(estadoActual)) {
+                                if (!accesibles.contains(transicion)) {
+                                    accesibles.add(transicion);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        Collections.sort(accesibles);
+        for (int i = 0; i < this.states.size(); i++) {
+            if (!accesibles.contains(this.states.get(i))) {
+                this.inaccessibleStates.add(this.states.get(i));
+            }
+        }
+
+    }
+
+    public ArrayList<String> getInaccessibleStates() {
+        return inaccessibleStates;
+    }
+    
+    
+    public void initializeAFNwithData(ArrayList<Character> sigma, ArrayList<String> states, String q, ArrayList<String> finalStates, ArrayList<String>[][] delta){
+        
+        //se guarda el sigma producido
+        //System.out.print("sigma: ");
+        for (int i = 0; i < sigma.size(); i++) {
+            this.sigma.add(sigma.get(i));
+            //System.out.print(this.sigma.get(i) + " ");
+        }
+        //System.out.println("");
+        
+        //se guarda los estados producidos
+        //System.out.print("states: ");
+        for (int i = 0; i < states.size(); i++) {
+            this.states.add(states.get(i));
+            //System.out.print(this.states.get(i) + " ");
+        }
+        //System.out.println("");
+        
+        //se inicializa el delta
+        this.initializeDelta(this.states.size(), this.sigma.size());
+        
+        //se guarda el q0
+        //System.out.print("q: ");
+        this.q = q;
+        //System.out.println(this.q);
+        
+        //se guarda los estados finales
+        //System.out.print("finalStates: ");
+        for (int i = 0; i < finalStates.size(); i++) {
+            this.finalStates.add(finalStates.get(i));
+            //System.out.print(this.finalStates.get(i) + " ");
+        }
+        //System.out.println("");
+        
+        //se guarda la matriz delta
+        //System.out.println("Delta: ");
+        for (int i = 0; i < states.size(); i++) {
+            for (int j = 0; j < sigma.size(); j++) {
+                for(int k = 0; k < delta[i][j].size();k++){
+                    
+                    this.delta[i][j].add(delta[i][j].get(k));
+                    
+                }
+                
+                //System.out.print(this.delta[i][j].get(0) + " ");
+            }
+            //System.out.println("");
+        }
+        //System.out.println("");
+
+    }
+    
+    
+    
+    
 
     public static void main(String[] args) throws Exception {
 
         AFN afd = new AFN();
-        afd.initializeAFN("AFN.txt");
-        
-        ArrayList<String> prueba = new ArrayList<>();
+        afd.initializeAFN("AFNtest3.txt");
+        afd.hallarEstadosInaccesibles();// ejecutando esta función los estados inaccesibles quedan dentro del atributo (de la clase)InacessibleStates
+        System.out.println(afd.inaccessibleStates.get(0));
+        /*ArrayList<String> prueba = new ArrayList<>();
         prueba.add("aa");
         prueba.add("bb");
         prueba.add("aaaaaaab");
@@ -770,6 +871,7 @@ public class AFN {
         afd.procesarCadena("aab");
         afd.procesarCadenaConDetalles("abb");
         //afd.processStringList(prueba, "abb", true);
+*/
     }
 
    

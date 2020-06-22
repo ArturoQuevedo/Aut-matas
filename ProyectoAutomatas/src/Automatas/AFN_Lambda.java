@@ -1,5 +1,11 @@
 package Automatas;
 
+import static Automatas.TemporalAFNtoAFD.AFNtoAFD;
+import Automatas.TemporalAFNtoAFD;
+import static Automatas.TemporalAFNtoAFD.AFNtoAFD;
+import static Automatas.TemporalAFNtoAFD.hallarComplemento;
+import static Automatas.Temporal_AFN_LambdaToAFN.AFN_LambdaToAFN;
+import ProcesadoresDeCadenas.PCAFD;
 import java.util.*;
 import java.io.*;
 
@@ -16,6 +22,7 @@ public class AFN_Lambda {
         public ArrayList<String> aceptada ;
         public ArrayList<String> rechazada;
         public ArrayList<String> abortada;
+        private ArrayList<String> inaccessibleStates = new ArrayList<>();
         
         
          
@@ -486,10 +493,38 @@ public class AFN_Lambda {
             muchasLambdaClausuras.add(printLambdaClausura(estados.get(i)));
             
         }
-        
-        
-        
+
         return muchasLambdaClausuras;
+        }
+        
+        public ArrayList<String> calcularMuchasLambdaClausuraSinImprimir(ArrayList<String> estados){
+        
+            ArrayList<String> muchasLambdaClausuras = new ArrayList<>();
+            ArrayList<String> temporal = new ArrayList<>();
+            
+            for(int i = 0; i < estados.size(); i++){
+                
+                temporal = calcularLambdaClausura(estados.get(i));
+                if(!temporal.isEmpty()){
+                    
+                    for(int j = 0;j < temporal.size();j++){
+                      
+                        if(!muchasLambdaClausuras.contains(temporal.get(j))){
+                        
+                            muchasLambdaClausuras.add(temporal.get(j));
+                            
+                        }
+                        
+                    }
+                    
+                    
+                }
+                
+            }
+        
+            
+            
+            return muchasLambdaClausuras;
         }
         
 
@@ -1047,17 +1082,133 @@ public class AFN_Lambda {
                         System.out.println("No hay procesamientos aceptados");
                      return false;
                     }
+                    
+                    
+                    
+                    
+                    
+                    
+                    
         }
 
+    public ArrayList<String> getStates() {
+        return states;
+    }
+
+    public ArrayList<String>[][] getDelta() {
+        return delta;
+    }
+
+    public ArrayList<Character> getSigma() {
+        return sigma;
+    }
+    
+    
+    
+    public void hallarEstadosInaccesibles() {
+
+        ArrayList<String> accesibles = new ArrayList<>();
+        this.inaccessibleStates.clear();
+
+        accesibles.add(this.getQ());
+
+        for (int j = 0; j < this.getDelta().length; j++) {
+            String estadoActual = this.getStates().get(j);
+            for (int k = 0; k < this.getDelta()[j].length; k++) {
+                if (this.getDelta()[j][k].isEmpty()) {
+                    continue;
+                } else {
+                    for (String transicion : this.getDelta()[j][k]) {
+                        if (!estadoActual.equals(transicion)) {
+                            if (accesibles.contains(estadoActual)) {
+                                if (!accesibles.contains(transicion)) {
+                                    accesibles.add(transicion);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        Collections.sort(accesibles);
+        for (int i = 0; i < this.states.size(); i++) {
+            if (!accesibles.contains(this.states.get(i))) {
+                this.inaccessibleStates.add(this.states.get(i));
+            }
+        }
+
+    }
+
+    public ArrayList<String> getInaccessibleStates() {
+        return inaccessibleStates;
+    }
+
+    public String getQ() {
+        return q;
+    }
+
+    public ArrayList<String> getFinalStates() {
+        return finalStates;
+    }
+    
+    
+    
+     public boolean procesarCadenaConversion(String cadena){
+        AFN afn = new AFN();
+        afn = AFN_LambdaToAFN(this);
+        return afn.procesarCadenaConversion(cadena);
+        
+    }
+    
+    public boolean procesarCadenaConDetallesConversion(String cadena){
+        
+        AFN afn = new AFN();
+        afn = AFN_LambdaToAFN(this);
+        return afn.procesarCadenaConDetallesConversion(cadena);
+ 
+    }
+    
+    public void procesarListaCadenasConversion(ArrayList<String> stringList, String nombreArchivo, boolean imprimirPantalla) throws IOException{
+        
+        AFN afn = new AFN();
+        afn = AFN_LambdaToAFN(this);
+        afn.procesarListaCadenasConversion(stringList,nombreArchivo,imprimirPantalla);
+    }
+    
+
+    
+    
     
     
     public static void main(String[] args) throws Exception {
 
 
-        AFN_Lambda afd = new AFN_Lambda();
-        afd.initializeAFD("AFNLambda1.txt"); // Aqui se debe poner el nombre del archivo que se desea leer
+        AFN_Lambda afnl = new AFN_Lambda();
+        
+        afnl.initializeAFD("AFN_Lambda2.txt");
+        
+        ArrayList<String> prueba = new ArrayList<>();
+        prueba.add("");
+        prueba.add("aaaaa");
+        prueba.add("bbbbbb");
+        prueba.add("");
+        prueba.add("aaaaaaaaaaaab");
+        // Aqui se debe poner el nombre del archivo que se desea leer
+        //afnl.hallarEstadosInaccesibles();// ejecutando esta función los estados inaccesibles quedan dentro del atributo (de la clase)InacessibleStates
+        //System.out.println(afd.inaccessibleStates.get(0));
         //afd.computarTodosLosProcesamientos("aba", "ProbandoLambda");
 
+  
+
+        
+        //test del afn_lambda to afd
+        //afnl.procesarCadenaConversion("aaaaaaaaaaaaaa");
+        //afnl.procesarCadenaConDetallesConversion("aaab");
+        afnl.procesarListaCadenasConversion(prueba, "probando", true);
+       
+        //afnl.procesarCadenaConDetallesConversion("aabaa");
+        
+        
 
         /*Los metodos que se DEBEN USAR para obtener resultados son los siguientes : 
         afd.calcularLambdaClausura(estado);
@@ -1074,6 +1225,9 @@ public class AFN_Lambda {
             en caso de ser en el metodo "computarTodosLosProcesamientos" seran : nombreArchivoiAceptadas.txt,nombreArchivoiRechazadas.txt,nombreArchivoiAbortadas.txt en donde "nombreArchivo" es el nombre que se ingreso y  la "i" representa un numero entero disponible.
        
         */
+        
+        
+      
         
         
         
