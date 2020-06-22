@@ -70,7 +70,7 @@ public class TemporalAFNtoAFD {
                 AFDdelta[i][j] = new ArrayList<String>();
             }
         }
-        
+
         //si q0 esta en los estados finales, se añade a los de AFD
         if (finalStates.contains(q)) {
             AFDfinalStates.add(q);
@@ -191,18 +191,34 @@ public class TemporalAFNtoAFD {
             }
             System.out.println("");
         }
-        
+
         System.out.println("\n AFD producido: ");
         AFD afd = new AFD();
         afd.initializeAFDwithData(sigma, AFDStates, q, AFDfinalStates, AFDdelta);
         return afd;
     }
 
+    public static AFD hallarComplemento(AFD afdInput) {
+        AFD complemento = new AFD();
+        ArrayList<String> newfinalStates = new ArrayList<>();
+
+        for (int i = 0; i < afdInput.getStates().size(); i++) {
+            if (!afdInput.getFinalStates().contains(afdInput.getStates().get(i))) {
+                newfinalStates.add(afdInput.getStates().get(i));
+            }
+        }
+
+        System.out.println("AFD complemento producido: ");
+        complemento.initializeAFDwithData(afdInput.getSigma(), afdInput.getStates(), afdInput.getQ(), newfinalStates, afdInput.getDelta());
+        return complemento;
+    }
+
     public static void main(String[] args) throws Exception {
 
         AFN afn = new AFN();
-        afn.initializeAFN("AFNtest2.txt"); // Aqui se debe poner el nombre del archivo que se desea leer
-        AFNtoAFD(afn);
-
+        AFD afd = new AFD();
+        afn.initializeAFN("AFNtest.txt"); // Aqui se debe poner el nombre del archivo que se desea leer
+        afd = AFNtoAFD(afn);
+        hallarComplemento(afd);
     }
 }
