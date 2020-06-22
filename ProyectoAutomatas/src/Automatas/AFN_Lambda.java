@@ -1,10 +1,8 @@
 package Automatas;
 
-import static Automatas.TemporalAFNtoAFD.AFNtoAFD;
-import Automatas.TemporalAFNtoAFD;
-import static Automatas.TemporalAFNtoAFD.AFNtoAFD;
-import static Automatas.TemporalAFNtoAFD.hallarComplemento;
-import static Automatas.Temporal_AFN_LambdaToAFN.AFN_LambdaToAFN;
+
+
+import static Automatas.Automatas.*;
 import ProcesadoresDeCadenas.PCAFD;
 import java.util.*;
 import java.io.*;
@@ -1197,7 +1195,7 @@ public class AFN_Lambda {
     
     
     
-  /*  public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
 
 
         AFN_Lambda afnl = new AFN_Lambda();
@@ -1221,11 +1219,11 @@ public class AFN_Lambda {
         //test del afn_lambda to afd
         //afnl.procesarCadenaConversion("aaaaaaaaaaaaaa");
         //afnl.procesarCadenaConDetallesConversion("aaab");
-        afnl.procesarListaCadenasConversion(prueba, "probando", true);
+        afnl.procesarListaCadenasConversion(prueba, "probando23", true);
        
         //afnl.procesarCadenaConDetallesConversion("aabaa");
         
-        
+        /*
 
         Los metodos que se DEBEN USAR para obtener resultados son los siguientes : 
         afd.calcularLambdaClausura(estado);
@@ -1241,7 +1239,7 @@ public class AFN_Lambda {
             en caso de ser en el metodo "procesarListaCadenas" sera : nombreArchivoi.txt en donde "nombreArchivo" es el nombre que se ingreso y  la "i" representa un numero entero disponible.
             en caso de ser en el metodo "computarTodosLosProcesamientos" seran : nombreArchivoiAceptadas.txt,nombreArchivoiRechazadas.txt,nombreArchivoiAbortadas.txt en donde "nombreArchivo" es el nombre que se ingreso y  la "i" representa un numero entero disponible.
        
-       
+       */
         
         
       
@@ -1252,6 +1250,6 @@ public class AFN_Lambda {
         
        
     }
-*/
+
 
 }

@@ -1,6 +1,6 @@
 package Automatas;
 
-import static Automatas.TemporalAFNtoAFD.AFNtoAFD;
+import static Automatas.Automatas.*;
 import ProcesadoresDeCadenas.PCAFD;
 import java.util.ArrayList;
 import java.io.*;

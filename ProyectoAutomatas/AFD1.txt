@@ -10,5 +10,7 @@ q1
 #transitions
 q1:a>q3
 q1:b>q1
+q2:a>q1
+q2:
 q3:a>q1
 q3:b>q3
