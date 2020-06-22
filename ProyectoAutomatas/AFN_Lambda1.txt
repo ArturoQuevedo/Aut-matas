@@ -8,7 +8,7 @@ s3
 #initial
 s0
 #accepting
-s3
+s0
 #transitions
 s0:a>s0
 s0:$>s2

@@ -9,8 +9,6 @@ s4
 #initial
 s0
 #accepting
-s0
-s1
 s3
 #transitions
 s0:b>s1

@@ -1,5 +1,11 @@
 package Automatas;
 
+import static Automatas.TemporalAFNtoAFD.AFNtoAFD;
+import Automatas.TemporalAFNtoAFD;
+import static Automatas.TemporalAFNtoAFD.AFNtoAFD;
+import static Automatas.TemporalAFNtoAFD.hallarComplemento;
+import static Automatas.Temporal_AFN_LambdaToAFN.AFN_LambdaToAFN;
+import ProcesadoresDeCadenas.PCAFD;
 import java.util.*;
 import java.io.*;
 
@@ -1147,20 +1153,62 @@ public class AFN_Lambda {
     
     
     
+     public boolean procesarCadenaConversion(String cadena){
+        AFN afn = new AFN();
+        afn = AFN_LambdaToAFN(this);
+        return afn.procesarCadenaConversion(cadena);
+        
+    }
     
+    public boolean procesarCadenaConDetallesConversion(String cadena){
+        
+        AFN afn = new AFN();
+        afn = AFN_LambdaToAFN(this);
+        return afn.procesarCadenaConDetallesConversion(cadena);
+ 
+    }
+    
+    public void procesarListaCadenasConversion(ArrayList<String> stringList, String nombreArchivo, boolean imprimirPantalla) throws IOException{
+        
+        AFN afn = new AFN();
+        afn = AFN_LambdaToAFN(this);
+        afn.procesarListaCadenasConversion(stringList,nombreArchivo,imprimirPantalla);
+    }
     
 
+    
+    
     
     
     public static void main(String[] args) throws Exception {
 
 
-        AFN_Lambda afd = new AFN_Lambda();
-        afd.initializeAFD("AFN_Lambda2.txt"); // Aqui se debe poner el nombre del archivo que se desea leer
-        afd.hallarEstadosInaccesibles();// ejecutando esta función los estados inaccesibles quedan dentro del atributo (de la clase)InacessibleStates
-        System.out.println(afd.inaccessibleStates.get(0));
+        AFN_Lambda afnl = new AFN_Lambda();
+        
+        afnl.initializeAFD("AFN_Lambda2.txt");
+        
+        ArrayList<String> prueba = new ArrayList<>();
+        prueba.add("");
+        prueba.add("aaaaa");
+        prueba.add("bbbbbb");
+        prueba.add("");
+        prueba.add("aaaaaaaaaaaab");
+        // Aqui se debe poner el nombre del archivo que se desea leer
+        //afnl.hallarEstadosInaccesibles();// ejecutando esta función los estados inaccesibles quedan dentro del atributo (de la clase)InacessibleStates
+        //System.out.println(afd.inaccessibleStates.get(0));
         //afd.computarTodosLosProcesamientos("aba", "ProbandoLambda");
 
+  
+
+        
+        //test del afn_lambda to afd
+        //afnl.procesarCadenaConversion("aaaaaaaaaaaaaa");
+        //afnl.procesarCadenaConDetallesConversion("aaab");
+        afnl.procesarListaCadenasConversion(prueba, "probando", true);
+       
+        //afnl.procesarCadenaConDetallesConversion("aabaa");
+        
+        
 
         /*Los metodos que se DEBEN USAR para obtener resultados son los siguientes : 
         afd.calcularLambdaClausura(estado);
@@ -1177,6 +1225,9 @@ public class AFN_Lambda {
             en caso de ser en el metodo "computarTodosLosProcesamientos" seran : nombreArchivoiAceptadas.txt,nombreArchivoiRechazadas.txt,nombreArchivoiAbortadas.txt en donde "nombreArchivo" es el nombre que se ingreso y  la "i" representa un numero entero disponible.
        
         */
+        
+        
+      
         
         
         

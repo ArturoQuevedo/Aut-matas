@@ -48,82 +48,138 @@ public class Temporal_AFN_LambdaToAFN {
     }
     
     
-    public static AFN AFN_LambdaToAFN(AFN_Lambda afnl){
-    
-        AFN afn = new AFN();//Falta ponerle todos los datos al AFN pero tendria que modificar la clase AFN
+    public static AFN AFN_LambdaToAFN(AFN_Lambda afnl) {
+
+        System.out.println("Iniciando transformacion de AFN_Lambda a AFN\n\n");
+        
+        AFN afn = new AFN();
         int rowsNumber = afnl.getStates().size();
         int columnsNumber = afnl.getSigma().size();
-                
-        ArrayList<String>[][]newDelta = new ArrayList[rowsNumber][columnsNumber]; // este es el delta del nuevo AFN
+
+        ArrayList<String>[][] newDelta = new ArrayList[rowsNumber][columnsNumber]; // este es el delta del nuevo AFN
+        ArrayList<String> newFinalStates = new ArrayList<>();//estos son los nuevos estados de aceptación
+        ArrayList<Character> newSigma = new ArrayList<>();
+
+        for (int u = 0; u < afnl.getSigma().size() - 1; u++) {
+
+            newSigma.add(afnl.getSigma().get(u));
+
+        }
+        ArrayList<String> comparación = new ArrayList<>();//estos son los nuevos estados de aceptación
         //inicializando newDelta
-            for (int i = 0; i < afnl.getStates().size(); i++) {
-                for (int j = 0; j < afnl.getSigma().size(); j++) {
-                    newDelta[i][j] = new ArrayList<String>();
-                }
+        for (int i = 0; i < afnl.getStates().size(); i++) {
+            for (int j = 0; j < afnl.getSigma().size(); j++) {
+                newDelta[i][j] = new ArrayList<String>();
             }
-            
-        
+        }
+
+        //calculando los nuevos estados de aceptación
+        for (int i = 0; i < afnl.getStates().size(); i++) {
+
+            comparación.clear();
+            comparación = (ArrayList<String>) afnl.calcularLambdaClausura(afnl.getStates().get(i)).clone();
+
+            for (int j = 0; j < afnl.getFinalStates().size(); j++) {
+
+                if (comparación.contains(afnl.getFinalStates().get(j))) {
+
+                    if (!newFinalStates.isEmpty()) {
+
+                        if (!newFinalStates.contains(afnl.getStates().get(i))) {
+                            newFinalStates.add(afnl.getStates().get(i));
+                        }
+
+                    } else {
+                        newFinalStates.add(afnl.getStates().get(i));
+                    }
+
+                }
+
+            }
+
+        }
+
+        System.out.println("");
+        Collections.sort(newFinalStates);
+
         //Imprimiendo lambda clausuras de cada estado 
         afnl.calcularMuchasLambdaClausura(afnl.getStates());
+        System.out.println("");
         //Llenando la matriz newDelta
-            for(int i = 0; i < rowsNumber;i++){
-                for(int j = 0; j < columnsNumber-1;j++){
-                    ArrayList<String> states = new ArrayList<>();
-                    states = afnl.calcularLambdaClausura(afnl.getStates().get(i));// Aqui inicia el proceso de calcular la lambda clausura de un estado
-                    String symbol = Character.toString(afnl.getSigma().get(j));
-                    System.out.print("D("+afnl.getStates().get(i)+","+symbol+") = ");
-                    System.out.print("$[D($["+afnl.getStates().get(i)+"],"+symbol+")] = ");
-                    System.out.print("$[D({");
-                    
-                    for(int k = 0; k < states.size(); k ++){
-                        System.out.print(states.get(k));
-                            if(k!= states.size()-1){
-                                System.out.print(",");
-                            };
-                    }
-                    
-                    System.out.print("},"+symbol+")] = ");
-                
-                    ArrayList<String> states2 = new ArrayList<>();//Ahora se mire a donde se llega con un simbolo y la lambda clausura del estado anterior
-                    states2 =ProcessStatesWithSymbol(states,symbol, afnl); // y los estados resultantes son states2
-                    Collections.sort(states2);
-                    
-                    System.out.print("$[{");
-                    
-                    for(int k = 0; k < states2.size(); k ++){
-                        System.out.print(states2.get(k));
-                            if(k!= states2.size()-1){
-                                System.out.print(",");
-                            };
-                    }
-                    
-                    System.out.print("}] = ");
-                    
-                    // esta son las nuevas transiciones para el estado y el simbolo en el nuevo AFN
-                    ArrayList<String> states3 = new ArrayList<>();
-                    states3 = afnl.calcularMuchasLambdaClausuraSinImprimir(states2);
-                    Collections.sort(states3);
-                    System.out.print("{");
-                    
-                    for(int k = 0; k < states3.size(); k ++){
-                        System.out.print(states3.get(k));
-                            if(k!= states3.size()-1){
-                                System.out.print(",");
-                            };
-                    }
-                    
-                    System.out.print("}.");
-                    System.out.println("");
-                    
-                    newDelta[i][j] = states3;
+        for (int i = 0; i < rowsNumber; i++) {
+            for (int j = 0; j < columnsNumber - 1; j++) {
+                ArrayList<String> states = new ArrayList<>();
+                states = afnl.calcularLambdaClausura(afnl.getStates().get(i));// Aqui inicia el proceso de calcular la lambda clausura de un estado
+                String symbol = Character.toString(afnl.getSigma().get(j));
+                System.out.print("D(" + afnl.getStates().get(i) + "," + symbol + ") = ");
+                System.out.print("$[D($[" + afnl.getStates().get(i) + "]," + symbol + ")] = ");
+                System.out.print("$[D({");
+
+                for (int k = 0; k < states.size(); k++) {
+                    System.out.print(states.get(k));
+                    if (k != states.size() - 1) {
+                        System.out.print(",");
+                    };
                 }
+
+                System.out.print("}," + symbol + ")] = ");
+
+                ArrayList<String> states2 = new ArrayList<>();//Ahora se mire a donde se llega con un simbolo y la lambda clausura del estado anterior
+                states2 = ProcessStatesWithSymbol(states, symbol, afnl); // y los estados resultantes son states2
+                Collections.sort(states2);
+
+                System.out.print("$[{");
+
+                for (int k = 0; k < states2.size(); k++) {
+                    System.out.print(states2.get(k));
+                    if (k != states2.size() - 1) {
+                        System.out.print(",");
+                    };
+                }
+
+                System.out.print("}] = ");
+
+                // esta son las nuevas transiciones para el estado y el simbolo en el nuevo AFN
+                ArrayList<String> states3 = new ArrayList<>();
+                states3 = afnl.calcularMuchasLambdaClausuraSinImprimir(states2);
+                Collections.sort(states3);
+                System.out.print("{");
+
+                for (int k = 0; k < states3.size(); k++) {
+                    System.out.print(states3.get(k));
+                    if (k != states3.size() - 1) {
+                        System.out.print(",");
+                    };
+                }
+
+                System.out.print("}.");
+                System.out.println("");
+
+                newDelta[i][j] = states3;
+            }
+
+        }
+        
+        for(int u = 0;u < newDelta.length;u++){
+            
+            for(int v = 0; v < newDelta[u].length;v++){
+                
+                if(newDelta[u][v].isEmpty()) newDelta[u][v].add(afnl.getStates().get(u));
                 
             }
+            
+        }
         
-            
-            
+
+        afn.initializeAFNwithData(newSigma, afnl.getStates(), afnl.getQ(), newFinalStates, newDelta);
+        System.out.println("\n\n");
+        System.out.println("Terminando transformacion de AFN_Lambda a AFN\n\n");
+        
+        
         return afn;
-    };
+    }
+
+    ;
     
     
     public static ArrayList<String> obtenerEstadosAccesibles(AFD afdinput) {
@@ -366,23 +422,36 @@ public class Temporal_AFN_LambdaToAFN {
     
     public static void main(String[] args) throws Exception {
         
-//        AFN_Lambda afnl = new AFN_Lambda();// eso no es un "uno" es una "l" :v
-//        afnl.initializeAFD("AFN_Lambda2.txt"); // Aqui se debe poner el nombre del archivo que se desea leer
-//        AFN_LambdaToAFN(afnl);
+        AFN_Lambda afnl = new AFN_Lambda();// eso no es un "uno" es una "l" :v
+        afnl.initializeAFD("AFN_Lambda1.txt"); // Aqui se debe poner el nombre del archivo que se desea leer
+
+        //AFN_LambdaToAFN(afnl).getSigma().get(0);
+        
+        AFN afn = new AFN();
+        afn = AFN_LambdaToAFN(afnl);
+        afn.showDelta();
+        afn.showFinalStates();
+        afn.showInitialState();
+        afn.showSigma();
+        afn.showStates();
+        
+        
+        afn.procesarCadenaConversion("");
+        afn.procesarCadenaConDetallesConversion("");
 
 
-        AFD afd1 = new AFD();
-        afd1.initializeAFD("AFD1.txt");
+        //AFD afd1 = new AFD();
+        //afd1.initializeAFD("AFD1.txt");
                
 
-        ArrayList<String> accesibles = obtenerEstadosAccesibles(afd1);
+        //ArrayList<String> accesibles = obtenerEstadosAccesibles(afd1);
         
-        afd1 = modificarAutomata(afd1, accesibles, new ArrayList<>());
+        //afd1 = modificarAutomata(afd1, accesibles, new ArrayList<>());
         
 //        afd1.showStates();
 //       afd1.showDelta();
 
-        simplificacionAutomataAFD(afd1, accesibles);
+        //simplificacionAutomataAFD(afd1, accesibles);
         
 //        simplificacionAutomataAFD2(afd1, triangular, accesibles);
 
