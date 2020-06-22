@@ -1,5 +1,6 @@
 package Automatas;
 
+import ProcesadoresDeCadenas.PCAFD;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -54,7 +55,7 @@ public class TemporalAFNtoAFD {
         ArrayList<String> finalStates = afn.getFinalStates();
         String q = afn.getQ();
         //tamaño original de la lista de estados
-        int StatesSize = AFNstates.size();
+        int statesSize = AFNstates.size();
 
         //nuevo estado para añadir
         String newState;
@@ -64,8 +65,8 @@ public class TemporalAFNtoAFD {
         ArrayList<String> AFDfinalStates = new ArrayList<>();
         AFDStates.add(q);
         //se crea una matriz de ArrayList para el AFD
-        ArrayList<String>[][] AFDdelta = new ArrayList[StatesSize * 3][sigma.size()];
-        for (int i = 0; i < StatesSize * 3; i++) {
+        ArrayList<String>[][] AFDdelta = new ArrayList[statesSize * 3][sigma.size()];
+        for (int i = 0; i < statesSize * 3; i++) {
             for (int j = 0; j < sigma.size(); j++) {
                 AFDdelta[i][j] = new ArrayList<String>();
             }
@@ -75,7 +76,29 @@ public class TemporalAFNtoAFD {
         if (finalStates.contains(q)) {
             AFDfinalStates.add(q);
         }
+        
+        //Se imprime la matriz delta original
+        System.out.print("  D  !!  ");
+        for (int j = 0; j < sigma.size(); j++) {
+            System.out.print(sigma.get(j) + "  |");
+        }
+        System.out.println("|");
+        
+        for (int i = 0; i < statesSize; i++) {
+            System.out.print(AFNstates.get(i) + " !! ");
+            for (int j = 0; j < sigma.size(); j++) {
+                System.out.print(" ");
+                for (int k = 0; k < delta[i][j].size(); k++) {
+                    System.out.print(delta[i][j].get(k) + ";");
+                }
+                System.out.print(" |");
+            }
+            System.out.println("|");
+        }
 
+        System.out.println("----------------------------------");
+        System.out.println("----------------------------------");
+        
         //recorre cada uno de los estados alcanzables por el AFD final
         for (int i = 0; i < AFDStates.size(); i++) {
 
@@ -123,6 +146,8 @@ public class TemporalAFNtoAFD {
 
             } //Si el estado originario es uno de los estados concatenados
             else {
+                
+                System.out.print(AFDStates.get(i) + " !! ");
 
                 //encontrar a los estados que puede saltar
                 ArrayList<String> newStates = new ArrayList<>();
@@ -157,6 +182,7 @@ public class TemporalAFNtoAFD {
 
                     //añade el edge al estado con el que se calculo el index
                     AFDdelta[i][j].add(newState);
+                    System.out.print(" " + newState + " |");
 
                     //si este nuevo estado no esta registrado ya, lo añade
                     if (!AFDStates.contains(newState)) {
@@ -172,27 +198,13 @@ public class TemporalAFNtoAFD {
                     //se limpia el arraylist para volver a usarse
                     newStates.clear();
                 }
-
+                System.out.println("|");
             }
 
         }
-
-        //se imprime la nueva matriz
-        System.out.print("D  ||  ");
-        for (int j = 0; j < sigma.size(); j++) {
-            System.out.print(sigma.get(j) + " \\ ");
-        }
-        System.out.println("");
-
-        for (int i = 0; i < AFDStates.size(); i++) {
-            System.out.print(AFDStates.get(i) + "  ||  ");
-            for (int j = 0; j < sigma.size(); j++) {
-                System.out.print(AFDdelta[i][j].get(0) + " \\ ");
-            }
-            System.out.println("");
-        }
-
-        System.out.println("\n AFD producido: ");
+        
+        System.out.println("\n");
+        //se crea y se retorna el AFD producido
         AFD afd = new AFD();
         afd.initializeAFDwithData(sigma, AFDStates, q, AFDfinalStates, AFDdelta);
         return afd;
@@ -208,7 +220,6 @@ public class TemporalAFNtoAFD {
             }
         }
 
-        System.out.println("AFD complemento producido: ");
         complemento.initializeAFDwithData(afdInput.getSigma(), afdInput.getStates(), afdInput.getQ(), newfinalStates, afdInput.getDelta());
         return complemento;
     }
@@ -217,10 +228,19 @@ public class TemporalAFNtoAFD {
 
         AFN afn = new AFN();
         AFD afd = new AFD();
+        PCAFD procesadorAFD = new PCAFD();
+        
         afn.initializeAFN("AFNtest.txt"); // Aqui se debe poner el nombre del archivo que se desea leer
         afd = AFNtoAFD(afn);
-        hallarComplemento(afd);
+        AFD afdc = hallarComplemento(afd);
+        
+        //test del afn to afd
         afn.procesarCadenaConversion("aabaa");
         afn.procesarCadenaConDetallesConversion("aabaa");
+        
+        //test del complemento
+        System.out.println("\n complemento:");
+        procesadorAFD.processString(afdc, "aabaa");
+        procesadorAFD.processStringWithDetails(afdc, "aabaa");
     }
 }
