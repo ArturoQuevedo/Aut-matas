@@ -3,6 +3,7 @@ package Automatas;
 /**
  * @author Arthur
  */
+
 import java.util.*;
 import java.io.*;
 
@@ -344,6 +345,34 @@ public class AFD {
     }
     
     
+    public ArrayList<String> obtenerEstadosAccesibles(AFD afdinput) {
+
+        ArrayList<String> accesibles = new ArrayList<>();
+
+        accesibles.add(afdinput.getQ());
+
+        for (int j = 0; j < afdinput.getDelta().length; j++) {
+            String estadoActual = afdinput.getStates().get(j);
+            for (int k = 0; k < afdinput.getDelta()[j].length; k++) {
+                if (afdinput.getDelta()[j][k].isEmpty()) {
+                    continue;
+                } else {
+                    for (String transicion : afdinput.getDelta()[j][k]) {
+                        if (!estadoActual.equals(transicion)) {
+                            if(accesibles.contains(estadoActual)){
+                                if (!accesibles.contains(transicion)) {
+                                    accesibles.add(transicion);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        Collections.sort(accesibles);
+        return accesibles;
+    }
+    
     
 
     public ArrayList<String> getInaccessibleStates() {
@@ -351,16 +380,256 @@ public class AFD {
     }
     
     
+    public AFD modificarAutomata(AFD afdinput, ArrayList<String> accesibles, ArrayList<String> inaccesibles){
+       
+        for (int i = 0; i < afdinput.getStates().size(); i++) {
+            if (!accesibles.contains(afdinput.getStates().get(i))) {
+                inaccesibles.add(afdinput.getStates().get(i));
+            }
+        }
+        
+        for (int i = 0; i < afdinput.getStates().size(); i++) {
+            if(inaccesibles.contains(afdinput.getStates().get(i))){
+                for (int j = 0; j < afdinput.getSigma().size(); j++) {
+                    afdinput.getDelta()[i][j] = null;
+                }
+            }
+        }
+       
+        
+        return afdinput;
+    }
+    
+    public String[][] simplificarAFD(AFD afdinput){
+        //Esta función hace La matriz Triangular que es la primera iteración del algoritmo 
+        ArrayList<String> accesibles = obtenerEstadosAccesibles(afdinput);
+        String[][] triangular = new String[accesibles.size()][accesibles.size()];
+        
+        for(int i=0;i<triangular.length;i++){
+            for(int j=i+1;j<triangular.length;j++){
+                triangular[i][j] = "E";
+            }
+        }
+        
+        for (int i = 0; i < accesibles.size(); i++) {
+            for (int j = i+1; j < accesibles.size(); j++) {
+                String p = accesibles.get(j);
+                boolean pAceptacion = afdinput.getFinalStates().contains(p);
+                String q = accesibles.get(i);
+                boolean qAceptacion = afdinput.getFinalStates().contains(q);
+                if(!(pAceptacion == qAceptacion)){
+                    triangular[i][j] = "1";
+                }
+            }
+        }
+        
+        simplificacionAutomataAFD2(afdinput, triangular, accesibles);
+        return triangular;
+    }
+    
+    public void simplificacionAutomataAFD2(AFD afdinput, String[][]triangular, ArrayList<String> accesibles){
+        //Esta función hace la tabla de la segunda iteración y actualiza la matriz triangular con la segunda iteración
+        ArrayList<Integer> posiciones = triangularAEstados(afdinput, triangular, accesibles);
+        ArrayList<Integer> copyPos = (ArrayList<Integer>) posiciones.clone();
+        
+        ArrayList<String>[][] tabular = new ArrayList[posiciones.size()/2][afdinput.getSigma().size()];
+        
+        int indice = 0;
+        int k = 0;
+        while(!copyPos.isEmpty()){
+            int posEstadoP = copyPos.remove(0);
+            int posEstadoQ = copyPos.remove(0);
+            k = 0;
+             for (int j = 0; j < afdinput.getSigma().size(); j++) {
+                String vaP = afdinput.getDelta()[posEstadoP][j].get(0); //SE PUEDE MORIR o no :v
+                String vaQ = afdinput.getDelta()[posEstadoQ][j].get(0);
+
+                tabular[indice][k] = new ArrayList();
+                tabular[indice][k].add(vaP);
+                tabular[indice][k].add(vaQ);
+                k++;
+                if(k==2)
+                    indice++;
+            }
+        }
+                        
+        for(int i = 0;i< tabular.length;i++){
+            for(int j = 0;j< tabular[i].length;j++){
+                if(!(tabular[i][j] == null)){
+                    String p = tabular[i][j].get(0);
+                    String q = tabular[i][j].get(1);
+                    
+                    boolean pAceptacion = afdinput.getFinalStates().contains(p);
+                    boolean qAceptacion = afdinput.getFinalStates().contains(q);
+                    
+                    if(!(pAceptacion == qAceptacion)){
+                        tabular[i][j].add("2");
+                    }
+                }                
+            }
+        }       
+        
+        copyPos = (ArrayList<Integer>) posiciones.clone();
+
+            for (int i = 0; i < tabular.length; i++) {
+                if(!copyPos.isEmpty()){
+                    int posEstadoP = accesibles.indexOf(afdinput.getStates().get(copyPos.remove(0)));
+                    int posEstadoQ = accesibles.indexOf(afdinput.getStates().get(copyPos.remove(0)));
+
+                    for (int j = 0; j < tabular[i].length; j++) {
+                        if (!(tabular[i][j] == null)) {
+                            if (tabular[i][j].contains("2")) {
+                                triangular[posEstadoQ][posEstadoP] = "2";
+                            }
+                        }
+                    }
+                }
+            }
+        
+        
+        
+        /*for(int i = 0;i<tabular.length;i++){
+            for(int j = 0;j<tabular[i].length;j++){
+                if(!(tabular[i][j] == null)){
+                    for (String string : tabular[i][j]) {
+                    System.out.print(string + ",");
+                }
+                System.out.println("");
+                }
+            }
+        }
+        
+        for(int i=0;i<triangular.length;i++){
+            for(int j=i+1;j<triangular.length;j++){
+                System.out.println(triangular[i][j]);
+            }
+        }*/
+        
+        printTriangular(triangular, accesibles);
+        printTabular(tabular,posiciones,accesibles,afdinput);
+        
+    }
+    
+    public ArrayList<Integer> triangularAEstados(AFD afdinput, String[][]triangular, ArrayList<String> accesibles){
+        ArrayList<Integer> posiciones = new ArrayList<>();
+        for(int i=0;i<triangular.length;i++){
+            for(int j=i+1;j<triangular.length;j++){
+                if(triangular[i][j].equals("E")){
+                    int indexP = afdinput.getStates().indexOf(accesibles.get(j));
+                    int indexQ = afdinput.getStates().indexOf(accesibles.get(i));
+                    //System.out.println("index P = " + indexP + " index Q = " + indexQ);
+                    posiciones.add(indexP); // posiciones en estados, mas no en accesibles
+                    posiciones.add(indexQ);
+                }
+            }
+        }
+        
+        return posiciones;
+    }
+    
+    public void printTriangular(String[][] triangular, ArrayList<String> accesibles) {
+
+        System.out.println("");// espaciado bonito :V
+        for (int i = 0; i < accesibles.size(); i++) {
+            for (int j = 0; j <= i; j++) {
+
+                if (i == j) {
+                    triangular[i][j] = accesibles.get(i);
+                }
+                    System.out.print(triangular[j][i]+"  ");
+
+
+            }
+            System.out.println("\n");
+        }
+
+
+    }
+
+    ;
+    
+    public void printTabular(ArrayList<String>[][] tabular, ArrayList<Integer> posiciones, ArrayList<String> accesibles, AFD afd) {
+
+        ArrayList<Integer> copyPos2 = (ArrayList<Integer>) posiciones.clone();
+        System.out.println("\n");// espaciado bonito :V
+        System.out.print("{p,q}    ");// 4 espacios entre todo horizontalmente;
+
+        for (int i = 0; i < afd.getSigma().size(); i++) {
+
+            System.out.print("{De(p," + afd.getSigma().get(i) + "),De(q," + afd.getSigma().get(i) + ")}    ");
+
+        }
+        System.out.println("\n");
+        while (!copyPos2.isEmpty()) {
+            for (int i = 0; i < tabular.length; i++) {
+
+                ArrayList<String> ordenar = new ArrayList<>();
+                ordenar.add(accesibles.get(accesibles.indexOf(afd.getStates().get(copyPos2.remove(0)))));
+                ordenar.add(accesibles.get(accesibles.indexOf(afd.getStates().get(copyPos2.remove(0)))));;
+                Collections.sort(ordenar);
+                
+                System.out.print("{" + ordenar.remove(0) + "," + ordenar.remove(0) + "}    ");
+
+                for (int j = 0; j < tabular[i].length; j++) {
+
+                    ordenar.add(tabular[i][j].get(0));
+                    ordenar.add(tabular[i][j].get(1));
+                    Collections.sort(ordenar);
+                    
+                    
+                    System.out.print("{" + ordenar.remove(0) + "," + ordenar.remove(0) + "}");
+                    if (tabular[i][j].contains("2")) {
+                        System.out.print(" X2       ");
+                    }else System.out.print("          ");
+
+                }
+                System.out.println("\n");
+            }
+
+        }
+    }
+
+    ;
+    
+    public static AFD hallarComplemento(AFD afdInput) {
+        AFD complemento = new AFD();
+        ArrayList<String> newfinalStates = new ArrayList<>();
+
+        for (int i = 0; i < afdInput.getStates().size(); i++) {
+            if (!afdInput.getFinalStates().contains(afdInput.getStates().get(i))) {
+                newfinalStates.add(afdInput.getStates().get(i));
+            }
+        }
+
+        complemento.initializeAFDwithData(afdInput.getSigma(), afdInput.getStates(), afdInput.getQ(), newfinalStates, afdInput.getDelta());
+        return complemento;
+    }
+    
+    
+    
+    
     
 
     public static void main(String[] args) throws Exception {
 
         AFD afd = new AFD();
-        afd.initializeAFD("AFD1.txt");
-        afd.hallarEstadosInaccesibles(); // ejecutando esta función los estados inaccesibles quedan dentro del atributo (de la clase)InacessibleStates
-        System.out.println(afd.getInaccessibleStates().get(0)); 
+        afd.initializeAFD("AFD3.txt");
+        afd.simplificarAFD(afd);
+        //afd.hallarEstadosInaccesibles(); // ejecutando esta función los estados inaccesibles quedan dentro del atributo (de la clase)InacessibleStates
+
         //El autómata que lee acepta cadenas con un numero par de de a Y b
         //afd.processStringWithDetails("abababa");
+        
+        
+        //afd = AFNtoAFD(afn);
+        AFD afdc = hallarComplemento(afd);
+        
+        
+        //test del complemento
+        System.out.println("\n complemento:");
+        System.out.println(afdc.getFinalStates().get(3));
+        
+        
 
       
         /*afd.showSigma();
