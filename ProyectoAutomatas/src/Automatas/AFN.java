@@ -1,5 +1,7 @@
 package Automatas;
 
+import static Automatas.TemporalAFNtoAFD.AFNtoAFD;
+import ProcesadoresDeCadenas.PCAFD;
 import java.util.ArrayList;
 import java.io.*;
 import java.util.StringTokenizer;
@@ -23,6 +25,47 @@ public class AFN {
         this.Aceptadas = new ArrayList<>();
         this.Rechazadas = new ArrayList<>();
         this.Abortadas = new ArrayList<>();
+    }
+    
+    
+    public ArrayList<Character> getSigma() {
+        return sigma;
+    }
+
+    public void setSigma(ArrayList<Character> sigma) {
+        this.sigma = sigma;
+    }
+
+    public ArrayList<String> getStates() {
+        return states;
+    }
+
+    public void setStates(ArrayList<String> states) {
+        this.states = states;
+    }
+
+    public String getQ() {
+        return q;
+    }
+
+    public void setQ(String q) {
+        this.q = q;
+    }
+
+    public ArrayList<String> getFinalStates() {
+        return finalStates;
+    }
+
+    public void setFinalStates(ArrayList<String> finalStates) {
+        this.finalStates = finalStates;
+    }
+
+    public ArrayList<String>[][] getDelta() {
+        return delta;
+    }
+
+    public void setDelta(ArrayList<String>[][] delta) {
+        this.delta = delta;
     }
 
     public void initializeDelta(int sizeOfStates, int sizeofSigma) {
@@ -690,6 +733,27 @@ public class AFN {
 
         }
 
+    }
+    
+    public boolean procesarCadenaConversion(String cadena){
+        AFD afd = new AFD();
+        afd = AFNtoAFD(this);
+        PCAFD procesadorAFD = new PCAFD();
+        return procesadorAFD.processString(afd, cadena);
+    }
+    
+    public boolean procesarCadenaConDetallesConversion(String cadena){
+        AFD afd = new AFD();
+        afd = AFNtoAFD(this);
+        PCAFD procesadorAFD = new PCAFD();
+        return procesadorAFD.processStringWithDetails(afd, cadena);
+    }
+    
+    public void procesarListaCadenasConversion(ArrayList<String> stringList, String nombreArchivo, boolean imprimirPantalla) throws IOException{
+        AFD afd = new AFD();
+        afd = AFNtoAFD(this);
+        PCAFD procesadorAFD = new PCAFD();
+        procesadorAFD.processStringList(afd, stringList, nombreArchivo, imprimirPantalla);
     }
 
     public static void main(String[] args) throws Exception {
