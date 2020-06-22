@@ -130,6 +130,8 @@ public class Temporal_AFN_LambdaToAFN {
 
         ArrayList<String> accesibles = new ArrayList<>();
 
+        accesibles.add(afdinput.getQ());
+
         for (int j = 0; j < afdinput.getDelta().length; j++) {
             String estadoActual = afdinput.getStates().get(j);
             for (int k = 0; k < afdinput.getDelta()[j].length; k++) {
@@ -138,8 +140,10 @@ public class Temporal_AFN_LambdaToAFN {
                 } else {
                     for (String transicion : afdinput.getDelta()[j][k]) {
                         if (!estadoActual.equals(transicion)) {
-                            if (!accesibles.contains(transicion)) {
-                                accesibles.add(transicion);
+                            if(accesibles.contains(estadoActual)){
+                                if (!accesibles.contains(transicion)) {
+                                    accesibles.add(transicion);
+                                }
                             }
                         }
                     }
@@ -368,7 +372,7 @@ public class Temporal_AFN_LambdaToAFN {
 
 
         AFD afd1 = new AFD();
-        afd1.initializeAFD("AFD3.txt");
+        afd1.initializeAFD("AFD1.txt");
                
 
         ArrayList<String> accesibles = obtenerEstadosAccesibles(afd1);

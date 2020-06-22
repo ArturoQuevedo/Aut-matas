@@ -13,6 +13,7 @@ public class AFD {
     private String q;
     private ArrayList<String> finalStates;
     private ArrayList<String>[][] delta;
+    private ArrayList<String> inaccessibleStates = new ArrayList<>();
 
     public AFD() {
         this.sigma = new ArrayList<>();
@@ -250,20 +251,68 @@ public class AFD {
         }
         return -1; // esto nunca deberia pasar a no se que pase un error de digitación
     }   
+    
+    public void hallarEstadosInaccesibles() {
+
+        ArrayList<String> accesibles = new ArrayList<>();
+        this.inaccessibleStates.clear();
+
+        accesibles.add(this.getQ());
+
+        for (int j = 0; j < this.getDelta().length; j++) {
+            String estadoActual = this.getStates().get(j);
+            for (int k = 0; k < this.getDelta()[j].length; k++) {
+                if (this.getDelta()[j][k].isEmpty()) {
+                    continue;
+                } else {
+                    for (String transicion : this.getDelta()[j][k]) {
+                        if (!estadoActual.equals(transicion)) {
+                            if (accesibles.contains(estadoActual)) {
+                                if (!accesibles.contains(transicion)) {
+                                    accesibles.add(transicion);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        Collections.sort(accesibles);
+        for (int i = 0; i < this.states.size(); i++) {
+            if (!accesibles.contains(this.states.get(i))) {
+                this.inaccessibleStates.add(this.states.get(i));
+            }
+        }
+
+    }
+    
+    
+    
+
+    public ArrayList<String> getInaccessibleStates() {
+        return inaccessibleStates;
+    }
+    
+    
+    
 
     public static void main(String[] args) throws Exception {
 
         AFD afd = new AFD();
-        afd.initializeAFD("file.txt");
+        afd.initializeAFD("AFNtest4.txt");
+        afd.hallarEstadosInaccesibles(); // ejecutando esta función los estados inaccesibles quedan dentro del atributo (de la clase)InacessibleStates
+        System.out.println(afd.getInaccessibleStates().get(0)); 
         //El autómata que lee acepta cadenas con un numero par de de a Y b
         //afd.processStringWithDetails("abababa");
 
       
-        afd.showSigma();
+        /*afd.showSigma();
         afd.showStates();
         afd.showInitialState();
         afd.showFinalStates();
-        afd.showDelta();        
+        afd.showDelta();*/
+
+        
     }
 
 }
