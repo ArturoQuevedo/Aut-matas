@@ -297,7 +297,7 @@ public class AFD {
             
         }
     }
-    }   
+    
     
     public void hallarEstadosInaccesibles() {
 
