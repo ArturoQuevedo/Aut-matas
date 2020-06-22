@@ -25,7 +25,7 @@ public class TemporalAFNtoAFD {
         String newState = "";
         if (mydelta.size() > 1) {
             for (int i = 0; i < mydelta.size() - 1; i++) {
-                newState = newState.concat(mydelta.get(i) + ",");
+                newState = newState.concat(mydelta.get(i) + ";");
             }
             newState = newState.concat(mydelta.get(mydelta.size() - 1));
         } else {
@@ -128,7 +128,7 @@ public class TemporalAFNtoAFD {
                 ArrayList<String> newStates = new ArrayList<>();
 
                 //se divide el estado en sus componentes
-                String[] split = AFDStates.get(i).split(",");
+                String[] split = AFDStates.get(i).split(";");
 
                 //se ubica en una letra de sigma
                 for (int j = 0; j < sigma.size(); j++) {
@@ -220,5 +220,7 @@ public class TemporalAFNtoAFD {
         afn.initializeAFN("AFNtest.txt"); // Aqui se debe poner el nombre del archivo que se desea leer
         afd = AFNtoAFD(afn);
         hallarComplemento(afd);
+        afn.procesarCadenaConversion("aabaa");
+        afn.procesarCadenaConDetallesConversion("aabaa");
     }
 }

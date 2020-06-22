@@ -1,5 +1,7 @@
 package Automatas;
 
+import static Automatas.TemporalAFNtoAFD.AFNtoAFD;
+import ProcesadoresDeCadenas.PCAFD;
 import java.util.ArrayList;
 import java.io.*;
 import java.util.StringTokenizer;
@@ -731,6 +733,27 @@ public class AFN {
 
         }
 
+    }
+    
+    public boolean procesarCadenaConversion(String cadena){
+        AFD afd = new AFD();
+        afd = AFNtoAFD(this);
+        PCAFD procesadorAFD = new PCAFD();
+        return procesadorAFD.processString(afd, cadena);
+    }
+    
+    public boolean procesarCadenaConDetallesConversion(String cadena){
+        AFD afd = new AFD();
+        afd = AFNtoAFD(this);
+        PCAFD procesadorAFD = new PCAFD();
+        return procesadorAFD.processStringWithDetails(afd, cadena);
+    }
+    
+    public void procesarListaCadenasConversion(ArrayList<String> stringList, String nombreArchivo, boolean imprimirPantalla) throws IOException{
+        AFD afd = new AFD();
+        afd = AFNtoAFD(this);
+        PCAFD procesadorAFD = new PCAFD();
+        procesadorAFD.processStringList(afd, stringList, nombreArchivo, imprimirPantalla);
     }
 
     public static void main(String[] args) throws Exception {
