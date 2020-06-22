@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class TemporalAFNtoAFD {
-    
+
 //AFN a AFD ----------------------------------------------------------------
     public static int getRow(String state, ArrayList<String> states) {
         //esta función es para obtener la fila en la que se encuentra un estado (se asume columna 0)
@@ -23,12 +23,12 @@ public class TemporalAFNtoAFD {
 
         //se concatenan los estados
         String newState = "";
-        if (mydelta.size() > 1){
-        for (int i = 0; i < mydelta.size(); i++) {
-            newState = newState.concat(mydelta.get(i) + ";");
-        }
-        }
-        else{
+        if (mydelta.size() > 1) {
+            for (int i = 0; i < mydelta.size() - 1; i++) {
+                newState = newState.concat(mydelta.get(i) + ",");
+            }
+            newState = newState.concat(mydelta.get(mydelta.size() - 1));
+        } else {
             newState = mydelta.get(0);
         }
         return newState;
@@ -65,12 +65,16 @@ public class TemporalAFNtoAFD {
         AFDStates.add(q);
         //se crea una matriz de ArrayList para el AFD
         ArrayList<String>[][] AFDdelta = new ArrayList[StatesSize * 3][sigma.size()];
-        for (int i = 0; i < StatesSize*3; i++) {
+        for (int i = 0; i < StatesSize * 3; i++) {
             for (int j = 0; j < sigma.size(); j++) {
                 AFDdelta[i][j] = new ArrayList<String>();
             }
         }
         
+        //si q0 esta en los estados finales, se añade a los de AFD
+        if (finalStates.contains(q)) {
+            AFDfinalStates.add(q);
+        }
 
         //recorre cada uno de los estados alcanzables por el AFD final
         for (int i = 0; i < AFDStates.size(); i++) {
@@ -108,8 +112,10 @@ public class TemporalAFNtoAFD {
                     else if (delta[stateindex][j].size() == 1 && !AFDStates.contains(delta[stateindex][j].get(0))) {
                         AFDStates.add(delta[stateindex][j].get(0));
                         AFDdelta[i][j].add(delta[stateindex][j].get(0));
-                    }
-                    else {
+                        if (finalStates.contains(delta[stateindex][j].get(0))) {
+                            AFDfinalStates.add(delta[stateindex][j].get(0));
+                        }
+                    } else {
                         AFDdelta[i][j].add(delta[stateindex][j].get(0));
                     }
 
@@ -122,7 +128,7 @@ public class TemporalAFNtoAFD {
                 ArrayList<String> newStates = new ArrayList<>();
 
                 //se divide el estado en sus componentes
-                String[] split = AFDStates.get(i).split(";");
+                String[] split = AFDStates.get(i).split(",");
 
                 //se ubica en una letra de sigma
                 for (int j = 0; j < sigma.size(); j++) {
@@ -162,7 +168,7 @@ public class TemporalAFNtoAFD {
                             AFDfinalStates.add(newState);
                         }
                     }
-                    
+
                     //se limpia el arraylist para volver a usarse
                     newStates.clear();
                 }
@@ -170,14 +176,14 @@ public class TemporalAFNtoAFD {
             }
 
         }
-        
+
         //se imprime la nueva matriz
         System.out.print("D  ||  ");
         for (int j = 0; j < sigma.size(); j++) {
             System.out.print(sigma.get(j) + " \\ ");
         }
         System.out.println("");
-        
+
         for (int i = 0; i < AFDStates.size(); i++) {
             System.out.print(AFDStates.get(i) + "  ||  ");
             for (int j = 0; j < sigma.size(); j++) {
@@ -186,13 +192,14 @@ public class TemporalAFNtoAFD {
             System.out.println("");
         }
         
+        System.out.println("\n AFD producido: ");
         AFD afd = new AFD();
+        afd.initializeAFDwithData(sigma, AFDStates, q, AFDfinalStates, AFDdelta);
         return afd;
     }
-    
-    
+
     public static void main(String[] args) throws Exception {
-        
+
         AFN afn = new AFN();
         afn.initializeAFN("AFNtest2.txt"); // Aqui se debe poner el nombre del archivo que se desea leer
         AFNtoAFD(afn);

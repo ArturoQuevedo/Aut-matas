@@ -179,6 +179,53 @@ public class AFD {
         br.close();
 
     }
+    
+    public void initializeAFDwithData(ArrayList<Character> sigma, ArrayList<String> states, String q, ArrayList<String> finalStates, ArrayList<String>[][] delta){
+        
+        //se guarda el sigma producido
+        System.out.print("sigma: ");
+        for (int i = 0; i < sigma.size(); i++) {
+            this.sigma.add(sigma.get(i));
+            System.out.print(this.sigma.get(i) + " ");
+        }
+        System.out.println("");
+        
+        //se guarda los estados producidos
+        System.out.print("states: ");
+        for (int i = 0; i < states.size(); i++) {
+            this.states.add(states.get(i));
+            System.out.print(this.states.get(i) + " ");
+        }
+        System.out.println("");
+        
+        //se inicializa el delta
+        this.initializeDelta(this.states.size(), this.sigma.size());
+        
+        //se guarda el q0
+        System.out.print("q: ");
+        this.q = q;
+        System.out.println(this.q);
+        
+        //se guarda los estados finales
+        System.out.print("finalStates: ");
+        for (int i = 0; i < finalStates.size(); i++) {
+            this.finalStates.add(finalStates.get(i));
+            System.out.print(this.finalStates.get(i) + " ");
+        }
+        System.out.println("");
+        
+        //se guarda la matriz delta
+        System.out.println("Delta: ");
+        for (int i = 0; i < states.size(); i++) {
+            for (int j = 0; j < sigma.size(); j++) {
+                this.delta[i][j].add(delta[i][j].get(0));
+                System.out.print(this.delta[i][j].get(0) + " ");
+            }
+            System.out.println("");
+        }
+        System.out.println("");
+
+    }
 
     public int getRow(String state) {
         //esta función es para obtener la fila en la que se encuentra un estado (se asume columna 0)
