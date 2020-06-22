@@ -147,9 +147,6 @@ public class Temporal_AFN_LambdaToAFN {
             }
         }
         Collections.sort(accesibles);
-        for (int i = 0; i < accesibles.size(); i++) {
-            System.out.print(accesibles.get(i) + "\n ////// \n");
-        }
         return accesibles;
     }
     
@@ -174,6 +171,7 @@ public class Temporal_AFN_LambdaToAFN {
     }
     
     public static String[][] simplificacionAutomataAFD(AFD afdinput, ArrayList<String> accesibles){
+        //Esta función hace La matriz Triangular que es la primera iteración del algoritmo 
         String[][] triangular = new String[accesibles.size()][accesibles.size()];
         
         for(int i=0;i<triangular.length;i++){
@@ -194,16 +192,12 @@ public class Temporal_AFN_LambdaToAFN {
             }
         }
         
-        for(int i=0;i<triangular.length;i++){
-            for(int j=i+1;j<triangular.length;j++){
-                System.out.println(triangular[i][j]);
-            }
-        }
         simplificacionAutomataAFD2(afdinput, triangular, accesibles);
         return triangular;
     }
     
     public static void simplificacionAutomataAFD2(AFD afdinput, String[][]triangular, ArrayList<String> accesibles){
+        //Esta función hace la tabla de la segunda iteración y actualiza la matriz triangular con la segunda iteración
         ArrayList<Integer> posiciones = triangularAEstados(afdinput, triangular, accesibles);
         ArrayList<Integer> copyPos = (ArrayList<Integer>) posiciones.clone();
         
@@ -216,7 +210,7 @@ public class Temporal_AFN_LambdaToAFN {
             int posEstadoQ = copyPos.remove(0);
             k = 0;
              for (int j = 0; j < afdinput.getSigma().size(); j++) {
-                String vaP = afdinput.getDelta()[posEstadoP][j].get(0); //SE PUEDE MORIR GONORREA POR SER NULL, OJO CUIDAO
+                String vaP = afdinput.getDelta()[posEstadoP][j].get(0); //SE PUEDE MORIR o no :v
                 String vaQ = afdinput.getDelta()[posEstadoQ][j].get(0);
 
                 tabular[indice][k] = new ArrayList();
@@ -263,7 +257,7 @@ public class Temporal_AFN_LambdaToAFN {
         
         
         
-        for(int i = 0;i<tabular.length;i++){
+        /*for(int i = 0;i<tabular.length;i++){
             for(int j = 0;j<tabular[i].length;j++){
                 if(!(tabular[i][j] == null)){
                     for (String string : tabular[i][j]) {
@@ -278,7 +272,10 @@ public class Temporal_AFN_LambdaToAFN {
             for(int j=i+1;j<triangular.length;j++){
                 System.out.println(triangular[i][j]);
             }
-        }
+        }*/
+        
+        printTriangular(triangular, accesibles);
+        printTabular(tabular,posiciones,accesibles,afdinput);
         
     }
     
@@ -289,8 +286,8 @@ public class Temporal_AFN_LambdaToAFN {
                 if(triangular[i][j].equals("E")){
                     int indexP = afdinput.getStates().indexOf(accesibles.get(j));
                     int indexQ = afdinput.getStates().indexOf(accesibles.get(i));
-                    System.out.println("index P = " + indexP + " index Q = " + indexQ);
-                    posiciones.add(indexP);
+                    //System.out.println("index P = " + indexP + " index Q = " + indexQ);
+                    posiciones.add(indexP); // posiciones en estados, mas no en accesibles
                     posiciones.add(indexQ);
                 }
             }
@@ -299,6 +296,69 @@ public class Temporal_AFN_LambdaToAFN {
         return posiciones;
     }
     
+    public static void printTriangular(String[][] triangular, ArrayList<String> accesibles) {
+
+        System.out.println("");// espaciado bonito :V
+        for (int i = 0; i < accesibles.size(); i++) {
+            for (int j = 0; j <= i; j++) {
+
+                if (i == j) {
+                    triangular[i][j] = accesibles.get(i);
+                }
+                    System.out.print(triangular[j][i]+"  ");
+
+
+            }
+            System.out.println("\n");
+        }
+
+
+    }
+
+    ;
+    
+    public static void printTabular(ArrayList<String>[][] tabular, ArrayList<Integer> posiciones, ArrayList<String> accesibles, AFD afd) {
+
+        ArrayList<Integer> copyPos2 = (ArrayList<Integer>) posiciones.clone();
+        System.out.println("\n");// espaciado bonito :V
+        System.out.print("{p,q}    ");// 4 espacios entre todo horizontalmente;
+
+        for (int i = 0; i < afd.getSigma().size(); i++) {
+
+            System.out.print("{De(p," + afd.getSigma().get(i) + "),De(q," + afd.getSigma().get(i) + ")}    ");
+
+        }
+        System.out.println("\n");
+        while (!copyPos2.isEmpty()) {
+            for (int i = 0; i < tabular.length; i++) {
+
+                ArrayList<String> ordenar = new ArrayList<>();
+                ordenar.add(accesibles.get(accesibles.indexOf(afd.getStates().get(copyPos2.remove(0)))));
+                ordenar.add(accesibles.get(accesibles.indexOf(afd.getStates().get(copyPos2.remove(0)))));;
+                Collections.sort(ordenar);
+                
+                System.out.print("{" + ordenar.remove(0) + "," + ordenar.remove(0) + "}    ");
+
+                for (int j = 0; j < tabular[i].length; j++) {
+
+                    ordenar.add(tabular[i][j].get(0));
+                    ordenar.add(tabular[i][j].get(1));
+                    Collections.sort(ordenar);
+                    
+                    
+                    System.out.print("{" + ordenar.remove(0) + "," + ordenar.remove(0) + "}");
+                    if (tabular[i][j].contains("2")) {
+                        System.out.print(" X2       ");
+                    }else System.out.print("          ");
+
+                }
+                System.out.println("\n");
+            }
+
+        }
+    }
+
+    ;
     
     public static void main(String[] args) throws Exception {
         
@@ -308,17 +368,18 @@ public class Temporal_AFN_LambdaToAFN {
 
 
         AFD afd1 = new AFD();
-        afd1.initializeAFD("AFD1.txt");
+        afd1.initializeAFD("AFD3.txt");
                
-        afd1.showDelta();
+
         ArrayList<String> accesibles = obtenerEstadosAccesibles(afd1);
         
         afd1 = modificarAutomata(afd1, accesibles, new ArrayList<>());
         
 //        afd1.showStates();
-//        afd1.showDelta();
+//       afd1.showDelta();
 
         simplificacionAutomataAFD(afd1, accesibles);
+        
 //        simplificacionAutomataAFD2(afd1, triangular, accesibles);
 
     }
