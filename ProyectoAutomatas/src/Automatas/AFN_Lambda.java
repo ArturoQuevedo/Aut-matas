@@ -512,6 +512,8 @@ public class AFN_Lambda {
         return muchasLambdaClausuras;
         }
         
+        
+        
         public ArrayList<String> calcularMuchasLambdaClausuraSinImprimir(ArrayList<String> estados){
         
             ArrayList<String> muchasLambdaClausuras = new ArrayList<>();
@@ -973,9 +975,7 @@ public class AFN_Lambda {
             bw.close();
         }
         
-        
-        
-        
+                
         public ArrayList<String> aceptacionMasCorto(){
         
             ArrayList<String> corto = new ArrayList<>();

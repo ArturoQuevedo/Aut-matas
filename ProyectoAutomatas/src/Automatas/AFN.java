@@ -594,6 +594,16 @@ public class AFN {
         System.out.println("----------------------------------------Cadena NO aceptada----------------------------------------");
         return bool;
     }
+    
+    public boolean procesarCadenaSinImprimirNiMadres(String string) {
+        boolean bool = procesarCadenaAFN(string, this.q, 0);
+        if (bool) {
+            
+            return bool;
+        }        
+        return bool;
+    }
+    
 
     public boolean procesarCadenaConDetalles(String string) {
         boolean bool = procesarCadenaConDetallesAFN(string, this.q, 0, "");

@@ -130,12 +130,33 @@ public class ClasePrueba {
         
     }
     
+    public static void validarAFNtoAFD(String fileRoute) throws IOException{
+        System.out.println("Validar AFN a AFD");
+        AFN afn = new AFN();
+        afn.initializeAFN(fileRoute);
+        ClaseValidacion cv= new ClaseValidacion();
+        cv.validarAFNtoAFD2(afn);        
+    }
+    
+    public static void validarAFNLambdatoAFN(String fileRoute) throws IOException{
+        System.out.println("\nValidar AFNLambda a AFN");
+        AFN_Lambda afnl = new AFN_Lambda();
+        afnl.initializeAFD(fileRoute);
+        ClaseValidacion cv= new ClaseValidacion();
+        cv.validarAFNLambatoAFN2(afnl);
+    }
+    
+    
 
     public static void main(String[] args) throws Exception {
         //probarAFD("AFD1.txt");
         //probarAFN("AFN.txt");        
         //probarAFNLambda("AFNLambda2.txt");
-        probarProductoCartesiano("AFD1.txt","AFD2.txt","diferencia simetrica");
+        //probarProductoCartesiano("AFD1.txt","AFD2.txt","diferencia simetrica");
+        validarAFNtoAFD("AFNtest.txt");
+        validarAFNLambdatoAFN("AFN_Lambda1.txt");
+        
+        
         
         
 

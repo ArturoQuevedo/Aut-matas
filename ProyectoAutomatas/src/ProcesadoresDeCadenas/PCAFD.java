@@ -21,6 +21,55 @@ public class PCAFD {
     public PCAFD() {
     }
     
+    public boolean processStringSinImprimirNiMadres(AFD afd, String string, boolean imprimir) { //Procesar string con o sin detalles
+
+        if (imprimir == true) {
+            System.out.print(string + "\n");
+        }
+        String actualState;// este es el estado actual
+        int actualStateP;//fila del estado actual
+        String actualSymbol; //char a leer
+        int actualSymbolP; //columna del char a leer
+
+        actualState = afd.getQ();
+        //Ahora empezamos el proceso de la cadena
+        while (!string.isEmpty() && !string.contains("$")) {
+            actualStateP = afd.getRow(actualState);
+            actualSymbol = Character.toString(string.charAt(0)); // quitamos la primera letra de la izquierda en cada iteración y luego actualizamos el string.
+
+            if (string.length() > 1) {
+                string = string.substring(1); //Este if es para controlar el caso en que solo quede o sea un string de tamaño 1
+            } else {
+                string = "";
+            }
+            if (imprimir == true) {
+                System.out.print("[" + actualState + "," + actualSymbol + string + "]->");
+            }
+
+            actualSymbolP = afd.getColumn(actualSymbol);//buscamos la posición de ese simbolo en nuestra matriz(es algun lugar de la primera fila)
+
+            if (!afd.getDelta()[actualStateP][actualSymbolP].get(0).isEmpty()) {
+
+                actualState = afd.getDelta()[actualStateP][actualSymbolP].get(0);//Ya que esto es un AFD, siempre habra como maximo un elemento en esa posición
+            } else {
+                System.out.print("Usted no ingresó los estados limbo");
+                break;
+            }
+        }
+        if (imprimir == true) {
+            System.out.print("[" + actualState + "]" + "\t");
+        }
+
+        for (int k = 0; k < afd.getFinalStates().size(); k++) {
+            if (actualState.equals(afd.getFinalStates().get(k))) {
+                //System.out.print("Aceptación\n");
+                return true;
+            }
+        }
+        //System.out.print("No aceptación\n");
+        return false;
+
+    }
 
     public boolean processString(AFD afd, String string, boolean imprimir) { //Procesar string con o sin detalles
 
