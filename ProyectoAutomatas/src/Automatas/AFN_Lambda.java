@@ -1217,9 +1217,9 @@ public class AFN_Lambda {
 
         
         //test del afn_lambda to afd
-        //afnl.procesarCadenaConversion("aaaaaaaaaaaaaa");
+        afnl.procesarCadenaConversion("aaaaaaaaaaaaaa");
         //afnl.procesarCadenaConDetallesConversion("aaab");
-        afnl.procesarListaCadenasConversion(prueba, "probando23", true);
+        //afnl.procesarListaCadenasConversion(prueba, "probando23", true);
        
         //afnl.procesarCadenaConDetallesConversion("aabaa");
         
