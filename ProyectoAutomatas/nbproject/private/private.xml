@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/NetBeansProjects/Proyecto-Automatas/Aut-matas/ProyectoAutomatas/src/ProcesadoresDeCadenas/PCAFD.java</file>
-            <file>file:/E:/NetBeansProjects/Proyecto-Automatas/Aut-matas/ProyectoAutomatas/src/Automatas/AFN_Lambda.java</file>
             <file>file:/E:/NetBeansProjects/Proyecto-Automatas/Aut-matas/ProyectoAutomatas/src/Pruebas/ClasePrueba.java</file>
+            <file>file:/E:/NetBeansProjects/Proyecto-Automatas/Aut-matas/ProyectoAutomatas/src/Automatas/AFD.java</file>
             <file>file:/E:/NetBeansProjects/Proyecto-Automatas/Aut-matas/ProyectoAutomatas/src/Automatas/Automatas.java</file>
-            <file>file:/E:/NetBeansProjects/Proyecto-Automatas/Aut-matas/ProyectoAutomatas/src/Pruebas/ClaseValidacion.java</file>
-            <file>file:/E:/NetBeansProjects/Proyecto-Automatas/Aut-matas/ProyectoAutomatas/src/Automatas/AFN.java</file>
+            <file>file:/E:/NetBeansProjects/Proyecto-Automatas/Aut-matas/ProyectoAutomatas/src/Cartesiano/ProductCartesiano.java</file>
         </group>
     </open-files>
 </project-private>

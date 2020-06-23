@@ -78,7 +78,7 @@ public class AFD {
     }
 
     public void showFinalStates() {
-        System.out.println("Final states:");
+        //System.out.println("Final states:");
         for (int i = 0; i < this.finalStates.size(); i++) {
             System.out.println(this.finalStates.get(i));
         }

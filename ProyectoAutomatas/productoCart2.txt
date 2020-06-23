@@ -9,9 +9,7 @@ b
 #initial
 (q1,q2)
 #accepting
-(q3,q2)
 (q1,q4)
-(q1,q2)
 #transitions
 (q1,q2):a>(q3,q2)
 (q1,q2):b>(q1,q4)

@@ -116,7 +116,7 @@ public class ClasePrueba {
 
     }
     
-    public static void probarProductoCartesiano(String fileRoute1, String fileRoute2, String type) throws IOException{
+    public static void probarProductoCartesiano(String fileRoute1, String fileRoute2) throws IOException{
         AFD afd1 = new AFD();
         afd1.initializeAFD(fileRoute1);
 
@@ -124,9 +124,44 @@ public class ClasePrueba {
         afd2.initializeAFD(fileRoute2);
         
         ProductCartesiano pc = new ProductCartesiano();
-
-        pc.hallarProductoCartesiano(afd1, afd2, type);
         
+        
+        pc.hallarProductoCartesiano(afd1, afd2, "union");
+        ArrayList<String> union = pc.getAcceptingStates();    
+        
+        pc.hallarProductoCartesianoSinImprimir(afd1, afd2, "interseccion");
+        ArrayList<String> interseccion = pc.getAcceptingStates();
+        
+        pc.hallarProductoCartesianoSinImprimir(afd1, afd2, "diferencia");
+        ArrayList<String> diferencia = pc.getAcceptingStates();
+        
+        pc.hallarProductoCartesianoSinImprimir(afd1, afd2, "diferencia simetrica");
+        ArrayList<String> diferenciaSimetrica = pc.getAcceptingStates();
+        
+        System.out.println("Estados de aceptación del autómata 1");
+        afd1.showFinalStates();
+        System.out.println("Estados de aceptación del autómata 2");
+        afd2.showFinalStates();
+        System.out.println("Estados de aceptación de la Union");
+        for (int i = 0; i < union.size(); i++) {
+            System.out.println(union.get(i));            
+            
+        }
+        System.out.println("Estados de aceptación de la Interseccion");
+        for (int i = 0; i < interseccion.size(); i++) {
+            System.out.println(interseccion.get(i));            
+            
+        }
+        System.out.println("Estados de aceptación de la Diferencia");
+        for (int i = 0; i < diferencia.size(); i++) {
+            System.out.println(diferencia.get(i));            
+            
+        }
+        System.out.println("Estados de aceptación de la Diferencia simetrica");
+        for (int i = 0; i < diferenciaSimetrica.size(); i++) {
+            System.out.println(diferenciaSimetrica.get(i));            
+            
+        }
         
     }
     
@@ -152,9 +187,9 @@ public class ClasePrueba {
         //probarAFD("AFD1.txt");
         //probarAFN("AFN.txt");        
         //probarAFNLambda("AFNLambda2.txt");
-        //probarProductoCartesiano("AFD1.txt","AFD2.txt","diferencia simetrica");
-        validarAFNtoAFD("AFNtest.txt");
-        validarAFNLambdatoAFN("AFN_Lambda1.txt");
+        probarProductoCartesiano("AFD1.txt","AFD2.txt");
+        //validarAFNtoAFD("AFNtest.txt");
+        //validarAFNLambdatoAFN("AFN_Lambda1.txt");
         
         
         

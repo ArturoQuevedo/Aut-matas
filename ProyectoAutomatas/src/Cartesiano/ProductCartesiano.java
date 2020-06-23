@@ -18,6 +18,21 @@ import java.util.ArrayList;
  * @author hp
  */
 public class ProductCartesiano {
+    
+    private ArrayList<String> acceptingStates;
+
+    public ProductCartesiano() {
+        this.acceptingStates = new ArrayList<>();
+    }
+
+    public void setAcceptingStates(ArrayList<String> acceptingStates) {
+        this.acceptingStates = acceptingStates;
+    }
+
+    public ArrayList<String> getAcceptingStates() {
+        return acceptingStates;
+    }
+    
 
     public void printProcedure(String transition, String currentState1, String currentState2, Character currentSimbol) {
         char g = (char) 399;
@@ -28,7 +43,8 @@ public class ProductCartesiano {
         System.out.println("");
     }
 
-    public void saveAutomata(ArrayList<Character> sigma, String initialState, ArrayList<String> states, ArrayList<String> finalStates, String[][] delta) throws IOException {
+    public void saveAutomata(ArrayList<Character> sigma, String initialState, ArrayList<String> states, 
+            ArrayList<String> finalStates, String[][] delta) throws IOException {
         String fileName = "productoCart.txt";
         File archivo = new File(fileName);
         BufferedWriter bw;
@@ -107,10 +123,9 @@ public class ProductCartesiano {
                         switch (type) {
                             case "union":
                                 if (finalStates.isEmpty() || (!finalStates.contains(transition))) {
-                                    if (afd1.getFinalStates().contains(x) || afd2.getFinalStates().contains(y)) {
-                                        
+                                    if (afd1.getFinalStates().contains(x) || afd2.getFinalStates().contains(y)) {                                 
 
-                                        finalStates.add(transition);
+                                        finalStates.add(transition);                                        
                                     }
                                 }
                                 break;
@@ -142,6 +157,7 @@ public class ProductCartesiano {
                             default:
                                 break;
                         }
+                        
 
                         printProcedure(transition, currentState1, currentState2, currentSimbol);
                     }
@@ -150,10 +166,92 @@ public class ProductCartesiano {
             }
 
             saveAutomata(afd1.getSigma(), initialState, states, finalStates, delta);
+            this.setAcceptingStates(finalStates);
 
         }
     }
+    
+    public void hallarProductoCartesianoSinImprimir(AFD afd1, AFD afd2, String type) throws IOException {
 
+        //Los alfabetos de ambos autómatas deben ser iguales
+        if (afd1.getSigma().equals(afd2.getSigma())) {
+
+            String initialState = "(" + afd1.getQ() + "," + afd2.getQ() + ")";
+            ArrayList<String> states = new ArrayList<>();
+            ArrayList<String> finalStates = new ArrayList<>();
+            String[][] delta = new String[afd1.getStates().size() * afd2.getStates().size()][afd1.getSigma().size()];
+
+            ArrayList<String>[][] delta1 = afd1.getDelta();
+            ArrayList<String>[][] delta2 = afd2.getDelta();
+
+            String x, y, transition;
+            int row = 0;
+            for (int i = 0; i < afd1.getStates().size(); i++) {
+                String currentState1 = afd1.getStates().get(i);
+                for (int j = 0; j < afd2.getStates().size(); j++) {
+                    String currentState2 = afd2.getStates().get(j);
+                    states.add("(" + currentState1 + "," + currentState2 + ")");
+                    for (int k = 0; k < afd1.getSigma().size(); k++) {
+                        Character currentSimbol = afd1.getSigma().get(k);
+
+                        x = delta1[i][k].get(0);
+                        y = delta2[j][k].get(0);
+
+                        transition = "(" + delta1[i][k].get(0) + "," + delta2[j][k].get(0) + ")";
+
+                        delta[row][k] = transition;
+                        //System.out.println("Se guardo "+transition+"en la posicion "+row+","+k);
+
+                        switch (type) {
+                            case "union":
+                                if (finalStates.isEmpty() || (!finalStates.contains(transition))) {
+                                    if (afd1.getFinalStates().contains(x) || afd2.getFinalStates().contains(y)) {                                 
+
+                                        finalStates.add(transition);                                        
+                                    }
+                                }
+                                break;
+
+                            case "interseccion":
+
+                                if (!finalStates.contains(transition)) {
+                                    if (afd1.getFinalStates().contains(x) && afd2.getFinalStates().contains(y)) {
+                                        
+                                        finalStates.add(transition);
+                                    }
+                                }
+                                break;
+                            case "diferencia":
+                                if (!finalStates.contains(transition)) {
+                                    if (afd1.getFinalStates().contains(x) && !afd2.getFinalStates().contains(y)) {
+                                        finalStates.add(transition);
+                                    }
+                                }
+                                break;
+                            case "diferencia simetrica":
+                                if (!finalStates.contains(transition)) {
+                                    if ((afd1.getFinalStates().contains(x) && !afd2.getFinalStates().contains(y))
+                                            || (!afd1.getFinalStates().contains(x) && afd2.getFinalStates().contains(y))) {
+                                        finalStates.add(transition);
+                                    }
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                        
+
+                        //printProcedure(transition, currentState1, currentState2, currentSimbol);
+                    }
+                    row++;
+                }
+            }
+
+            saveAutomata(afd1.getSigma(), initialState, states, finalStates, delta);
+            this.setAcceptingStates(finalStates);
+
+        }
+    }
     public static void main(String[] args) throws Exception {
 
         AFD afd1 = new AFD();
