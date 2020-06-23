@@ -12,6 +12,8 @@ import Automatas.AFN_Lambda;
 import ProcesadoresDeCadenas.PCAFD;
 import java.io.IOException;
 import java.util.ArrayList;
+import Automatas.*;
+import ProcesadoresDeCadenas.Alfabeto;
 
 /**
  *
@@ -19,60 +21,13 @@ import java.util.ArrayList;
  */
 public class ClasePrueba {
 
-    public static void probarAFD(String fileRoute) throws IOException {
-        AFD afd = new AFD();
-        afd.initializeAFD(fileRoute); //Recibe el nombre del archivo donde está el AFD
+    
 
-        PCAFD procesadorAFD = new PCAFD();
 
-        //Procesar las siguientes cadenas:
-        System.out.println("\nPROCESAR CADENA CON DETALLES:");
-        procesadorAFD.processStringWithDetails(afd, "abababab");//Con detalles
 
-        System.out.println("\nPROCESAR CADENA SIN DETALLES:");
-        procesadorAFD.processString(afd, "ababababa");//Sin detalles
-
-        //Crear una lista de cadenas
-        ArrayList<String> prueba = new ArrayList<>();
-        prueba.add("aa");
-        prueba.add("bb");
-        prueba.add("aba");
-        prueba.add("baba");
-        prueba.add("abba");
-        prueba.add("");
-        prueba.add("b");
-
-        //Procesar la cadena
-        System.out.println("\nPROCESAR LISTA DE CADENAS:");
-        procesadorAFD.processStringList(afd, prueba, "procesarCadenasAFD", true);
-    }
-
-    public static void probarAFN(String fileRoute) throws IOException {
-        AFN afn = new AFN();
-        afn.initializeAFN("AFN.txt");
-
-        System.out.println("\nCOMPUTAR TODOS LOS PROCESAMIENTOS:");
-        afn.computarTodosLosProcesamientos("aab", "procesarCadenasAFN");
-
-        System.out.println("\nPROCESAR CADENA SIN DETALLES :");
-        afn.procesarCadena("aab");
-
-        System.out.println("\nPROCESAR CADENA CON DETALLES :");
-        afn.procesarCadenaConDetalles("abb");
-
-        //Agregar cadenas a una lista
-        ArrayList<String> prueba = new ArrayList<>();
-        prueba.add("aa");
-        prueba.add("bb");
-        prueba.add("baba");
-        prueba.add("babab");
-        System.out.println("\nPROCESAR LISTA DE CADENAS:");
-        afn.processStringList(prueba, "procesarListaCadenasAFN", true);
-
-    }
 
     public static void probarAFNLambda(String fileRoute) throws IOException {
-
+        
         AFN_Lambda afd = new AFN_Lambda();
         afd.initializeAFD("AFNLambda1.txt"); // Aqui se debe poner el nombre del archivo que se desea leer
 
@@ -180,10 +135,20 @@ public class ClasePrueba {
         ClaseValidacion cv= new ClaseValidacion();
         cv.validarAFNLambatoAFN2(afnl);
     }
-    
-    
+
 
     public static void main(String[] args) throws Exception {
+       
+        Automatas automata = new Automatas();
+        
+        automata.initializeAutomata("file.txt");
+        automata.createAutomata();
+        automata.elAlfabeto();
+        Alfabeto alfabeto = new Alfabeto(automata.getSigma());
+        //el numero es el tamaño de las cadenas que genera
+        alfabeto.generarCadenaAleatoria(4);
+        //la "aa" puede ser remplazada
+        automata.allProcess("aa",alfabeto.getCadenas());
         //probarAFD("AFD1.txt");
         //probarAFN("AFN.txt");        
         //probarAFNLambda("AFNLambda2.txt");

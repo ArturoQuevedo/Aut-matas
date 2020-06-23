@@ -23,6 +23,8 @@ public class AFD {
         this.finalStates = new ArrayList<>();
         this.limboStates = new ArrayList<>();
     }
+    
+    
 
     public ArrayList<Character> getSigma() {
         return sigma;

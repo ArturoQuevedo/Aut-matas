@@ -61,6 +61,7 @@ public class Alfabeto {
         }
     }
 
+   
     public static void main(String[] args) {
         // TODO code application logic here
         ArrayList<Character> simb = new ArrayList<>();
