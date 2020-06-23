@@ -6,14 +6,19 @@
 package Pruebas;
 
 import Cartesiano.ProductCartesiano;
-import Automatas.AFD;
-import Automatas.AFN;
-import Automatas.AFN_Lambda;
+import Automatas.*;
 import ProcesadoresDeCadenas.PCAFD;
 import java.io.IOException;
 import java.util.ArrayList;
+import static Automatas.Automatas.AFNtoAFD;
+import static Automatas.Automatas.AFN_LambdaToAFN;
+import static Automatas.Automatas.AFN_LambdaToAFD;
+import static Automatas.Automatas.AFNtoAFDSinImprimir;
+import static Automatas.Automatas.AFN_LambdaToAFNSinImprimir;
+import static Automatas.AFD.hallarComplemento;
 import Automatas.*;
 import ProcesadoresDeCadenas.Alfabeto;
+
 
 /**
  *
@@ -70,6 +75,266 @@ public class ClasePrueba {
          */
 
     }
+    
+    public static void probarAFNtoAFD2() throws IOException {
+
+        AFN_Lambda afn = new AFN_Lambda();
+        AFN afn2 = new AFN();
+        AFD afd = new AFD();
+        PCAFD a = new PCAFD ();
+        boolean afnr;
+        String afnc = "bbbba";
+        
+        
+        
+        afn.initializeAFD("probarAFNtoAFD.txt");
+        afn2 = AFN_LambdaToAFNSinImprimir(afn);
+        afd = AFN_LambdaToAFD(afn);
+
+
+        
+
+        afnr = afn.procesarCadena(afnc);
+        
+        System.out.println("Con la cadena : " + afnc);
+        
+        if (afnr == a.processString(afd, afnc)) {
+            System.out.println("son iguales");
+
+        } else {
+            System.out.println(" no son iguales");
+
+        };
+       
+        
+        System.out.println("AFN----------------------------");
+        afn2.showAllTipeOfStates();
+        System.out.println("-------------------------------");
+        System.out.println("AFD----------------------------");
+        afd.showAllTipeOfStates();
+        System.out.println("-------------------------------");
+        
+        
+
+    }
+
+    
+    
+    public static void probarAFN_LambdatoAFN() throws IOException 
+    {
+
+        AFN_Lambda afnl = new AFN_Lambda();
+        AFN afn = new AFN();
+        boolean afnlr;
+        String afnlc = "bbb";
+ 
+        
+        afnl.initializeAFD("probarAFN_LambdatoAFN.txt");
+        afn = AFN_LambdaToAFN(afnl);
+
+        
+        
+        afnlr = afnl.procesarCadena(afnlc);
+        
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
+        System.out.print("Con la cadena : " + afnlc);
+        if (afnlr == afn.procesarCadena(afnlc)) {
+            System.out.println(" son iguales");
+
+        } else {
+            System.out.println(" no son iguales");
+
+        };
+       
+        
+        System.out.println("AFL_Lambda----------------------------");
+        afnl.showAllTipeOfStates();
+        System.out.println("-------------------------------");
+        System.out.println("AFN----------------------------");
+        afn.showAllTipeOfStates();
+        System.out.println("-------------------------------");
+        
+        
+
+    }
+    
+    public static void probarAFN_LambdatoAFN2() throws IOException 
+    {
+
+        AFN_Lambda afnl = new AFN_Lambda();
+        AFN afn = new AFN();
+        AFD afd = new AFD();
+        PCAFD a = new PCAFD ();
+        boolean afnlr;
+        String afnlc = "bbbbbbbbbbbbaababa";
+ 
+        
+        afnl.initializeAFD("probarAFN_LambdatoAFN.txt");
+        afn = AFN_LambdaToAFNSinImprimir(afnl);
+        afd = AFN_LambdaToAFD(afnl);
+
+        
+        
+        afnlr = afnl.procesarCadena(afnlc);
+        
+        System.out.println("Con la cadena : " + afnlc);
+        if (afnlr == a.processString(afd, afnlc)) {
+            System.out.println(" son iguales");
+
+        } else {
+            System.out.println(" no son iguales");
+
+        };
+       
+        
+        System.out.println("AFL_Lambda----------------------------");
+        afnl.showAllTipeOfStates();
+        System.out.println("-------------------------------");
+        System.out.println("AFN----------------------------");
+        afn.showAllTipeOfStates();
+        System.out.println("-------------------------------");
+        
+        
+
+    }
+    
+    public static void probarAFN_LambdatoAFD() throws IOException {
+
+        AFN_Lambda afnl = new AFN_Lambda();
+        AFN afn = new AFN();
+        AFD afd = new AFD();
+        boolean afnlr;
+        boolean afnr;
+        boolean afdr;
+        String afnlc = "aaaabbbbb";
+ 
+        
+        afnl.initializeAFD("probarAFN_LambdatoAFN.txt");
+        afn = AFN_LambdaToAFN(afnl);
+
+        
+        System.out.println("Con la cadena : " + afnlc);
+        afnlr = afnl.procesarCadena(afnlc);
+        afnr = afn.procesarCadena(afnlc);
+        afd = AFNtoAFD(afn);
+        afdr = afnl.procesarCadenaConversion(afnlc);
+        
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n");
+        System.out.print("Con la cadena : " + afnlc);
+        
+        if (afnlr == afnr && afnr == afdr) {
+            System.out.println(" son Iguales");
+
+        } else {
+            System.out.println(" no son iguales");
+
+        };
+       
+        
+        System.out.println("AFL_Lambda----------------------------");
+        afnl.showAllTipeOfStates();
+        System.out.println("-------------------------------");
+        System.out.println("AFN----------------------------");
+        afn.showAllTipeOfStates();
+        System.out.println("-------------------------------");
+        System.out.println("AFD----------------------------");
+        afd.showAllTipeOfStates();
+        System.out.println("-------------------------------");
+        
+        
+
+    }
+    
+    
+    public static void probarAFN_LambdatoAFD2() throws IOException {
+
+        AFN_Lambda afnl = new AFN_Lambda();
+        AFN afn = new AFN();
+        AFD afd = new AFD();
+        PCAFD a = new PCAFD ();
+        boolean afnlr;
+        boolean afnr;
+        boolean afdr;
+        String afnlc = "bbbbaaabbbbbbbbb";
+ 
+        
+        afnl.initializeAFD("probarAFN_LambdatoAFN.txt");
+        afn = AFN_LambdaToAFN(afnl);
+
+        
+        System.out.println("Con la cadena : " + afnlc);
+        afnlr = afnl.procesarCadena(afnlc);
+        afd = AFNtoAFDSinImprimir(afn);
+        afdr = a.processString(afd, afnlc);
+        afnr = afdr;
+        
+        System.out.println("Con la cadena : " + afnlc);
+        
+        if (afnlr == afnr && afnr == afdr) {
+            System.out.println(" son Iguales");
+
+        } else {
+            System.out.println(" no son iguales");
+
+        };
+       
+        
+        System.out.println("AFL_Lambda----------------------------");
+        afnl.showAllTipeOfStates();
+        System.out.println("-------------------------------");
+        System.out.println("AFN----------------------------");
+        afn.showAllTipeOfStates();
+        System.out.println("-------------------------------");
+        System.out.println("AFD----------------------------");
+        afd.showAllTipeOfStates();
+        System.out.println("-------------------------------");
+        
+        
+
+    }
+    
+    
+    public static void probarComplemento() throws IOException{
+        AFD afd1 = new AFD();
+        AFD complemento;
+        afd1.initializeAFD("AFD_probar_complemento.txt");
+        
+        complemento = hallarComplemento(afd1);
+        
+        
+        System.out.println("------------ AFD INICIAL ------------");
+        afd1.showAllTipeOfStates();
+        
+        System.out.println("------------ AFD INICIAL Finaliza ------------");
+        
+        System.out.println("------------ AFD COMPLEMENTO ------------");
+        
+        complemento.showAllTipeOfStates();
+        
+        System.out.println("------------ AFD COMPLEMENTO Finaliza ------------");
+    }
+    
+    
+    public static void probarSimplificacion() throws IOException{
+        AFD afd1 = new AFD();
+        afd1.initializeAFD("AFD_probar_simplificacion.txt");
+        PCAFD procesadorAFD = new PCAFD();
+
+        System.out.println("------------ TABLA TRIANGULAR Y TABLA DE TRANSICIONES ------------");
+        
+        afd1.simplificarAFD(afd1);
+        
+        System.out.println("------------ CADENAS ------------");
+        
+        procesadorAFD.processStringWithDetails(afd1, "aba");
+        
+        procesadorAFD.processStringWithDetails(afd1, "baba");
+        
+        procesadorAFD.processStringWithDetails(afd1, "babaab");
+        
+    }
+    
+    
     
     public static void probarProductoCartesiano(String fileRoute1, String fileRoute2) throws IOException{
         AFD afd1 = new AFD();
@@ -155,6 +420,12 @@ public class ClasePrueba {
         probarProductoCartesiano("AFD1.txt","AFD2.txt");
         //validarAFNtoAFD("AFNtest.txt");
         //validarAFNLambdatoAFN("AFN_Lambda1.txt");
+        //probarProductoCartesiano("AFD1.txt","AFD2.txt","diferencia simetrica");
+        //probarAFNtoAFD2();
+        //probarAFN_LambdatoAFN2();
+        //probarAFN_LambdatoAFD2();
+        //probarComplemento();
+        probarSimplificacion();
         
         
         
