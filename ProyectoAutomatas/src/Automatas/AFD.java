@@ -3,7 +3,7 @@ package Automatas;
 /**
  * @author Arthur
  */
-
+import ProcesadoresDeCadenas.PCAFD;
 import java.util.*;
 import java.io.*;
 
@@ -613,8 +613,10 @@ public class AFD {
     public static void main(String[] args) throws Exception {
 
         AFD afd = new AFD();
-        afd.initializeAFD("AFD3.txt");
-        afd.simplificarAFD(afd);
+        afd.initializeAFD("AFD1.txt");
+        PCAFD pro = new PCAFD();
+        pro.processString(afd, "a");
+        //afd.simplificarAFD(afd);
         //afd.hallarEstadosInaccesibles(); // ejecutando esta función los estados inaccesibles quedan dentro del atributo (de la clase)InacessibleStates
 
         //El autómata que lee acepta cadenas con un numero par de de a Y b
@@ -622,12 +624,12 @@ public class AFD {
         
         
         //afd = AFNtoAFD(afn);
-        AFD afdc = hallarComplemento(afd);
+        //AFD afdc = hallarComplemento(afd);
         
         
         //test del complemento
-        System.out.println("\n complemento:");
-        System.out.println(afdc.getFinalStates().get(3));
+        //System.out.println("\n complemento:");
+        //System.out.println(afdc.getFinalStates().get(3));
         
         
 

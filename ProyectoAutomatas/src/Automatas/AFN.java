@@ -14,7 +14,7 @@ public class AFN {
     private String q;
     private ArrayList<String> finalStates;
     private ArrayList<String>[][] delta;
-    public boolean finale = false;
+    public static boolean finale = false;
     public ArrayList<String> Aceptadas;
     public ArrayList<String> Rechazadas;
     public ArrayList<String> Abortadas;
@@ -877,9 +877,10 @@ public class AFN {
     public static void main(String[] args) throws Exception {
 
         AFN afd = new AFN();
-        afd.initializeAFN("AFNtest3.txt");
-        afd.hallarEstadosInaccesibles();// ejecutando esta función los estados inaccesibles quedan dentro del atributo (de la clase)InacessibleStates
-        System.out.println(afd.inaccessibleStates.get(0));
+        afd.initializeAFN("AFNtest.txt");
+        afd.procesarCadena("aab");
+        //afd.hallarEstadosInaccesibles();// ejecutando esta función los estados inaccesibles quedan dentro del atributo (de la clase)InacessibleStates
+        //System.out.println(afd.inaccessibleStates.get(0));
         /*ArrayList<String> prueba = new ArrayList<>();
         prueba.add("aa");
         prueba.add("bb");

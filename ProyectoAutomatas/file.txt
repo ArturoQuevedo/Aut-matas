@@ -1,5 +1,5 @@
 #automata
-AFD
+AFN
 #alphabet
 a-c
 #states
