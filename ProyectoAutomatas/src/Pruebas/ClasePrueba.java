@@ -120,8 +120,7 @@ public class ClasePrueba {
 
     
     
-    public static void probarAFN_LambdatoAFN() throws IOException 
-    {
+    public static void probarAFN_LambdatoAFN() throws IOException {
 
         AFN_Lambda afnl = new AFN_Lambda();
         AFN afn = new AFN();
@@ -147,7 +146,7 @@ public class ClasePrueba {
         };
        
         
-        System.out.println("AFL_Lambda----------------------------");
+        System.out.println("AFN_Lambda----------------------------");
         afnl.showAllTipeOfStates();
         System.out.println("-------------------------------");
         System.out.println("AFN----------------------------");
@@ -158,8 +157,7 @@ public class ClasePrueba {
 
     }
     
-    public static void probarAFN_LambdatoAFN2() throws IOException 
-    {
+    public static void probarAFN_LambdatoAFN2() throws IOException {
 
         AFN_Lambda afnl = new AFN_Lambda();
         AFN afn = new AFN();
@@ -259,7 +257,7 @@ public class ClasePrueba {
  
         
         afnl.initializeAFD("probarAFN_LambdatoAFN.txt");
-        afn = AFN_LambdaToAFN(afnl);
+        afn = AFN_LambdaToAFNSinImprimir(afnl);
 
         
         System.out.println("Con la cadena : " + afnlc);
@@ -404,33 +402,67 @@ public class ClasePrueba {
 
     public static void main(String[] args) throws Exception {
        
-        Automatas automata = new Automatas();
         
-        automata.initializeAutomata("file.txt");
-        automata.createAutomata();
+        //Creacion del automata
+        Automatas automata = new Automatas();
+        automata.initializeAutomata("AFD_entrega.txt");
+        automata.createAutomata("AFD_entrega.txt");
+//        automata.initializeAutomata("AFN_Lambda1.txt");
+//        automata.createAutomata("AFN_Lambda1.txt");
         automata.elAlfabeto();
         Alfabeto alfabeto = new Alfabeto(automata.getSigma());
+        automata.showAutomataData();
+        
+        
         //el numero es el tamaño de las cadenas que genera
         alfabeto.generarCadenaAleatoria(4);
         //la "aa" puede ser remplazada
-        automata.allProcess("aa",alfabeto.getCadenas());
-        //probarAFD("AFD1.txt");
-        //probarAFN("AFN.txt");        
-        //probarAFNLambda("AFNLambda2.txt");
+        
+        
+        /*                      Procesamiento de cadenas                        */
+        
+        automata.allProcess("aa",alfabeto.getCadenas()); 
+        
+        //Producto cartesiano entre dos automatas
+        System.out.println("--------- Producto cartesiano entre dos automatas ---------");
         probarProductoCartesiano("AFD1.txt","AFD2.txt");
-        //validarAFNtoAFD("AFNtest.txt");
-        //validarAFNLambdatoAFN("AFN_Lambda1.txt");
-        //probarProductoCartesiano("AFD1.txt","AFD2.txt","diferencia simetrica");
-        //probarAFNtoAFD2();
-        //probarAFN_LambdatoAFN2();
-        //probarAFN_LambdatoAFD2();
-        //probarComplemento();
+        
+        //Validar AFN en AFD
+        System.out.println("--------- Validar AFN en AFD ---------");
+        validarAFNtoAFD("AFNtest.txt");
+        
+        //Validar AFN_Lambda to AFN
+        System.out.println("--------- Validar AFN_Lambda to AFN ---------");
+        validarAFNLambdatoAFN("AFN_Lambda1.txt");
+        
+        //Probar producto cartesiano
+        System.out.println("--------- Probar producto cartesiano ---------");
+        probarProductoCartesiano("AFD1.txt","AFD2.txt");
+        
+        
+        //Probar AFN to AFD
+        System.out.println("--------- Probar AFN to AFD ---------");
+        probarAFNtoAFD2();
+        
+        
+        //Probar AFN_Lambda to AFN
+        System.out.println("--------- Probar AFN_Lambda to AFN ---------");
+        probarAFN_LambdatoAFN2();
+        
+        
+        //Probar AFN_Lambda to AFD
+        System.out.println("--------- Probar AFN_Lambda to AFD ---------");
+        probarAFN_LambdatoAFD2();
+        
+        
+        //Probar complemento de AFD
+        System.out.println("--------- Probar complemento de AFD ---------");
+        probarComplemento();
+        
+        
+        //Probar simplificacion de un AFD
+        System.out.println("--------- Probar simplificacion de un AFD ---------");
         probarSimplificacion();
-        
-        
-        
-        
-
     }
 
 }

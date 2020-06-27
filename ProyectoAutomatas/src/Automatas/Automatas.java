@@ -109,14 +109,14 @@ public class Automatas {
 
         }
 
-    public void createAutomata() throws IOException{
+    public void createAutomata(String fileRoute) throws IOException{
         if(this.TipoAuntomata.equals("AFD")){
-            afd.initializeAFD("file.txt");
+            afd.initializeAFD(fileRoute);
             
         }else if(this.TipoAuntomata.equals("AFN")){
-            afn.initializeAFN("file.txt");
+            afn.initializeAFN(fileRoute);
         }else if(this.TipoAuntomata.equals("AFNE")){
-            afn_lambda.initializeAFD("file.txt");
+            afn_lambda.initializeAFD(fileRoute);
         }else{
             System.out.println("El automata seleccionado no existe");
         }
@@ -151,43 +151,55 @@ public class Automatas {
             
     }
     
-     public void allProcess(String cadena,ArrayList<String> prueba) throws IOException{
-         if(this.TipoAuntomata.equals("AFD")){
-         System.out.println("processString");
-         pcafd.processString(afd, cadena);
-         System.out.println("---------------");
-         System.out.println("processStringWithDetails");
-         pcafd.processStringWithDetails(afd, cadena);
-         System.out.println("---------------");
-         System.out.println("procesarCadenasAFD");
-         pcafd.processStringList(afd,prueba,"procesarCadenasAFD", true);
-         System.out.println("---------------");
-        }else if(this.TipoAuntomata.equals("AFN")){
-         System.out.println("processString");
-         afn.procesarCadena(cadena);
-         System.out.println("---------------");
-         System.out.println("procesarCadenaConDetalles");
-         afn.procesarCadenaConDetalles(cadena);
-         System.out.println("---------------");
-         System.out.println("computarTodosLosProcesamientos");
-         afn.computarTodosLosProcesamientos(cadena,"procesamientosComputadosAFN");
-         System.out.println("---------------");
-         System.out.println("processStringList");
-         afn.processStringList(prueba,"procesarListaCadenasAFN", true);
-         System.out.println("---------------");
-        }else if(this.TipoAuntomata.equals("AFNE")){
-         afn_lambda.printLambdaClausura(afn_lambda.getQ());
-         afn_lambda.calcularMuchasLambdaClausura(afn_lambda.getStates());
-         afn_lambda.procesarCadena(cadena);
-         afn_lambda.procesarCadenaConDetalles2(cadena);
-         afn_lambda.computarTodosLosProcesamientos(cadena,"procesamientosComputadosAFNE");
-         afn_lambda.procesarListaCadenas(prueba,"procesarLstaCadenasAFNLambda", true);
-        }else{
+    public void allProcess(String cadena, ArrayList<String> prueba) throws IOException {
+        if (this.TipoAuntomata.equals("AFD")) {
+            System.out.println("processString");
+            pcafd.processString(afd, cadena);
+            System.out.println("---------------");
+            System.out.println("processStringWithDetails");
+            pcafd.processStringWithDetails(afd, cadena);
+            System.out.println("---------------");
+            System.out.println("procesarCadenasAFD");
+            pcafd.processStringList(afd, prueba, "procesarCadenasAFD", true);
+            System.out.println("---------------");
+        } else if (this.TipoAuntomata.equals("AFN")) {
+            System.out.println("processString");
+            afn.procesarCadena(cadena);
+            System.out.println("---------------");
+            System.out.println("procesarCadenaConDetalles");
+            afn.procesarCadenaConDetalles(cadena);
+            System.out.println("---------------");
+            System.out.println("computarTodosLosProcesamientos");
+            afn.computarTodosLosProcesamientos(cadena, "procesamientosComputadosAFN");
+            System.out.println("---------------");
+            System.out.println("processStringList");
+            afn.processStringList(prueba, "procesarListaCadenasAFN", true);
+            System.out.println("---------------");
+        } else if (this.TipoAuntomata.equals("AFNE")) {
+            System.out.println("--------  LambdaClausura --------");
+            afn_lambda.printLambdaClausura(afn_lambda.getQ());
+            System.out.println("---------------");
+            System.out.println("--------  MuchosLambdaClausura --------");
+            afn_lambda.calcularMuchasLambdaClausura(afn_lambda.getStates());
+            System.out.println("---------------");
+            System.out.println("--------  ProcesarCadena --------");
+            System.out.println(afn_lambda.procesarCadena(cadena));
+            System.out.println("---------------");
+            System.out.println("--------  ProcesarCadenaConDetalles --------");
+            afn_lambda.procesarCadenaConDetalles2(cadena);
+            System.out.println("---------------");
+            System.out.println("--------  ComputarTodosLosProcesamientos --------");
+            afn_lambda.computarTodosLosProcesamientos(cadena, "procesamientosComputadosAFNE");
+            System.out.println("---------------");
+            System.out.println("--------  ProcesarListaCadenas --------");
+            afn_lambda.procesarListaCadenas(prueba, "procesarLstaCadenasAFNLambda", true);
+            System.out.println("---------------");
+        } else {
             System.out.println("El automata seleccionado no existe");
-           
+
         }
-     }
-     
+    }
+
  
       
     
@@ -1038,7 +1050,7 @@ public class Automatas {
     public static void main(String[] args) throws IOException{
         Automatas automata = new Automatas();
         automata.initializeAutomata("file.txt");
-        automata.createAutomata();
+        automata.createAutomata("file.txt");
         automata.showAutomataData();
         
         //Pruebas AFN_Lambda to AFN

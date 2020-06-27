@@ -1,3 +1,4 @@
+#!AFNE
 #alphabet
 a-b
 #states
