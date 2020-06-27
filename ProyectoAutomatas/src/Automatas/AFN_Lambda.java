@@ -563,24 +563,24 @@ public class AFN_Lambda {
 
                 estadoActual = estado;
 
-                System.out.println("letra: "+letraActual);
+//                System.out.println("letra: "+letraActual);
                 simbolo = Character.toString(cadena.charAt(letraActual));
 
                 posicionEstado = getPosEstado(estadoActual);
                 posicionSimbolo = getPosSimbolo(simbolo);
-                System.out.println("Estado: "+estadoActual+":"+simbolo);
+//                System.out.println("Estado: "+estadoActual+":"+simbolo);
                 
                 String temp = String.format("[%s, %s]", estadoActual, cadena.substring(letraActual, cadena.length()));
                 
                 this.globalito.get(indice).add(temp);
-                System.out.println(temp);
+//                System.out.println(temp);
                 if(!this.delta[posicionEstado][posicionLambda].isEmpty()){
                     if(!loop){
                         for(i = 0;i<this.delta[posicionEstado][posicionLambda].size();i++){
-                            System.out.println(this.delta[posicionEstado][posicionLambda]);
+//                            System.out.println(this.delta[posicionEstado][posicionLambda]);
                             if(letraActual< cadena.length()){
                                 estadoActual = this.delta[posicionEstado][posicionLambda].get(i);
-                                System.out.println("Estado: "+estadoActual+">"+lambda);
+//                                System.out.println("Estado: "+estadoActual+">"+lambda);
                                 if(estadoAnterior.equals(estadoActual)){
                                     loop = true;
                                     aceptada = computarTodosLosProcesamientos(cadena, estadoActual, letraActual, true, aceptada, salida, indice, estadoAnterior);
@@ -600,10 +600,10 @@ public class AFN_Lambda {
                         }
                     }else{
                         temp = String.format("[%s, %s]", estadoActual, cadena.substring(letraActual, cadena.length()));
-                        System.out.println(temp);
+//                        System.out.println(temp);
                         this.globalito.get(indice).add(temp);
                         this.globalito.get(indice).add("Abortado");
-                        System.out.println("Procesamiento abortado");
+//                        System.out.println("Procesamiento abortado");
                         aceptada = false;
                         return aceptada;
                     }
@@ -611,26 +611,26 @@ public class AFN_Lambda {
                 estadoActual = estadoAnterior;
                 if(!this.delta[posicionEstado][posicionSimbolo].isEmpty()){
                     for(i = 0;i<this.delta[posicionEstado][posicionSimbolo].size();i++){
-                        System.out.println(estadoActual+": " +simbolo + ">" + this.delta[posicionEstado][posicionSimbolo]);
+//                        System.out.println(estadoActual+": " +simbolo + ">" + this.delta[posicionEstado][posicionSimbolo]);
                         if(letraActual< cadena.length()){
                             ++letraActual;
                             estadoActual = this.delta[posicionEstado][posicionSimbolo].get(i);
-                            System.out.println("Estado: "+estadoActual+">"+simbolo);
+//                            System.out.println("Estado: "+estadoActual+">"+simbolo);
                             aceptada = computarTodosLosProcesamientos(cadena, estadoActual, letraActual, false, (aceptada), salida, indice, estadoAnterior) || aceptada;                            
                         }else{
                             this.globalito.get(indice).add("No aceptacion");
                             indice++;
-                            System.out.println("Cadena rechazada");
+//                            System.out.println("Cadena rechazada");
                             aceptada = false;
                             return aceptada;
                         }
                     }
                 }else{
                     temp = String.format("[%s, %s]", estadoActual, cadena.substring(letraActual, cadena.length()));
-                    System.out.println(temp);
+//                    System.out.println(temp);
                     this.globalito.get(indice).add(temp);
                     this.globalito.get(indice).add("Abortado");
-                    System.out.println("Procesamiento abortado");
+//                    System.out.println("Procesamiento abortado");
                     aceptada = aceptada || false;
                     return aceptada;
                 }
@@ -958,7 +958,7 @@ public class AFN_Lambda {
                         if(imprimirPantalla)System.out.println("No");
                         bw.write("\n"+"No");
                         
-                    }else System.out.println("Esto no es un atomata :c"); // esto es cuando no tiene ninguna aceptada ni rechazada
+                    }
                     
                     //Limpiando todo para sel siguiente ciclo
                 globalito.clear();
@@ -1070,41 +1070,28 @@ public class AFN_Lambda {
         }
         
         
-        public boolean procesarCadenaConDetalles2(String cadena){
-            
-            
+    public boolean procesarCadenaConDetalles2(String cadena) {
+        String salida = "";
+        int indice = 0;
+        boolean resultado = computarTodosLosProcesamientos(cadena, this.q, 0, false, true, salida, indice, this.q);
+        this.filtro();
+        if (!aceptada.isEmpty()) {
 
-                String salida = "";
-                int indice = 0;
-                boolean resultado = computarTodosLosProcesamientos(cadena, this.q, 0, false, true, salida, indice, this.q);
-                this.filtro();      
-                    if(!aceptada.isEmpty()){
-                        
-                        ArrayList<String> a = new ArrayList<>();
-                        a = aceptacionMasCorto(); 
-                        System.out.println(cadena);
-                        for(int i = 1; i < (a.size()-1);i++ ){ 
-                            System.out.print(a.get(i)+"->");  
-                        }
-                        System.out.print(a.get(a.size()-1)+"\n");
-                        return true;
-                        
-                        
-            
-            
-  
-                    }else {
-                        System.out.println("No hay procesamientos aceptados");
-                     return false;
-                    }
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+            ArrayList<String> a = new ArrayList<>();
+            a = aceptacionMasCorto();
+            System.out.println(cadena);
+            for (int i = 1; i < (a.size() - 1); i++) {
+                System.out.print(a.get(i) + "->");
+            }
+            System.out.print(a.get(a.size() - 1) + "\n");
+            return true;
+
+        } else {
+            System.out.println("No hay procesamientos aceptados");
+            return false;
         }
+
+    }
 
     public ArrayList<String> getStates() {
         return states;
