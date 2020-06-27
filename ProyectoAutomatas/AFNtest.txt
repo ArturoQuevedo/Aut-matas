@@ -1,3 +1,4 @@
+#!AFN
 #alphabet
 a-b
 #states

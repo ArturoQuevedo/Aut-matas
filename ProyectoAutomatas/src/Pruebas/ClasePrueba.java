@@ -405,8 +405,8 @@ public class ClasePrueba {
         
         //Creacion del automata
         Automatas automata = new Automatas();
-        automata.initializeAutomata("AFD_entrega.txt");
-        automata.createAutomata("AFD_entrega.txt");
+        automata.initializeAutomata("AFN_Lambda1.txt");
+        automata.createAutomata("AFN_Lambda1.txt");
 //        automata.initializeAutomata("AFN_Lambda1.txt");
 //        automata.createAutomata("AFN_Lambda1.txt");
         automata.elAlfabeto();
@@ -421,7 +421,7 @@ public class ClasePrueba {
         
         /*                      Procesamiento de cadenas                        */
         
-        automata.allProcess("aa",alfabeto.getCadenas()); 
+        automata.allProcess("aaaa",alfabeto.getCadenas()); 
         
         //Producto cartesiano entre dos automatas
         System.out.println("--------- Producto cartesiano entre dos automatas ---------");
