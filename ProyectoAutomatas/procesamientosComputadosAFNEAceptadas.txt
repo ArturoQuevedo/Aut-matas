@@ -1,4 +1,0 @@
-aa
-[s0, aa]->Aceptacion
-[s0, aa]->Aceptacion
-[s0, aa]->Aceptacion
