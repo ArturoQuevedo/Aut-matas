@@ -638,7 +638,15 @@ public class AFN_Lambda {
                 if(!aceptada){
                     aceptada = (verifyComputarTodosLosProcesamientos(letraActual, cadena, estadoActual, i, aceptada, indice)) || aceptada;
                 }
+            }else if(this.finalStates.contains(estado) && cadena.length() == 0){
+                String temp = String.format("[%s, %s]", this.q, " ");
+                this.globalito.get(indice).add(temp);
+                this.globalito.get(indice).add("Aceptacion");
+                return true;
+            }else{
+                return aceptada;
             }
+            
             return aceptada;
         }
         
@@ -820,12 +828,23 @@ public class AFN_Lambda {
             }
         }
         
-        public void obtenerLista(ArrayList<String> lista, int inicio, int ultimo, ArrayList<String> objetivo){
-            for(int i=0;i<lista.size();i++){
-                if(i >= inicio && i<= ultimo){
-                    objetivo.add(lista.get(i));
+        public void obtenerLista(ArrayList<String> lista, int inicio, int ultimo, ArrayList<String> objetivo, int index){
+            
+            if(objetivo == aceptada){
+                for(int i=0;i<=index;i++){
+                    String prueba = globalito.get(i).get(1);
+                    if(!prueba.equals("Abortado") && !prueba.equals("Aceptacion") && !prueba.equals("No aceptacion")){
+                        objetivo.add(prueba);
+                    }
                 }
-                if(i>ultimo) break;
+                objetivo.add("Aceptacion");
+            }else{
+                for(int i=0;i<lista.size();i++){
+                    if(i >= inicio && i<= ultimo){
+                        objetivo.add(lista.get(i));
+                    }
+                    if(i>ultimo) break;
+                }
             }
         }
         
@@ -838,23 +857,23 @@ public class AFN_Lambda {
                     switch (resp) {
                         case 0:
                             if(proceso==0)
-                                obtenerLista(globalito.get(i), proceso, j, abortada);
+                                obtenerLista(globalito.get(i), proceso, j, abortada, 0);
                             else
-                                obtenerLista(globalito.get(i), proceso+1, j, abortada);
+                                obtenerLista(globalito.get(i), proceso+1, j, abortada, 0);
                             proceso = j;
                             break;
                         case 1:
                             if(proceso==0)
-                                obtenerLista(globalito.get(i), proceso, j, rechazada);
+                                obtenerLista(globalito.get(i), proceso, j, rechazada, 0);
                             else
-                                obtenerLista(globalito.get(i), proceso+1, j, rechazada);
+                                obtenerLista(globalito.get(i), proceso+1, j, rechazada, 0);
                             proceso = j;
                             break;
                         case 2:
                             if(proceso==0)
-                                obtenerLista(globalito.get(i), proceso, j, aceptada);
+                                obtenerLista(globalito.get(i), proceso, j, aceptada, i);
                             else
-                                obtenerLista(globalito.get(i), proceso+1, j, aceptada);
+                                obtenerLista(globalito.get(i), proceso+1, j, aceptada, i);
                             proceso = j;
                             break;
                         default:
@@ -959,7 +978,8 @@ public class AFN_Lambda {
                         bw.write("\n"+"No");
                         
                     }
-                    
+//                    AGREGAR CASO ABORTADOS PERRA DE VEREDA
+
                     //Limpiando todo para sel siguiente ciclo
                 globalito.clear();
                 aceptada.clear();
@@ -1187,24 +1207,29 @@ public class AFN_Lambda {
 
         AFN_Lambda afnl = new AFN_Lambda();
         
-        afnl.initializeAFD("AFN_Lambda2.txt");
+        afnl.initializeAFD("AFN_Lambda3.txt");
+        
         
         ArrayList<String> prueba = new ArrayList<>();
-        prueba.add("");
-        prueba.add("aaaaa");
-        prueba.add("bbbbbb");
-        prueba.add("");
-        prueba.add("aaaaaaaaaaaab");
+//        prueba.add("");
+//        prueba.add("a");
+//        prueba.add("aa");
+//        prueba.add("aaa");
+        prueba.add("aaaab");
+//        prueba.add("bbbbbb");
+//        prueba.add("aaaaaaaaaaaab");
+        
+        afnl.procesarListaCadenas(prueba, "hola", true);
         // Aqui se debe poner el nombre del archivo que se desea leer
         //afnl.hallarEstadosInaccesibles();// ejecutando esta función los estados inaccesibles quedan dentro del atributo (de la clase)InacessibleStates
         //System.out.println(afd.inaccessibleStates.get(0));
         //afd.computarTodosLosProcesamientos("aba", "ProbandoLambda");
 
-  
+//        afnl.computarTodosLosProcesamientos("a", "hola.txt");
 
         
         //test del afn_lambda to afd
-        afnl.procesarCadenaConversion("aaaaaaaaaaaaaa");
+//        afnl.procesarCadenaConversion("aaaaaaaaaaaaaa");
         //afnl.procesarCadenaConDetallesConversion("aaab");
         //afnl.procesarListaCadenasConversion(prueba, "probando23", true);
        
