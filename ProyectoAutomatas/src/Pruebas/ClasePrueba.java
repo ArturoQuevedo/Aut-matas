@@ -31,50 +31,6 @@ public class ClasePrueba {
 
 
 
-    public static void probarAFNLambda(String fileRoute) throws IOException {
-        
-        AFN_Lambda afd = new AFN_Lambda();
-        afd.initializeAFD("AFNLambda1.txt"); // Aqui se debe poner el nombre del archivo que se desea leer
-
-        //Los metodos que se DEBEN USAR para obtener resultados son los siguientes :
-        System.out.println("\nLAMBDA CLAUSURA");
-        afd.printLambdaClausura("s1");
-
-        System.out.println("\nLAMBDA CLAUSURA DE VARIOS ESTADOS");
-        ArrayList<String> pruebasEstados = new ArrayList<String>();
-        pruebasEstados.add("s1");
-        pruebasEstados.add("s2");
-        pruebasEstados.add("s3");
-        pruebasEstados.add("s4");
-        afd.calcularMuchasLambdaClausura(pruebasEstados);
-
-        System.out.println("\nPROCESAR CADENA SIN DETALLES:");
-        afd.procesarCadena("aba");
-
-        System.out.println("\nPROCESAR CADENA CON DETALLES:");
-        afd.procesarCadenaConDetalles2("aba");
-
-        System.out.println("\nCOMPUTAR TODOS LOS PROCESAMIENTOS:");
-        afd.computarTodosLosProcesamientos("aba", "procesarCadenasAFNLambda");
-
-        ArrayList<String> pruebasCadenas = new ArrayList<String>();
-        pruebasCadenas.add("aaaaaa");
-        pruebasCadenas.add("aba");
-        pruebasCadenas.add("aabb");
-        pruebasCadenas.add("bbbbbbbb");
-        pruebasCadenas.add("");
-        System.out.println("\nCOMPUTAR LISTA DE CADENAS:");
-        afd.procesarListaCadenas(pruebasCadenas, "procesarLstaCadenasAFNLambda", true);
-        /*Cualquier otro metodo con nombre similar no dara el resultado esperado.
-        NOTAS : 
-        -Todas las "listas" (denotadas como "cadenas") recibidas deben ser ArrayList
-        -Todos los parametros "nombreArchivo" van sin la extensión .txt y en caso de ya existir se les dara un nombre generico que :
-            en caso de ser en el metodo "procesarListaCadenas" sera : nombreArchivoi.txt en donde "nombreArchivo" es el nombre que se ingreso y  la "i" representa un numero entero disponible.
-            en caso de ser en el metodo "computarTodosLosProcesamientos" seran : nombreArchivoiAceptadas.txt,nombreArchivoiRechazadas.txt,nombreArchivoiAbortadas.txt en donde "nombreArchivo" es el nombre que se ingreso y  la "i" representa un numero entero disponible.
-       
-         */
-
-    }
     
     public static void probarAFNtoAFD2() throws IOException {
 
@@ -125,7 +81,7 @@ public class ClasePrueba {
         AFN_Lambda afnl = new AFN_Lambda();
         AFN afn = new AFN();
         boolean afnlr;
-        String afnlc = "bbb";
+        String afnlc = "abbb";
  
         
         afnl.initializeAFD("probarAFN_LambdatoAFN.txt");
@@ -404,11 +360,9 @@ public class ClasePrueba {
        
         
         //Creacion del automata
-        Automatas automata = new Automatas();
+        /*Automatas automata = new Automatas();
         automata.initializeAutomata("AFN_Lambda1.txt");
         automata.createAutomata("AFN_Lambda1.txt");
-//        automata.initializeAutomata("AFN_Lambda1.txt");
-//        automata.createAutomata("AFN_Lambda1.txt");
         automata.elAlfabeto();
         Alfabeto alfabeto = new Alfabeto(automata.getSigma());
         automata.showAutomataData();
@@ -416,53 +370,53 @@ public class ClasePrueba {
         
         //el numero es el tamaño de las cadenas que genera
         alfabeto.generarCadenaAleatoria(4);
-        //la "aa" puede ser remplazada
+        //la "aa" puede ser remplazada*/
         
         
         /*                      Procesamiento de cadenas                        */
         
-        automata.allProcess("aaaa",alfabeto.getCadenas()); 
+        //automata.allProcess("aaaa",alfabeto.getCadenas()); 
         
         //Producto cartesiano entre dos automatas
         System.out.println("--------- Producto cartesiano entre dos automatas ---------");
-        probarProductoCartesiano("AFD1.txt","AFD2.txt");
+        //probarProductoCartesiano("AFD1.txt","AFD2.txt");
         
         //Validar AFN en AFD
         System.out.println("--------- Validar AFN en AFD ---------");
-        validarAFNtoAFD("AFNtest.txt");
+        //validarAFNtoAFD("AFNtest.txt");
         
         //Validar AFN_Lambda to AFN
         System.out.println("--------- Validar AFN_Lambda to AFN ---------");
-        validarAFNLambdatoAFN("AFN_Lambda1.txt");
+        //validarAFNLambdatoAFN("AFN_Lambda1.txt");
         
         //Probar producto cartesiano
         System.out.println("--------- Probar producto cartesiano ---------");
-        probarProductoCartesiano("AFD1.txt","AFD2.txt");
+        //probarProductoCartesiano("AFD1.txt","AFD2.txt");
         
         
         //Probar AFN to AFD
         System.out.println("--------- Probar AFN to AFD ---------");
-        probarAFNtoAFD2();
+        //probarAFNtoAFD2();
         
         
         //Probar AFN_Lambda to AFN
         System.out.println("--------- Probar AFN_Lambda to AFN ---------");
-        probarAFN_LambdatoAFN2();
+        probarAFN_LambdatoAFN();
         
         
         //Probar AFN_Lambda to AFD
         System.out.println("--------- Probar AFN_Lambda to AFD ---------");
-        probarAFN_LambdatoAFD2();
+        //probarAFN_LambdatoAFD2();
         
         
         //Probar complemento de AFD
         System.out.println("--------- Probar complemento de AFD ---------");
-        probarComplemento();
+        //probarComplemento();
         
         
         //Probar simplificacion de un AFD
         System.out.println("--------- Probar simplificacion de un AFD ---------");
-        probarSimplificacion();
+        //probarSimplificacion();
     }
 
 }

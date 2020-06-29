@@ -28,7 +28,11 @@ public class Alfabeto {
     public boolean generarCadenaAleatoria(int n) {
         boolean fiveThousands;
         int size;
+        if(this.simbolos.contains('$') ){
+            size = this.simbolos.size()-1;
+        }else{
         size = this.simbolos.size();
+        }
         fiveThousands = theRealRecursiveStringsGenerator("", size, n);
         return fiveThousands;
     }

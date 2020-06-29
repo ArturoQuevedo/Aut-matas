@@ -938,7 +938,7 @@ public class AFN {
 
         AFN afd = new AFN();
         afd.initializeAFN("AFNtest.txt");
-        afd.procesarCadena("aa");
+        afd.procesarCadena(" ");
         //afd.hallarEstadosInaccesibles();// ejecutando esta función los estados inaccesibles quedan dentro del atributo (de la clase)InacessibleStates
         //System.out.println(afd.inaccessibleStates.get(0));
         /*ArrayList<String> prueba = new ArrayList<>();

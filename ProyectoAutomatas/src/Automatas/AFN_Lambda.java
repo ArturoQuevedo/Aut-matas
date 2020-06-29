@@ -794,6 +794,16 @@ public class AFN_Lambda {
             
             
             System.out.println("Numero de procesamientos realizados : "+ total);
+            
+                globalito.clear();
+                aceptada.clear();
+                rechazada.clear();
+                abortada.clear();
+                for(int o=0;o<250;o++){
+                    ArrayList<String> a = new ArrayList<>();
+                    globalito.add(a);
+                }
+            
             return total;
         }
         
@@ -958,14 +968,14 @@ public class AFN_Lambda {
                         int pNoAceptados = Integer.valueOf(b.get(0));
                         if(imprimirPantalla) System.out.println(cadena);
                         bw.write("\n"+cadena + "\n");
-                        for(i = 1; i < b.size();i++ ){
+                        for(i = 1; i < (b.size()-1);i++ ){
                             
                             if(imprimirPantalla)System.out.print(b.get(i)+"->");
                             bw.write(b.get(i)+"->");
                             
                         }
-                        if(imprimirPantalla)System.out.println("En total hay " + total + " procesamientos posibles.");
-                        bw.write("\n"+"En total hay " + total + " procesamientos posibles.");
+                        if(imprimirPantalla)System.out.print(b.get(b.size()-1)+ "\n");
+                        bw.write(b.get(b.size()-1)+ "\n");
                         if(imprimirPantalla)System.out.println("En total hay " + total + " procesamientos posibles.");
                         bw.write("\n"+"En total hay " + total + " procesamientos posibles.");
                         if(imprimirPantalla)System.out.println("En total hay " + pAceptados + " procesamientos aceptados.");
@@ -977,8 +987,7 @@ public class AFN_Lambda {
                         if(imprimirPantalla)System.out.println("No");
                         bw.write("\n"+"No");
                         
-                    }
-//                    AGREGAR CASO ABORTADOS PERRA DE VEREDA
+                    }else System.out.println("Para la cadena "+ cadena+ " todos los procesamientos fueron abortados");
 
                     //Limpiando todo para sel siguiente ciclo
                 globalito.clear();
@@ -1207,7 +1216,8 @@ public class AFN_Lambda {
 
         AFN_Lambda afnl = new AFN_Lambda();
         
-        afnl.initializeAFD("AFN_Lambda3.txt");
+        afnl.initializeAFD("probarAFN_LambdatoAFN.txt");
+        System.out.println(afnl.procesarCadena("abbb"));
         
         
         ArrayList<String> prueba = new ArrayList<>();
@@ -1219,7 +1229,7 @@ public class AFN_Lambda {
 //        prueba.add("bbbbbb");
 //        prueba.add("aaaaaaaaaaaab");
         
-        afnl.procesarListaCadenas(prueba, "hola", true);
+        //afnl.procesarListaCadenas(prueba, "hola", true);
         // Aqui se debe poner el nombre del archivo que se desea leer
         //afnl.hallarEstadosInaccesibles();// ejecutando esta función los estados inaccesibles quedan dentro del atributo (de la clase)InacessibleStates
         //System.out.println(afd.inaccessibleStates.get(0));
