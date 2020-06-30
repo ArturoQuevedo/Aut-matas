@@ -27,7 +27,7 @@ public class ClaseValidacion {
         ArrayList<String> diffResult = new ArrayList<>();
         for (int i = 0; i < 5000; i++) {
             
-            afnlResult = afnl.procesarCadena(alfabeto.cadenas.get(i));
+            afnlResult = afnl.procesarCadena2(alfabeto.cadenas.get(i));
             //System.out.println("AFNL procesó "+alfabeto.cadenas.get(i)+" "+afnlResult);
             
             afnResult = afn.procesarCadenaSinImprimirNiMadres(alfabeto.cadenas.get(i));
