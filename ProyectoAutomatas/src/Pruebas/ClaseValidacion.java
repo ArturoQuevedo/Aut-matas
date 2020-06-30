@@ -93,7 +93,7 @@ public class ClaseValidacion {
     
     public void validarAFNtoAFD(AFN afn) {
 
-        AFD afd = Automatas.AFNtoAFD(afn);
+        AFD afd = Automatas.AFNtoAFDSinImprimir(afn);
         PCAFD pc = new PCAFD();
         Alfabeto alfabeto = new Alfabeto(afn.getSigma());
         
@@ -105,13 +105,13 @@ public class ClaseValidacion {
         ArrayList<String> diffResult = new ArrayList<>();
         for (int i = 0; i < 5000; i++) {
             
-            afdResult = pc.processStringSinImprimirNiMadres(afd,alfabeto.cadenas.get(i),true);
+            afdResult = pc.processStringSinImprimirNiMadres(afd,alfabeto.cadenas.get(i),false);
             //System.out.println("AFNL procesó "+alfabeto.cadenas.get(i)+" "+afnlResult);
             
             afnResult = afn.procesarCadenaSinImprimirNiMadres(alfabeto.cadenas.get(i));
             //System.out.println("AFN procesó "+alfabeto.cadenas.get(i)+" "+afnResult);            
 
-            if ((afdResult && afnResult) || (!afdResult && !afnResult)) {
+            if ((afdResult == afnResult) ) {
                 equal++;
             } else {
 
