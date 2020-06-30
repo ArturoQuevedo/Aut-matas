@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.io.*;
 import java.util.Collections;
 import java.util.StringTokenizer;
+import Automatas.Automatas;
 
 public class AFN {
 
@@ -937,9 +938,13 @@ public class AFN {
 
     public static void main(String[] args) throws Exception {
 
-        AFN afd = new AFN();
-        afd.initializeAFN("AFNtest.txt");
-        afd.procesarCadena(" ");
+        AFN afn = new AFN();
+        AFD afd = new AFD();
+        PCAFD pcafd = new PCAFD();
+        afn.initializeAFN("AFNtest.txt");
+        afd = Automatas.AFNtoAFD(afn);
+        System.out.println(afn.procesarCadenaSinImprimirNiMadres("b"));
+        System.out.println(pcafd.processStringSinImprimirNiMadres(afd, "b", false));
         //afd.hallarEstadosInaccesibles();// ejecutando esta función los estados inaccesibles quedan dentro del atributo (de la clase)InacessibleStates
         //System.out.println(afd.inaccessibleStates.get(0));
         /*ArrayList<String> prueba = new ArrayList<>();

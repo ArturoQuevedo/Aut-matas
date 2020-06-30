@@ -251,7 +251,7 @@ public class ClasePrueba {
         AFN afn = new AFN();
         afn.initializeAFN(fileRoute);
         ClaseValidacion cv= new ClaseValidacion();
-        cv.validarAFNtoAFD2(afn);        
+        cv.validarAFNtoAFD(afn);        
     }
     
     public static void validarAFNLambdatoAFN(String fileRoute) throws IOException{
@@ -268,26 +268,26 @@ public class ClasePrueba {
         
         //Creacion del automata
         Automatas automata = new Automatas();
-        automata.initializeAutomata("AFD_entrega.txt");
-        automata.createAutomata("AFD_entrega.txt");
+        //automata.initializeAutomata("AFD_entrega.txt");
+        //automata.createAutomata("AFD_entrega.txt");
         //Archivos : AFD_entrega.txt - AFN_entrega.txt - AFN_Lambda_entrega.txt
-        automata.elAlfabeto();
+        //automata.elAlfabeto();
         Alfabeto alfabeto = new Alfabeto(automata.getSigma());
-        automata.showAutomataData();
+        //automata.showAutomataData();
         
         
         //el numero es el tamaño de las cadenas que genera
-        alfabeto.generarCadenaAleatoria(3);
+        //alfabeto.generarCadenaAleatoria(3);
         
         
         
         /*                      Procesamiento de cadenas                        */
         //la "abab" puede ser remplazada
-        automata.allProcess("abab",alfabeto.getCadenas()); 
+        //automata.allProcess("abab",alfabeto.getCadenas()); 
         
         //Producto cartesiano entre dos automatas
         System.out.println("--------- Producto cartesiano entre dos automatas ---------");
-        probarProductoCartesiano("AFD1.txt","AFD2.txt");
+        //probarProductoCartesiano("AFD1.txt","AFD2.txt");
         
         //Validar AFN en AFD
         System.out.println("--------- Validar AFN en AFD ---------");
@@ -295,7 +295,7 @@ public class ClasePrueba {
         
         //Validar AFN_Lambda to AFN
         System.out.println("--------- Validar AFN_Lambda to AFN ---------");
-        validarAFNLambdatoAFN("AFN_Lambda1.txt");
+        /*validarAFNLambdatoAFN("AFN_Lambda1.txt");
         
         //Probar producto cartesiano
         System.out.println("--------- Probar producto cartesiano ---------");
@@ -324,7 +324,7 @@ public class ClasePrueba {
         
         //Probar simplificacion de un AFD
         System.out.println("--------- Probar simplificacion de un AFD ---------");
-        probarSimplificacion();
+        probarSimplificacion();*/
     }
 
 }
