@@ -85,11 +85,11 @@ public class AFN_Lambda {
                 System.out.println(this.finalStates.get(i));
             }
         }
-
-        public void showInitialState() {
-            System.out.println("Initial state: " + this.q);
-        }
-
+        
+    public void showInitialState() {
+        System.out.println("Initial state: ");
+        System.out.println(this.q);
+    }
     public void ShowInaccessibleStates(){
     int i,j,k;
         System.out.println("Inaccesible States:");
