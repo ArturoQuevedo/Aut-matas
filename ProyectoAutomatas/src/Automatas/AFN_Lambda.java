@@ -19,6 +19,8 @@ public class AFN_Lambda {
         public ArrayList<ArrayList<String>> globalito = new ArrayList<ArrayList<String>>();
         public int totalProcesamientos = 0;
         public ArrayList<String> aceptada ;
+         public ArrayList<String> aceptada_L;
+        public ArrayList<String> rechazada_L ;
         public ArrayList<String> rechazada;
         public ArrayList<String> abortada;
         private ArrayList<String> inaccessibleStates = new ArrayList<>();
@@ -33,6 +35,8 @@ public class AFN_Lambda {
             this.aceptada = new ArrayList<>();
             this.rechazada = new ArrayList<>();
             this.abortada = new ArrayList<>();
+            this.aceptada_L = new ArrayList<>();
+            this.rechazada_L = new ArrayList<>();
             
             for(int i=0;i<250;i++){
                 ArrayList<String> a = new ArrayList<>();
@@ -662,10 +666,21 @@ public class AFN_Lambda {
         
         public int computarTodosLosProcesamientos(String cadena, String nombreArchivo) throws IOException {
         String salida = "";
+        this.totalProcesamientos = 0;
         int indice = 0;
         boolean resultado = computarTodosLosProcesamientos(cadena, this.q, 0, false, true, salida, indice, this.q);
+        if(!resultado){
+            if(!aceptada_L.isEmpty()) resultado = true;    
+        }
         this.filtro();
         int total = this.totalProcesamientos;
+        
+        ArrayList<String> a_L = new ArrayList<>();
+        ArrayList<String> b_L = new ArrayList<>();
+        a_L = aceptacionMasCorto_Lambda(); 
+        b_L = noAceptacionMasCorto_Lambda();
+        total = total + Integer.valueOf(a_L.get(0)) + Integer.valueOf(b_L.get(0));
+        
         for (int i = 0; i < globalito.size(); i++) {
             if (!globalito.get(i).isEmpty()) {
                 total++;
@@ -708,13 +723,13 @@ public class AFN_Lambda {
         int j = 0;
         bw.write(cadena + "\n");
         System.out.println(cadena);
-        if (aceptada.isEmpty()) {
+        
+        if (aceptada.isEmpty() && aceptada_L.isEmpty()) {
             System.out.println("No hay procesamientos aceptados");
         } else {
             while (true) {
 
                 if (j == aceptada.size()) {
-                    System.out.println("");
                     break;
                 }
 
@@ -732,12 +747,39 @@ public class AFN_Lambda {
                 }
 
             }
+            
+            j = 0;
+         while(true){
+            
+            if(j == aceptada_L.size()){
+                System.out.println("");
+                break;
+            }
+ 
+
+            if(aceptada_L.get(j).equals("Aceptacion")){
+                bw.write(aceptada_L.get(j)+"\n");
+                System.out.print(aceptada_L.get(j));
+                System.out.println("");
+                j++;
+            }else{
+                
+                 bw.write(aceptada_L.get(j)+"->");
+                 System.out.print(aceptada_L.get(j)+"->");
+                 j++;
+                
+            }
+            
+            
+   
+        }
+            
         }
 
         //escribiendo en el documento de Rechazadas con el formato adecuado  
         j = 0;
         bw2.write(cadena + "\n");
-        if (rechazada.isEmpty()) {
+        if (rechazada.isEmpty() && rechazada_L.isEmpty()) {
             System.out.println("No hay procesamientos rechazados");
         } else {
             while (true) {
@@ -761,6 +803,35 @@ public class AFN_Lambda {
                 }
 
             }
+            
+            j = 0;
+        while(true){
+            
+            if(j == rechazada_L.size()){
+                System.out.println("");
+                break;
+            }
+            
+            if(rechazada_L.get(j).equals("No aceptacion")){
+                bw2.write(rechazada_L.get(j)+"\n");
+                System.out.print(rechazada_L.get(j));
+                System.out.println("");
+                j++;
+            }else{
+                
+                 bw2.write(rechazada_L.get(j)+"->");
+                 System.out.print(rechazada_L.get(j)+"->");
+                 j++;
+                
+            }
+        
+        
+        
+        
+        
+        
+        }
+           
         }
 
         //escribiendo en el documento de Abortadas con el formato adecuado  
@@ -801,6 +872,8 @@ public class AFN_Lambda {
         aceptada.clear();
         rechazada.clear();
         abortada.clear();
+        aceptada_L.clear();
+        rechazada_L.clear();
         for (int o = 0; o < 250; o++) {
             ArrayList<String> a = new ArrayList<>();
             globalito.add(a);
@@ -809,17 +882,67 @@ public class AFN_Lambda {
         return total;
     }
         
+        public boolean procesarCadena2(String cadena){
+         
+        String salida = "";
+        this.totalProcesamientos = 0;
+        int indice = 0;
+        boolean resultado = computarTodosLosProcesamientos(cadena, this.q, 0, false, true, salida, indice, this.q);
+        return resultado;    
+        }
+        
+        void procesarCadenaVacia(int indice, String estadoActual){
+        ArrayList<String> estados = new ArrayList<>(); //los estados a lso que se puede llegar con lambda y cadena vacia 
+        estados = calcularLambdaClausura(estadoActual);
+        estados.remove(estadoActual);
+        //aqui lo ideal seria poner todo el camino de como se llega cada estado pero no se como hacerlo :c tonces solo pondre el estado destino y si es de aceptación o no 
+        if(!estados.isEmpty()){
+            ArrayList<String> procesamiento = new ArrayList<>();
+                procesamiento = (ArrayList<String>) globalito.get(indice).clone();
+                procesamiento.remove(procesamiento.size()-1); // quitando el "aceptado" o "no aceptado"
+
+            for(int i = 0;i < estados.size(); i++){
+                
+                if(this.getFinalStates().contains(estados.get(i))){
+                    for(int j = 0; j < procesamiento.size();j++){
+                        
+                        this.aceptada_L.add(procesamiento.get(j));
+                    }
+                    this.aceptada_L.add("["+estados.get(i) + ",]");
+                    this.aceptada_L.add("Aceptacion");
+                }else{
+                    for(int j = 0; j < procesamiento.size();j++){
+                        
+                        this.rechazada_L.add(procesamiento.get(j));
+                    }
+                    this.rechazada_L.add("["+estados.get(i) + ",]");
+                    this.rechazada_L.add("No aceptacion");
+                }
+                
+                
+            }
+            
+        }
+        
+        }
+        
+        
         public boolean verifyComputarTodosLosProcesamientos(int letraActual, String cadena, String estadoActual, int i, boolean aceptada, int indice){
 //            System.out.println("Voy en la letra "+letraActual + " y el size de la cadena es "+ cadena.length()+" Estado actual "+ estadoActual);
             if(letraActual == cadena.length()){
                 for(i = 0; i< this.finalStates.size(); i++){
                     if(estadoActual.equals(this.finalStates.get(i))){
+                        this.globalito.get(indice).add("["+estadoActual+",]");
                         this.globalito.get(indice).add("Aceptacion");
+                        procesarCadenaVacia(indice,estadoActual); 
+
                         //System.out.println("Cadena Aceptada");
                         return true;
                     }
                 }
+                this.globalito.get(indice).add("["+estadoActual+",]");
                 this.globalito.get(indice).add("No aceptacion");
+                procesarCadenaVacia(indice,estadoActual);
                 //System.out.println("Cadena rechazada");
                 return false;
             }
@@ -878,7 +1001,7 @@ public class AFN_Lambda {
 //                                    if(!objetivo.contains(prueba)){
 //                                        objetivo.add(prueba);
 //                                    }
-                                    if(!prueba.equals("Aceptacion")){
+                                    if(!prueba.equals("Aceptacion")){   
                                         String last = objetivo.get(objetivo.size()-1);
                                         int initA = last.indexOf(" ")+2;
                                         int initB = prueba.indexOf(" ")+1;
@@ -962,6 +1085,7 @@ public class AFN_Lambda {
             
             //Verificar si "nombreArchivo.txt" ya existe
             int i = 1;
+            this.totalProcesamientos = 0;
             String ruta = nombreArchivo + ".txt";
             File archivo = new File(ruta);
             BufferedWriter bw;
@@ -991,26 +1115,51 @@ public class AFN_Lambda {
                 }
            
                      
-                    if(!aceptada.isEmpty()){
+                    if(!aceptada.isEmpty() || !aceptada_L.isEmpty()){
                         
                         ArrayList<String> a = new ArrayList<>();
                         ArrayList<String> b = new ArrayList<>();
+                        ArrayList<String> a_L = new ArrayList<>();
+                        ArrayList<String> b_L = new ArrayList<>();
                         a = aceptacionMasCorto(); 
+                        a_L = aceptacionMasCorto_Lambda(); 
                         b = noAceptacionMasCorto();
-
-                        int pAceptados = Integer.valueOf(a.get(0));
-                        int pNoAceptados = Integer.valueOf(b.get(0));
+                        b_L = noAceptacionMasCorto_Lambda();
+                        total = total + Integer.valueOf(a_L.get(0)) + Integer.valueOf(b_L.get(0));
+                        int pAceptados = Integer.valueOf(a.get(0)) + Integer.valueOf(a_L.get(0));
+                        
+                        int pNoAceptados = Integer.valueOf(b.get(0)) + Integer.valueOf(b_L.get(0));
+                        
+                         
                         if(imprimirPantalla) System.out.println(cadena);
                         bw.write("\n"+cadena + "\n");
 
-                        for(i = 1; i < (a.size()-1);i++ ){
+                        if(!aceptada.isEmpty()){
+                            
+                            for(i = 1; i < (a.size()-1);i++ ){
                             
                             if(imprimirPantalla)System.out.print(a.get(i)+"->");
                             bw.write(a.get(i)+"->");
                             
                         }
-                        if(imprimirPantalla)System.out.print(a.get(a.size()-1)+ "\n");
+                            if(imprimirPantalla)System.out.print(a.get(a.size()-1)+ "\n");
                         bw.write(a.get(a.size()-1)+ "\n");
+                            
+                        }else{
+                            
+                           for(i = 1; i < (a_L.size()-1);i++ ){
+                            
+                            if(imprimirPantalla)System.out.print(a_L.get(i)+"->");
+                            bw.write(a_L.get(i)+"->");
+                            
+                        }
+                           if(imprimirPantalla)System.out.print(a_L.get(a_L.size()-1)+ "\n");
+                        bw.write(a_L.get(a_L.size()-1)+ "\n");
+                            
+                        }
+                        
+                        
+                        
                         if(imprimirPantalla)System.out.println("En total hay " + total + " procesamientos posibles.");
                         bw.write("\n"+"En total hay " + total + " procesamientos posibles.");
                         if(imprimirPantalla)System.out.println("En total hay " + pAceptados + " procesamientos aceptados.");
@@ -1023,15 +1172,22 @@ public class AFN_Lambda {
                         bw.write("\n"+"Si");
                         
                         
-                    }else if(!rechazada.isEmpty()){
+                    }else if(!rechazada.isEmpty() || !rechazada_L.isEmpty()){
                         
                         ArrayList<String> b = new ArrayList<>();
+                        ArrayList<String> b_L = new ArrayList<>();
                         b = noAceptacionMasCorto();
+                        b_L = noAceptacionMasCorto_Lambda();
+                        total = total + Integer.valueOf(b_L.get(0));
                         int pAceptados = 0;
-                        int pNoAceptados = Integer.valueOf(b.get(0));
+                        int pNoAceptados = Integer.valueOf(b.get(0)) + Integer.valueOf(b_L.get(0));
+                        
                         if(imprimirPantalla) System.out.println(cadena);
                         bw.write("\n"+cadena + "\n");
-                        for(i = 1; i < (b.size()-1);i++ ){
+                        
+                        if(!rechazada.isEmpty()){
+                            
+                            for(i = 1; i < (b.size()-1);i++ ){
                             
                             if(imprimirPantalla)System.out.print(b.get(i)+"->");
                             bw.write(b.get(i)+"->");
@@ -1039,6 +1195,20 @@ public class AFN_Lambda {
                         }
                         if(imprimirPantalla)System.out.print(b.get(b.size()-1)+ "\n");
                         bw.write(b.get(b.size()-1)+ "\n");
+                            
+                        }else{
+                            
+                            for(i = 1; i < (b_L.size()-1);i++ ){
+                            
+                            if(imprimirPantalla)System.out.print(b_L.get(i)+"->");
+                            bw.write(b_L.get(i)+"->");
+                            
+                        }
+                        if(imprimirPantalla)System.out.print(b_L.get(b_L.size()-1)+ "\n");
+                        bw.write(b_L.get(b_L.size()-1)+ "\n");
+                            
+                        }
+                        
                         if(imprimirPantalla)System.out.println("En total hay " + total + " procesamientos posibles.");
                         bw.write("\n"+"En total hay " + total + " procesamientos posibles.");
                         if(imprimirPantalla)System.out.println("En total hay " + pAceptados + " procesamientos aceptados.");
@@ -1050,13 +1220,15 @@ public class AFN_Lambda {
                         if(imprimirPantalla)System.out.println("No");
                         bw.write("\n"+"No");
                         
-                    }else System.out.println("Para la cadena "+ cadena+ " todos los procesamientos fueron abortados");
+                    }else 
 
                     //Limpiando todo para sel siguiente ciclo
                 globalito.clear();
                 aceptada.clear();
                 rechazada.clear();
                 abortada.clear();
+                aceptada_L.clear();
+                rechazada_L.clear();
                 for(int o=0;o<250;o++){
                     ArrayList<String> a = new ArrayList<>();
                     globalito.add(a);
@@ -1086,9 +1258,9 @@ public class AFN_Lambda {
                 
                 while(true){
                     
-                    if(j == aceptada.size()){
-                    break;
-            }
+                    if(j == aceptada.size()) break;
+                    
+            
             
             if(aceptada.get(j).equals("Aceptacion")){
                 numero++;
@@ -1113,6 +1285,53 @@ public class AFN_Lambda {
             return corto;
             
         }
+        
+         public ArrayList<String> aceptacionMasCorto_Lambda(){
+        
+            ArrayList<String> corto = new ArrayList<>();
+            int in = 0;  //el indice mas corto hasta hora
+            int fin = 0; // el indice mas largo hasta hora
+            int temin = 0; // lo mismo de arriba pero temporal para ir comparando
+            int temfin = 0; // same
+            int longitud = 0; //la resta de fin con in 
+            int numero = 0;//numero de procesamientos
+            int j  = 0; //contador
+            if(aceptada_L.isEmpty()){
+                corto.add(0,Integer.toString(numero));
+                return corto;
+                
+            }else{
+                
+                while(true){
+                    
+                    if(j == aceptada_L.size()){
+                    break;
+            }
+            
+            if(aceptada_L.get(j).equals("Aceptacion")){
+                numero++;
+                temfin = j;
+                if((temfin-temin) > longitud){
+                    in = temin;
+                    fin = temfin;
+                    longitud = (temfin-temin);
+                }
+                temin = j+1;
+                j++;
+            }else j++;
+                    
+                }
+                for(int k = 0;k <= longitud;k++){
+                    corto.add(aceptada_L.get(in));
+                    in++;
+                }
+
+            }
+            corto.add(0,Integer.toString(numero));
+            return corto;
+            
+        }
+        
         public ArrayList<String> noAceptacionMasCorto(){
         
             ArrayList<String> corto = new ArrayList<>();
@@ -1160,6 +1379,56 @@ public class AFN_Lambda {
             return corto;
             
         }
+        
+        
+        public ArrayList<String> noAceptacionMasCorto_Lambda(){
+        
+            ArrayList<String> corto = new ArrayList<>();
+            int in = 0;  //el indice mas corto hasta hora
+            int fin = 0; // el indice mas largo hasta hora
+            int temin = 0; // lo mismo de arriba pero temporal para ir comparando
+            int temfin = 0; // same
+            int longitud = 0; //la resta de fin con in
+            int numero = 0;//numero de procesamientos
+            int j  = 0; //contador
+            
+            if(rechazada_L.isEmpty()){
+                corto.add(0,Integer.toString(numero));
+                return corto;
+                
+            }else{
+                
+                while(true){
+                    
+                    if(j == rechazada_L.size()){
+                    break;
+            }
+            
+            if(rechazada_L.get(j).equals("No aceptacion")){
+                numero++;
+                temfin = j;
+                if((temfin-temin) > longitud){
+                    in = temin;
+                    fin = temfin;
+                    longitud = (temfin-temin);
+                }
+                temin = j+1;
+                j++;
+            }else j++;
+                    
+                }
+                
+                for(int k = 0;k <= longitud;k++){
+                    corto.add(rechazada_L.get(in));
+                    in++;
+                }
+                
+            }
+            corto.add(0,Integer.toString(numero));
+            return corto;
+            
+        }
+        
         
         
     public boolean procesarCadenaConDetalles2(String cadena) {
@@ -1293,8 +1562,8 @@ public class AFN_Lambda {
         prueba.add("bbcb");
         prueba.add("bbbbbb");
 //        prueba.add("aaaaaaaaaaaab");
-        
-        afnl.procesarListaCadenas(prueba, "pruebaLambda.txt", true);
+        //afnl.computarTodosLosProcesamientos("aaa", "holuu");
+        //afnl.procesarListaCadenas(prueba, "pruebaLambda.txt", true);
         // Aqui se debe poner el nombre del archivo que se desea leer
         //afnl.hallarEstadosInaccesibles();// ejecutando esta función los estados inaccesibles quedan dentro del atributo (de la clase)InacessibleStates
         //System.out.println(afd.inaccessibleStates.get(0));

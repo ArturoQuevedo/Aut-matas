@@ -183,7 +183,7 @@ public class Automatas {
             afn_lambda.calcularMuchasLambdaClausura(afn_lambda.getStates());
             System.out.println("---------------");
             System.out.println("--------  ProcesarCadena --------");
-            System.out.println(afn_lambda.procesarCadena(cadena));
+            System.out.println(afn_lambda.procesarCadena2(cadena));
             System.out.println("---------------");
             System.out.println("--------  ProcesarCadenaConDetalles --------");
             afn_lambda.procesarCadenaConDetalles2(cadena);

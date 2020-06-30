@@ -1,3 +1,4 @@
+#!AFNE
 #alphabet
 a-b
 #states
@@ -14,5 +15,5 @@ s0:a>s0
 s0:$>s2
 s1:a>s2
 s2:b>s1
-s2:$>s3
+s2:a>s3
 s3:b>s3
