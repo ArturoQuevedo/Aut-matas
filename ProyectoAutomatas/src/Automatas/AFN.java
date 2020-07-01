@@ -427,58 +427,7 @@ public class AFN {
         //verificando si esta en estado de aceptacion
         return result;
     }
-/*
-    public void ImprimirProcessStringAFN(String cadena) {
-        int i, j;
-        System.out.println(this.q);
-        newProcessStringAFN(cadena, this.q, 0);
-        for (i = 0; i < this.endsStates.size(); i++) {
-            System.out.println("estado finale: " + this.endsStates.get(i));
-            for (j = 0; j < this.finalStates.size(); j++) {
-                if (this.endsStates.get(i).equals(this.finalStates.get(j))) {
-                    System.out.println("es un estado de aceptacion");
-                    j = this.finalStates.size() + 1;
-                } else if (this.endsStates.get(i).equals("aborted") && j == this.finalStates.size() - 1) {
-                    System.out.println("es un estado abortado");
-                    j = this.finalStates.size() + 1;
-                } else if (j == this.finalStates.size() - 1) {
-                    System.out.println("es un estado rechazado");
-                }
-            }
-        }
-    }
-*/
-/*
-    public void newProcessStringAFN(String cadena, String estado, int posLetra) {
-        //declaracion de variables
-        int i, j, k;
-        int posState, posSymbol;
-        String symbol;
-        ArrayList<String> delta1 = new ArrayList<>();
-        //inicializacion 
-        symbol = Character.toString(cadena.charAt(posLetra));
-        posState = getRow(estado);
-        posSymbol = getColumn(symbol);
-        delta1 = this.delta[posState][posSymbol];
-        //procesos
-        posLetra++;
-        if (!delta1.isEmpty()) {
-            for (i = 0; i < delta1.size(); i++) {
-                estado = delta1.get(i);
-                if (posLetra >= cadena.length()) {
-                    this.endsStates.add(estado);
-                }
-                if (posLetra < cadena.length()) {
-                    newProcessStringAFN(cadena, estado, posLetra);
-                }
-            }
-        } else {
-            this.endsStates.add("aborted");
-        }
 
-        return;
-    }
-*/
     public boolean processStringAFN(String cadena, String estado, int letra) {
         int i;
         String state;
@@ -645,6 +594,7 @@ public class AFN {
     }
 
     public boolean procesarCadena(String string) {
+        this.finale = false;
         boolean bool = procesarCadenaAFN(string, this.q, 0);
         if (bool) {
             System.out.println("----------------------------------------Cadena aceptada----------------------------------------");
@@ -655,6 +605,7 @@ public class AFN {
     }
 
     public boolean procesarCadenaSinImprimirNiMadres(String string) {
+        this.finale = false;
         boolean bool = procesarCadenaAFN(string, this.q, 0);
         if (bool) {
 
@@ -664,6 +615,7 @@ public class AFN {
     }
 
     public boolean procesarCadenaConDetalles(String string) {
+        this.finale = false;
         boolean bool = procesarCadenaConDetallesAFN(string, this.q, 0, "");
         if (bool) {
             System.out.println("----------------------------------------Cadena aceptada----------------------------------------");
@@ -674,7 +626,7 @@ public class AFN {
     }
 
     public int computarTodosLosProcesamientos(String string, String fileName) throws IOException {
-
+        this.finale = false;
         //lugar de la ruta
         String ruta = (fileName);
         int counter = 0;
@@ -717,7 +669,7 @@ public class AFN {
     }
 
     public void processStringList(ArrayList<String> stringList, String nombreArchivo, boolean imprimirPantalla) throws IOException {
-
+        this.finale = false;
         int i = 1;
         boolean result;
         int counterAc = 0, counterRe = 0, counterAb = 0; //contadores para las cadenas
@@ -890,7 +842,6 @@ public class AFN {
         //System.out.print("sigma: ");
         for (int i = 0; i < sigma.size(); i++) {
             this.sigma.add(sigma.get(i));
-            //System.out.print(this.sigma.get(i) + " ");
         }
         //System.out.println("");
 
@@ -942,9 +893,6 @@ public class AFN {
         AFD afd = new AFD();
         PCAFD pcafd = new PCAFD();
         afn.initializeAFN("AFNtest.txt");
-        afd = Automatas.AFNtoAFD(afn);
-        System.out.println(afn.procesarCadenaSinImprimirNiMadres("b"));
-        System.out.println(pcafd.processStringSinImprimirNiMadres(afd, "b", false));
         //afd.hallarEstadosInaccesibles();// ejecutando esta función los estados inaccesibles quedan dentro del atributo (de la clase)InacessibleStates
         //System.out.println(afd.inaccessibleStates.get(0));
         /*ArrayList<String> prueba = new ArrayList<>();
