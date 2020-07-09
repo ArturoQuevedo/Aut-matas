@@ -263,8 +263,9 @@ public class ClasePrueba {
 
         //Creacion del automata
         Automatas automata = new Automatas();
-        automata.initializeAutomata("AFD_entrega.txt");
-        automata.createAutomata("AFD_entrega.txt");
+        automata.initializeAutomata("AFN_LambdatoAFN.txt");
+        automata.createAutomata("AFN_LambdatoAFN.txt");
+
         //Archivos : AFD_entrega.txt - AFN_entrega.txt - AFN_Lambda_entrega.txt
         automata.elAlfabeto();
         Alfabeto alfabeto = new Alfabeto(automata.getSigma());
@@ -323,7 +324,6 @@ public class ClasePrueba {
                 probarSimplificacion();
                 return 1;
             case 10:
-                probarSimplificacion();
                 return 0;
             default:
                 return 0;
@@ -333,11 +333,17 @@ public class ClasePrueba {
 
     public static void main(String[] args) throws Exception {
 
-        int menu;
-        menu = funcionMenu();
-        while (menu == 1) {
-            menu = funcionMenu();
-        }
+        
+//        Automatas automata = new Automatas();
+//        automata.initializeAutomata("AFN_Lambda_entrega.txt");
+//        automata.createAutomata("AFN_Lambda_entrega.txt");
+        
+        probarAutomata();
+//        int menu;
+//        menu = funcionMenu();
+//        while (menu == 1) {
+//            menu = funcionMenu();
+//        }
 
     }
 

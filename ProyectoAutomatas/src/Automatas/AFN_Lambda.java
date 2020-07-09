@@ -661,6 +661,10 @@ public class AFN_Lambda {
                 }
                 return aceptada;
             }
+            
+            if(!aceptada){
+                    aceptada = (verifyComputarTodosLosProcesamientos(letra, cadena, estado, 0, aceptada, indice)) || aceptada;
+                }
             return aceptada;
         }
         
@@ -1106,6 +1110,11 @@ public class AFN_Lambda {
                 String cadena = cadenas.remove(0);
                 String salida = "";
                 int indice = 0;
+                
+                if(globalito.isEmpty()){
+                    System.out.println("HOLAAAAAAAAAAAAAAAAAAAAAA");
+                }
+                
                 boolean resultado = computarTodosLosProcesamientos(cadena, this.q, 0, false, true, salida, indice, this.q);
                 this.filtro();
                 int total = this.totalProcesamientos;
@@ -1172,6 +1181,20 @@ public class AFN_Lambda {
                         bw.write("\n"+"Si");
                         
                         
+                        //Limpiando todo para sel siguiente ciclo
+                        globalito.clear();
+                        aceptada.clear();
+                        rechazada.clear();
+                        abortada.clear();
+                        aceptada_L.clear();
+                        rechazada_L.clear();
+                        for(int o=0;o<200;o++){
+                            ArrayList<String> c = new ArrayList<>();
+                            globalito.add(c);
+                        }
+                        
+                        
+                        
                     }else if(!rechazada.isEmpty() || !rechazada_L.isEmpty()){
                         
                         ArrayList<String> b = new ArrayList<>();
@@ -1218,24 +1241,39 @@ public class AFN_Lambda {
                         if(imprimirPantalla)System.out.println("En total hay " + (total-(pAceptados+pNoAceptados)) + " procesamientos abortados.");
                         bw.write("\n"+"En total hay " + (total-(pAceptados+pNoAceptados)) + " procesamientos abortados.");
                         if(imprimirPantalla)System.out.println("No");
-                        bw.write("\n"+"No");
+                        bw.write("\n"+"No"); 
                         
-                    }else 
-
-                    //Limpiando todo para sel siguiente ciclo
-                globalito.clear();
-                aceptada.clear();
-                rechazada.clear();
-                abortada.clear();
-                aceptada_L.clear();
-                rechazada_L.clear();
-                for(int o=0;o<250;o++){
-                    ArrayList<String> a = new ArrayList<>();
-                    globalito.add(a);
-                }
+                        
+                        //Limpiando todo para sel siguiente ciclo
+                        globalito.clear();
+                        aceptada.clear();
+                        rechazada.clear();
+                        abortada.clear();
+                        aceptada_L.clear();
+                        rechazada_L.clear();
+                        for(int o=0;o<200;o++){
+                            ArrayList<String> a = new ArrayList<>();
+                            globalito.add(a);
+                        }
+                    }else{
+                        System.out.println("TODOS LOS PROCESAMIENTOS DE ESTA CADENA " + cadena + "  ESTAN ABORTADOS.");
+                        
+                        //Limpiando todo para sel siguiente ciclo
+                        globalito.clear();
+                        aceptada.clear();
+                        rechazada.clear();
+                        abortada.clear();
+                        aceptada_L.clear();
+                        rechazada_L.clear();
+                        for(int o=0;o<200;o++){
+                            ArrayList<String> a = new ArrayList<>();
+                            globalito.add(a);
+                        }
+                    }
                     
                     
             }
+            
             bw.close();
         }
         
@@ -1548,20 +1586,22 @@ public class AFN_Lambda {
 
         AFN_Lambda afnl = new AFN_Lambda();
         
-        afnl.initializeAFD("probarAFN_LambdatoAFN.txt");
+        afnl.initializeAFD("AFN_Lambda_entrega.txt");
         afnl.showDelta();
 //        System.out.println(afnl.procesarCadenaConDetalles2("abbb"));
         
         
         ArrayList<String> prueba = new ArrayList<>();
 //        prueba.add("");
-        prueba.add("a");
-        prueba.add("aa");
-        prueba.add("aaa");
-        prueba.add("abbb");
-        prueba.add("bbcb");
-        prueba.add("bbbbbb");
+        prueba.add("aab");
+//        prueba.add("aa");
+//        prueba.add("aaa");
+//        prueba.add("abbb");
+//        prueba.add("bbcb");
+//        prueba.add("bbbbbb");
 //        prueba.add("aaaaaaaaaaaab");
+
+        afnl.procesarListaCadenas(prueba, "probandoLambda", true);
         //afnl.computarTodosLosProcesamientos("aaa", "holuu");
         //afnl.procesarListaCadenas(prueba, "pruebaLambda.txt", true);
         // Aqui se debe poner el nombre del archivo que se desea leer
