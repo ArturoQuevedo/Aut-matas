@@ -30,7 +30,7 @@ public class ClaseValidacion {
             afnlResult = afnl.procesarCadena2(alfabeto.cadenas.get(i));
             //System.out.println("AFNL procesó "+alfabeto.cadenas.get(i)+" "+afnlResult);
             
-            afnResult = afn.procesarCadenaSinImprimirNiMadres(alfabeto.cadenas.get(i));
+            afnResult = afn.procesarCadenaNoImprimir(alfabeto.cadenas.get(i));
             //System.out.println("AFN procesó "+alfabeto.cadenas.get(i)+" "+afnResult);            
 
             if ((afnResult && afnlResult) || (!afnResult && !afnlResult)) {
@@ -69,7 +69,7 @@ public class ClaseValidacion {
             afnlResult = afnl.procesarCadena(alfabeto.cadenas.get(i));
             //System.out.println("AFNL procesó "+alfabeto.cadenas.get(i)+" "+afnlResult);
             
-            afnResult = pc.processStringSinImprimirNiMadres(afd, alfabeto.cadenas.get(i),false);
+            afnResult = pc.processStringNoPrint(afd, alfabeto.cadenas.get(i),false);
             //System.out.println("AFN procesó "+alfabeto.cadenas.get(i)+" "+afnResult);            
 
             if ((afnResult && afnlResult) || (!afnResult && !afnlResult)) {
@@ -105,10 +105,10 @@ public class ClaseValidacion {
         ArrayList<String> diffResult = new ArrayList<>();
         for (int i = 0; i < 5000; i++) {
             
-            afdResult = pc.processStringSinImprimirNiMadres(afd,alfabeto.cadenas.get(i),false);
+            afdResult = pc.processStringNoPrint(afd,alfabeto.cadenas.get(i),false);
             //System.out.println("AFNL procesó "+alfabeto.cadenas.get(i)+" "+afnlResult);
             
-            afnResult = afn.procesarCadenaSinImprimirNiMadres(alfabeto.cadenas.get(i));
+            afnResult = afn.procesarCadenaNoImprimir(alfabeto.cadenas.get(i));
             //System.out.println("AFN procesó "+alfabeto.cadenas.get(i)+" "+afnResult);            
 
             if ((afdResult == afnResult) ) {
@@ -144,10 +144,10 @@ public class ClaseValidacion {
         ArrayList<String> diffResult = new ArrayList<>();
         for (int i = 0; i < 5000; i++) {
             
-            afdResult = pc.processStringSinImprimirNiMadres(afd,alfabeto.cadenas.get(i),false);
+            afdResult = pc.processStringNoPrint(afd,alfabeto.cadenas.get(i),false);
             //System.out.println("AFNL procesó "+alfabeto.cadenas.get(i)+" "+afnlResult);
             
-            afnResult = pc.processStringSinImprimirNiMadres(afd,alfabeto.cadenas.get(i),false);
+            afnResult = pc.processStringNoPrint(afd,alfabeto.cadenas.get(i),false);
             //System.out.println("AFN procesó "+alfabeto.cadenas.get(i)+" "+afnResult);            
 
             if ((afdResult && afnResult) || (!afdResult && !afnResult)) {

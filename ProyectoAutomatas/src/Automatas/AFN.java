@@ -604,7 +604,7 @@ public class AFN {
         return bool;
     }
 
-    public boolean procesarCadenaSinImprimirNiMadres(String string) {
+    public boolean procesarCadenaNoImprimir(String string) {
         this.finale = false;
         boolean bool = procesarCadenaAFN(string, this.q, 0);
         if (bool) {
