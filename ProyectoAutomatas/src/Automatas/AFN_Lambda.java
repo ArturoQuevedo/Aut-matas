@@ -19,11 +19,17 @@ public class AFN_Lambda {
         public ArrayList<ArrayList<String>> globalito = new ArrayList<ArrayList<String>>();
         public int totalProcesamientos = 0;
         public ArrayList<String> aceptada ;
-         public ArrayList<String> aceptada_L;
+        public ArrayList<String> aceptada_L;
         public ArrayList<String> rechazada_L ;
         public ArrayList<String> rechazada;
         public ArrayList<String> abortada;
         private ArrayList<String> inaccessibleStates = new ArrayList<>();
+        public ArrayList<ArrayList<String>> aceptadaR = new ArrayList<ArrayList<String>>();
+        public ArrayList<ArrayList<String>> rechazadaR = new ArrayList<ArrayList<String>>();
+        public ArrayList<ArrayList<String>> abortadaR = new ArrayList<ArrayList<String>>();
+        
+        
+        public String ultimoEstado = "";
         
         
          
@@ -42,6 +48,23 @@ public class AFN_Lambda {
                 ArrayList<String> a = new ArrayList<>();
                 this.globalito.add(a);
             }
+            
+            for(int i=0;i<250;i++){
+                ArrayList<String> a = new ArrayList<>();
+                this.aceptadaR.add(a);
+            }
+            
+            for(int i=0;i<250;i++){
+                ArrayList<String> a = new ArrayList<>();
+                this.rechazadaR.add(a);
+            }
+            
+            for(int i=0;i<500;i++){
+                ArrayList<String> a = new ArrayList<>();
+                this.abortadaR.add(a);
+            }
+            
+            
             
         }
 
@@ -668,7 +691,144 @@ public class AFN_Lambda {
             return aceptada;
         }
         
+        public void organizar(){
+            int i = 0;
+            int j = 0;
+            
+            //Organizando las aceptadas
+            while (true) {
+
+                if (j == aceptada.size()) {
+                    break;
+                }
+
+                if (aceptada.get(j).equals("Aceptacion")) {
+                    
+                    aceptadaR.get(i).add(aceptada.get(j));
+                    i++;
+                    j++;
+                    
+                } else {
+                    aceptadaR.get(i).add(aceptada.get(j));
+                    j++;
+                    
+                }
+
+            }
+            
+            i = 0;
+            j = 0;
+            //Organizando las rechazadas
+            while (true) {
+
+                if (j == rechazada.size()) {
+                    break;
+                }
+
+                if (rechazada.get(j).equals("No aceptacion")) {
+                    
+                    rechazadaR.get(i).add(rechazada.get(j));
+                    i++;
+                    j++;
+                    
+                } else {
+                    rechazadaR.get(i).add(rechazada.get(j));
+                    j++;
+                    
+                }
+
+            }
+            
+            i = 0;
+            j = 0;
+            //Organizando las abrotadas
+            while (true) {
+
+                if (j == abortada.size()) {
+                    break;
+                }
+
+                if (abortada.get(j).equals("Abortado")) {
+                    
+                    abortadaR.get(i).add(abortada.get(j));
+                    i++;
+                    j++;
+                    
+                } else {
+                    abortadaR.get(i).add(abortada.get(j));
+                    j++;
+                    
+                }
+
+            }
+               
+            
+        }
+        
+       public void eliminarRepetidas() {
+           
+
+        //aceptadas   
+        
+        for (int i = 0; i < (aceptadaR.size() - 1); i++) {
+            for (int j = i+1; j < aceptadaR.size(); j++) {
+              
+                if (aceptadaR.get(i).equals(aceptadaR.get(j))) {
+                aceptadaR.remove(j);
+                j--;
+
+            }
+                
+            }
+            
+            
+        }
+        
+        
+        //rechazadas   
+        
+        for (int i = 0; i < (rechazadaR.size() - 1); i++) {
+            for (int j = i+1; j < rechazadaR.size(); j++) {
+              
+                if (rechazadaR.get(i).equals(rechazadaR.get(j))) {
+                rechazadaR.remove(j);
+                j--;
+
+            }
+                
+            }
+            
+            
+        }
+        
+        
+        //abortadas  
+        
+        for (int i = 0; i < (abortadaR.size() - 1); i++) {
+            for (int j = i+1; j < abortadaR.size(); j++) {
+              
+                if (abortadaR.get(i).equals(abortadaR.get(j))) {
+                abortadaR.remove(j);
+                j--;
+
+            }
+                
+            }
+            
+            
+        }
+        
+        
+        
+
+        
+
+
+    }
+        
         public int computarTodosLosProcesamientos(String cadena, String nombreArchivo) throws IOException {
+        organizar();
+        eliminarRepetidas();
         String salida = "";
         this.totalProcesamientos = 0;
         int indice = 0;
@@ -727,32 +887,36 @@ public class AFN_Lambda {
         int j = 0;
         bw.write(cadena + "\n");
         System.out.println(cadena);
+            
         
-        if (aceptada.isEmpty() && aceptada_L.isEmpty()) {
+        if (aceptadaR.isEmpty() && aceptada_L.isEmpty()) {
             System.out.println("No hay procesamientos aceptados");
         } else {
-            while (true) {
+            System.out.println("Procesamientos aceptados ------------------------------------------------");
+            for(int f = 0; f < aceptadaR.size();f++){
+                
+                for(int h = 0; h < aceptadaR.get(f).size();h++){
+                    
 
-                if (j == aceptada.size()) {
-                    break;
-                }
-
-                if (aceptada.get(j).equals("Aceptacion")) {
-                    bw.write(aceptada.get(j) + "\n");
-                    System.out.print(aceptada.get(j));
+                       
+                   if (aceptadaR.get(f).get(h).equals("Aceptacion")) {
+                    
+                    bw.write(aceptadaR.get(f).get(h) + "\n");
+                    System.out.print(aceptadaR.get(f).get(h));
                     System.out.println("");
-                    j++;
+ 
                 } else {
-
-                    bw.write(aceptada.get(j) + "->");
-                    System.out.print(aceptada.get(j) + "->");
-                    j++;
-
+                    bw.write(aceptadaR.get(f).get(h) + "->");
+                    System.out.print(aceptadaR.get(f).get(h) + "->");   
                 }
-
+                    
+                    
+                    
+                }
+                
             }
             
-            j = 0;
+            /*j = 0;
          while(true){
             
             if(j == aceptada_L.size()){
@@ -777,39 +941,44 @@ public class AFN_Lambda {
             
    
         }
-            
+         */
+          System.out.println("------------------------------------------------------------");  
         }
 
         //escribiendo en el documento de Rechazadas con el formato adecuado  
         j = 0;
         bw2.write(cadena + "\n");
+        
+
+        
+        
         if (rechazada.isEmpty() && rechazada_L.isEmpty()) {
             System.out.println("No hay procesamientos rechazados");
         } else {
-            while (true) {
-
-                if (j == rechazada.size()) {
+            System.out.println("Procesamientos rechazados ------------------------------------------------");
+            for(int f = 0; f < rechazadaR.size();f++){
+                for(int h = 0; h < rechazadaR.get(f).size();h++){
+                    
+                   if (rechazadaR.get(f).get(h).equals("No aceptacion")) {
+                    
+                    bw.write(rechazadaR.get(f).get(h) + "\n");
+                    System.out.print(rechazadaR.get(f).get(h));
                     System.out.println("");
-                    break;
-                }
-
-                if (rechazada.get(j).equals("No aceptacion")) {
-                    bw2.write(rechazada.get(j) + "\n");
-                    System.out.print(rechazada.get(j));
-                    System.out.println("");
-                    j++;
+ 
                 } else {
-
-                    bw2.write(rechazada.get(j) + "->");
-                    System.out.print(rechazada.get(j) + "->");
-                    j++;
-
+ 
+                    bw.write(rechazadaR.get(f).get(h) + "->");
+                    System.out.print(rechazadaR.get(f).get(h) + "->");   
                 }
-
+                    
+                    
+                    
+                }
+                
             }
             
             j = 0;
-        while(true){
+        /*while(true){
             
             if(j == rechazada_L.size()){
                 System.out.println("");
@@ -834,8 +1003,8 @@ public class AFN_Lambda {
         
         
         
-        }
-           
+        }*/
+           System.out.println("------------------------------------------------------------");
         }
 
         //escribiendo en el documento de Abortadas con el formato adecuado  
@@ -844,27 +1013,28 @@ public class AFN_Lambda {
         if (abortada.isEmpty()) {
             System.out.println("No hay procesamientos abortados");
         } else {
-            while (true) {
-
-                if (j == abortada.size()) {
+            System.out.println("Procesamientos abortados ------------------------------------------------");
+            for(int f = 0; f < abortadaR.size();f++){
+                for(int h = 0; h < abortadaR.get(f).size();h++){
+                    
+                   if (abortadaR.get(f).get(h).equals("Abortado")) {
+                    
+                    bw.write(abortadaR.get(f).get(h) + "\n");
+                    System.out.print(abortadaR.get(f).get(h));
                     System.out.println("");
-                    break;
-                }
-
-                if (abortada.get(j).equals("Abortado")) {
-                    bw3.write(abortada.get(j) + "\n");
-                    System.out.print(abortada.get(j));
-                    System.out.println("");
-                    j++;
+ 
                 } else {
-
-                    bw3.write(abortada.get(j) + "->");
-                    System.out.print(abortada.get(j) + "->");
-                    j++;
-
+ 
+                    bw.write(abortadaR.get(f).get(h) + "->");
+                    System.out.print(abortadaR.get(f).get(h) + "->");   
                 }
-
+                    
+                    
+                    
+                }
+                
             }
+            System.out.println("------------------------------------------------------------");
         }
         bw.close();
         bw2.close();
@@ -873,6 +1043,9 @@ public class AFN_Lambda {
         System.out.println("Numero de procesamientos realizados : " + total);
 
         globalito.clear();
+        aceptadaR.clear();
+        rechazadaR.clear();
+        abortadaR.clear();
         aceptada.clear();
         rechazada.clear();
         abortada.clear();
@@ -881,6 +1054,18 @@ public class AFN_Lambda {
         for (int o = 0; o < 250; o++) {
             ArrayList<String> a = new ArrayList<>();
             globalito.add(a);
+        }
+        for (int o = 0; o < 250; o++) {
+            ArrayList<String> a = new ArrayList<>();
+            aceptadaR.add(a);
+        }
+        for (int o = 0; o < 250; o++) {
+            ArrayList<String> a = new ArrayList<>();
+            rechazadaR.add(a);
+        }
+        for (int o = 0; o < 250; o++) {
+            ArrayList<String> a = new ArrayList<>();
+            abortadaR.add(a);
         }
 
         return total;
@@ -936,7 +1121,7 @@ public class AFN_Lambda {
             if(letraActual == cadena.length()){
                 for(i = 0; i< this.finalStates.size(); i++){
                     if(estadoActual.equals(this.finalStates.get(i))){
-                        this.globalito.get(indice).add("["+estadoActual+",]");
+                        this.globalito.get(indice).add("["+estadoActual+",]");   
                         this.globalito.get(indice).add("Aceptacion");
                         procesarCadenaVacia(indice,estadoActual); 
 
@@ -974,7 +1159,18 @@ public class AFN_Lambda {
                 objetivo.add(estadoInicial);
                 for(int i=0;i<=index;i++){
                     for(int j=1;j<globalito.get(i).size();j++){
+                        
                         String prueba = globalito.get(i).get(j);
+                        
+                        if (prueba.equals("Aceptacion")) {
+                            
+                                                    //this.ultimoEstado = objetivo.get(objetivo.size()-1);
+                                                    //System.out.println("------------------------------------------------Este es :  " + this.ultimoEstado);
+
+                                                }
+                        
+                        
+                        
                         if(prueba.equals("Abortado")){
                             if(objetivo.contains(globalito.get(i).get(j-1))){
                                 String del = globalito.get(i).get(j-1);

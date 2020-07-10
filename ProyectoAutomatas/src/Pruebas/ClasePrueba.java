@@ -253,7 +253,7 @@ public class ClasePrueba {
         AFN_Lambda afnl = new AFN_Lambda();
         afnl.initializeAFD("AFN_Lambda1.txt");
         ClaseValidacion cv = new ClaseValidacion();
-        cv.validarAFNLambatoAFN2(afnl);
+        cv.validarAFNLambatoAFN(afnl);
     }
 
     public static void probarAutomata() throws IOException {
@@ -339,11 +339,12 @@ public class ClasePrueba {
 //        automata.createAutomata("AFN_Lambda_entrega.txt");
         
         probarAutomata();
-//        int menu;
-//        menu = funcionMenu();
-//        while (menu == 1) {
-//            menu = funcionMenu();
-//        }
+       /* int menu;
+      menu = funcionMenu();
+        while (menu == 1) {
+          menu = funcionMenu();
+     }
+*/
 
     }
 
