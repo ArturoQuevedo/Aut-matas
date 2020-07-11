@@ -263,8 +263,8 @@ public class ClasePrueba {
 
         //Creacion del automata
         Automatas automata = new Automatas();
-        automata.initializeAutomata("AFN_LambdatoAFN.txt");
-        automata.createAutomata("AFN_LambdatoAFN.txt");
+        automata.initializeAutomata("AFN_entrega.txt");
+        automata.createAutomata("AFN_entrega.txt");
 
         //Archivos : AFD_entrega.txt - AFN_entrega.txt - AFN_Lambda_entrega.txt
         automata.elAlfabeto();
@@ -333,18 +333,14 @@ public class ClasePrueba {
 
     public static void main(String[] args) throws Exception {
 
+
         
-//        Automatas automata = new Automatas();
-//        automata.initializeAutomata("AFN_Lambda_entrega.txt");
-//        automata.createAutomata("AFN_Lambda_entrega.txt");
-        
-        probarAutomata();
-       /* int menu;
+        int menu;
       menu = funcionMenu();
         while (menu == 1) {
           menu = funcionMenu();
      }
-*/
+
 
     }
 
