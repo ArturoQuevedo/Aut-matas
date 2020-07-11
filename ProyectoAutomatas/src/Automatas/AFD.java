@@ -55,61 +55,78 @@ public class AFD {
     }
 
     public void showDelta() {
+        System.out.println("#Transitions:");
         for (int i = 0; i < this.states.size(); i++) {
-            System.out.print("Estado " + this.states.get(i) + "   ");
             for (int j = 0; j < this.sigma.size(); j++) {
-                System.out.print(this.delta[i][j] + " ");
+                if(!this.delta[i][j].isEmpty()){
+                System.out.print(this.states.get(i)+":");
+                System.out.print(this.sigma.get(j)+">");
+                for(int k=0;k<this.delta[i][j].size();k++){
+                    System.out.print(this.delta[i][j].get(k));
+                    if(k<this.delta[i][j].size()-1){
+                    System.out.print(";");
+                    }
+                }
+                }
+                if(!this.delta[i][j].isEmpty()){
+                    System.out.println("");
+                }
             }
-            System.out.println("\n");
         }
 
     }
 
     public void showSigma() {
-        System.out.println("Alphabet:");
-        for (int i = 0; i < this.sigma.size(); i++) {
-            System.out.println(this.sigma.get(i));
+        System.out.println("#Alphabet:");
+        if(this.sigma.size()>1){
+        System.out.println(this.sigma.get(0)+"-"+this.sigma.get(this.sigma.size()-1));
+        }else{
+        System.out.println(this.sigma.get(0));
         }
     }
 
     public void showStates() {
-        System.out.println("States:");
+        System.out.println("#States:");
         for (int i = 0; i < this.states.size(); i++) {
             System.out.println(this.states.get(i));
         }
     }
 
     public void showFinalStates() {
-        System.out.println("Final states:");
+        System.out.println("#Accepting:");
         for (int i = 0; i < this.finalStates.size(); i++) {
             System.out.println(this.finalStates.get(i));
         }
     }
 
     public void showInitialState() {
-        System.out.println("Initial state: ");
+        System.out.println("#Initial: ");
         System.out.println(this.q);
+    }
+
+    public void ShowInaccessibleStates() {
+        int i, j, k;
+        System.out.println("#Inaccesible States:");
+        for(i=0;i<this.inaccessibleStates.size();i++){
+            System.out.println(this.inaccessibleStates.get(i));
+        }
     }
 
     public void showLimboStates(){
         int i,j,k;
-        System.out.println("Limbo states:");
+        System.out.println("#Limbo states:");
         for(i=0;i<this.limboStates.size();i++){
             System.out.println(this.limboStates.get(i));
         }
     }
     
-    public void ShowInaccessibleStates(){
-    int i,j,k;
-        System.out.println("Inaccesible States:");
-        for(i=0;i<this.inaccessibleStates.size();i++){
-            System.out.println(this.inaccessibleStates.get(i));
-        }
-    }
+
     
     public void showAllTipeOfStates(){
         hallarEstadosInaccesibles();
         findLimboStates();
+        showSigma();
+        showStates();
         showInitialState();
         showFinalStates();
         ShowInaccessibleStates();
@@ -617,7 +634,8 @@ public class AFD {
         AFD afd = new AFD();
         afd.initializeAFD("AFD1.txt");
         PCAFD pro = new PCAFD();
-        pro.processString(afd, "a");
+        //pro.processString(afd, "a");
+        afd.showAllTipeOfStates();
         //afd.simplificarAFD(afd);
         //afd.hallarEstadosInaccesibles(); // ejecutando esta función los estados inaccesibles quedan dentro del atributo (de la clase)InacessibleStates
 

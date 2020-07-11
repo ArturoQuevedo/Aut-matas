@@ -76,50 +76,66 @@ public class AFN_Lambda {
                 }
             }
         }
-
-        public void showDelta() {
-            for (int i = 0; i < this.states.size(); i++) {
-                System.out.print("Estado " + this.states.get(i) + "   ");
-                for (int j = 0; j < this.sigma.size(); j++) {
-                    System.out.print(this.delta[i][j] + " ");
+     public void showDelta() {
+        System.out.println("#Transitions:");
+        for (int i = 0; i < this.states.size(); i++) {
+            for (int j = 0; j < this.sigma.size(); j++) {
+                if(!this.delta[i][j].isEmpty()){
+                System.out.print(this.states.get(i)+":");
+                System.out.print(this.sigma.get(j)+">");
+                for(int k=0;k<this.delta[i][j].size();k++){
+                    System.out.print(this.delta[i][j].get(k));
+                    if(k<this.delta[i][j].size()-1){
+                    System.out.print(";");
+                    }
                 }
-                System.out.println("\n");
-            }
-
-        }
-
-        public void showSigma() {
-            System.out.println("Alphabet:");
-            for (int i = 0; i < this.sigma.size(); i++) {
-                System.out.println(this.sigma.get(i));
+                }
+                if(!this.delta[i][j].isEmpty()){
+                    System.out.println("");
+                }
             }
         }
 
-        public void showStates() {
-            System.out.println("States:");
-            for (int i = 0; i < this.states.size(); i++) {
-                System.out.println(this.states.get(i));
-            }
-        }
+    }
 
-        public void showFinalStates() {
-            System.out.println("Final states:");
-            for (int i = 0; i < this.finalStates.size(); i++) {
-                System.out.println(this.finalStates.get(i));
-            }
+    public void showSigma() {
+        System.out.println("#Alphabet:");
+        if(this.sigma.size()>2){
+        System.out.print(this.sigma.get(0)+"-");
+        System.out.print(this.sigma.get(this.sigma.size()-2));
+        }else{
+        System.out.println(this.sigma.get(0));
         }
-        
+        System.out.println("");
+    }
+
+    public void showStates() {
+        System.out.println("#States:");
+        for (int i = 0; i < this.states.size(); i++) {
+            System.out.println(this.states.get(i));
+        }
+    }
+
+    public void showFinalStates() {
+        System.out.println("#Accepting:");
+        for (int i = 0; i < this.finalStates.size(); i++) {
+            System.out.println(this.finalStates.get(i));
+        }
+    }
+
     public void showInitialState() {
-        System.out.println("Initial state: ");
+        System.out.println("#Initial: ");
         System.out.println(this.q);
     }
-    public void ShowInaccessibleStates(){
-    int i,j,k;
-        System.out.println("Inaccesible States:");
+
+    public void ShowInaccessibleStates() {
+        int i, j, k;
+        System.out.println("#Inaccesible States:");
         for(i=0;i<this.inaccessibleStates.size();i++){
             System.out.println(this.inaccessibleStates.get(i));
         }
     }
+
     
     public void showAllTipeOfStates(){
         hallarEstadosInaccesibles();
@@ -1783,13 +1799,13 @@ public class AFN_Lambda {
         AFN_Lambda afnl = new AFN_Lambda();
         
         afnl.initializeAFD("AFN_Lambda_entrega.txt");
-        afnl.showDelta();
+        //afnl.showDelta();
 //        System.out.println(afnl.procesarCadenaConDetalles2("abbb"));
         
-        
+        afnl.showAllTipeOfStates();
         ArrayList<String> prueba = new ArrayList<>();
 //        prueba.add("");
-        prueba.add("aab");
+        //prueba.add("aab");
 //        prueba.add("aa");
 //        prueba.add("aaa");
 //        prueba.add("abbb");
@@ -1797,7 +1813,7 @@ public class AFN_Lambda {
 //        prueba.add("bbbbbb");
 //        prueba.add("aaaaaaaaaaaab");
 
-        afnl.procesarListaCadenas(prueba, "probandoLambda", true);
+       // afnl.procesarListaCadenas(prueba, "probandoLambda", true);
         //afnl.computarTodosLosProcesamientos("aaa", "holuu");
         //afnl.procesarListaCadenas(prueba, "pruebaLambda.txt", true);
         // Aqui se debe poner el nombre del archivo que se desea leer
