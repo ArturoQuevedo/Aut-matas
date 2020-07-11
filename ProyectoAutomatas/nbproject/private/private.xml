@@ -5,22 +5,20 @@
             <url>src/Automatas/AFN_Lambda.java</url>
             <bookmark id="1">
                 <name/>
-                <line>990</line>
+                <line>1186</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Equipo/Desktop/Automatas/Aut-matas/ProyectoAutomatas/src/Automatas/AFN.java</file>
-            <file>file:/C:/Users/Equipo/Desktop/Automatas/Aut-matas/ProyectoAutomatas/src/Cartesiano/ProductCartesiano.java</file>
-            <file>file:/C:/Users/Equipo/Desktop/Automatas/Aut-matas/ProyectoAutomatas/src/Pruebas/ClasePrueba.java</file>
-            <file>file:/C:/Users/Equipo/Desktop/Automatas/Aut-matas/ProyectoAutomatas/src/ProcesadoresDeCadenas/Alfabeto.java</file>
-            <file>file:/C:/Users/Equipo/Desktop/Automatas/Aut-matas/ProyectoAutomatas/src/Automatas/Automatas.java</file>
-            <file>file:/C:/Users/Equipo/Desktop/Automatas/Aut-matas/ProyectoAutomatas/src/Pruebas/ClaseValidacion.java</file>
-            <file>file:/C:/Users/Equipo/Desktop/Automatas/Aut-matas/ProyectoAutomatas/src/Automatas/AFD.java</file>
-            <file>file:/C:/Users/Equipo/Desktop/Automatas/Aut-matas/ProyectoAutomatas/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/Equipo/Desktop/Automatas/Aut-matas/ProyectoAutomatas/src/Automatas/AFN_Lambda.java</file>
+            <file>file:/C:/Users/andre/OneDrive/Escritorio/Programas/Automatas/Aut-matas/ProyectoAutomatas/src/Automatas/AFD.java</file>
+            <file>file:/C:/Users/andre/OneDrive/Escritorio/Programas/Automatas/Aut-matas/ProyectoAutomatas/src/Automatas/AFN_Lambda.java</file>
+            <file>file:/C:/Users/andre/OneDrive/Escritorio/Programas/Automatas/Aut-matas/ProyectoAutomatas/src/Automatas/Automatas.java</file>
+            <file>file:/C:/Users/andre/OneDrive/Escritorio/Programas/Automatas/Aut-matas/ProyectoAutomatas/src/Automatas/AFN.java</file>
+            <file>file:/C:/Users/andre/OneDrive/Escritorio/Programas/Automatas/Aut-matas/ProyectoAutomatas/src/Cartesiano/ProductCartesiano.java</file>
+            <file>file:/C:/Users/andre/OneDrive/Escritorio/Programas/Automatas/Aut-matas/ProyectoAutomatas/src/ProcesadoresDeCadenas/PCAFD.java</file>
+            <file>file:/C:/Users/andre/OneDrive/Escritorio/Programas/Automatas/Aut-matas/ProyectoAutomatas/src/ProcesadoresDeCadenas/Alfabeto.java</file>
         </group>
     </open-files>
 </project-private>

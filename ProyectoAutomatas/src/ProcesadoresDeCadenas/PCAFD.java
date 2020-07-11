@@ -21,7 +21,7 @@ public class PCAFD {
     public PCAFD() {
     }
     
-    public boolean processStringSinImprimirNiMadres(AFD afd, String string, boolean imprimir) { //Procesar string con o sin detalles
+    public boolean processStringNoPrint(AFD afd, String string, boolean imprimir) { //Procesar string con o sin detalles
 
         if (imprimir == true) {
             System.out.print(string + "\n");
@@ -141,7 +141,7 @@ public class PCAFD {
         while (true) {
             if (archivo.exists()) {
 
-                ruta = "AFD_Generado" + i + ".txt";; //aqui lo mismo
+                ruta = "AFD_Generado" + i + ".txt"; //aqui lo mismo
                 archivo = new File(ruta);
                 i++;
 
