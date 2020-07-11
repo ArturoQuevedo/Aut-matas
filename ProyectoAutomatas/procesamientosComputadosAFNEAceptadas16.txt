@@ -1,0 +1,9 @@
+abab
+[s0, abab]->[s0, bab]->[s1, ab]->[s3, b]->[s1,b]->[s3,]->Aceptada->[s0, abab]->[s3, b]->[s1, b]->[s3,]->Aceptacion
+[s0, abab]->[s1,a]->[s0,]->Aceptada->[s0, abab]->[s2,a]->[s3,]->Aceptada->[s0, abab]->[s1, b]->[s3,]->Aceptacion
+[s0, abab]->[s0, bab]->[s1, ab]->[s3, b]->[s1,b]->[s3,]->[s1,]->Aceptacion
+[s0, abab]->[s3, b]->[s1, b]->[s3,]->[s1,]->Aceptacion
+[s0, abab]->[s1,a]->[s0,]->[s1,]->Aceptacion
+[s0, abab]->[s1,a]->[s0,]->[s3,]->Aceptacion
+[s0, abab]->[s2,a]->[s3,]->[s1,]->Aceptacion
+[s0, abab]->[s1, b]->[s3,]->[s1,]->Aceptacion

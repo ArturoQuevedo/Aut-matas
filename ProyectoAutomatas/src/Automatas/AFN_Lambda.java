@@ -1103,6 +1103,41 @@ public class AFN_Lambda {
     }
         
         
+        void confirmadora(ArrayList<String> estados,ArrayList<String> procIncompleto,int columna){
+            //que los estados sean la lambda clausura, verificar todos los de la lambda clausura si llega a aceptación procesando el simbolo
+            procIncompleto.remove(procIncompleto.size()-1);
+            int fila = 0;
+            for(int i = 0; i < estados.size();i++){
+                fila = getPosEstado(estados.get(i));
+                //El simbolo siempre es el mismo, solo cambia el estado que intenta procesarlo
+                if(getDelta()[fila][columna].isEmpty()){
+                    continue;
+                }else{
+                    //buscamos que pasa cuando procesamos los estados con la lambda clausura del estado que nos envio aqui
+                    for(int j = 0;j <getDelta()[fila][columna].size();j++ ){
+                    if(this.getFinalStates().contains(getDelta()[fila][columna].get(j))){
+                        ArrayList<String> procesamiento = new ArrayList<>();
+                        procesamiento = (ArrayList<String>) procIncompleto.clone();
+                        procesamiento.add("[" + estados.get(i) + ","+ this.getSigma().get(columna) +"]");
+                        procesamiento.add("[" + getDelta()[fila][columna].get(j) + ",]");
+                        procesamiento.add("Aceptada");
+                        aceptadaR.add(procesamiento);
+                    }else{
+                        ArrayList<String> procesamiento = new ArrayList<>();
+                        procesamiento = (ArrayList<String>) procIncompleto.clone();
+                        procesamiento.add("[" + estados.get(i) + ","+ this.getSigma().get(columna) +"]");
+                        procesamiento.add("[" + getDelta()[fila][columna].get(j) + ",]");
+                        procesamiento.add("No aceptada");
+                        rechazadaR.add(procesamiento);
+                    }
+                    
+                }
+                }
+                
+            }
+            
+        }
+    
         void procesoFinalAceptacion() {
         ArrayList<String> estados = new ArrayList<>();
         ArrayList<String> procIncompleto = new ArrayList<>();
@@ -1115,6 +1150,7 @@ public class AFN_Lambda {
             if (aceptadaR.get(i).isEmpty()) {
                 aceptadaR.remove(i);
                 i--;
+                //Esto es para eliminar las posiciones que no tienen nada
                 continue;
             }
             pareja = aceptadaR.get(i).get(aceptadaR.get(i).size() - 2);
@@ -1123,11 +1159,38 @@ public class AFN_Lambda {
                 //desde la posicion uno hasta la posicion 3(exclusivo) esta el estado y desde el 5 hasta el 6 (exclusivo)
                 fila = getPosEstado(pareja.substring(1, 3));
                 columna = getPosSimbolo(pareja.substring(5, 6));
-                if (getDelta()[fila][columna].isEmpty()) {
+                if (getDelta()[fila][columna].isEmpty()) {// Este if revisa si no se puede llegar a ningun lado con el estado y el simbolo
+                    if (getDelta()[fila][getSigma().size() - 1].isEmpty()) {//Este se asegura de que se pueda mover con transiciones lambda, si no, el procesamiento se elimina
 
-                    aceptadaR.remove(i);
-                    i--;
-                    continue;
+                        aceptadaR.remove(i);
+                            i--;
+                            continue;
+
+                    }else if (getDelta()[fila][getSigma().size() - 1].contains(pareja.substring(1, 3)) && getDelta()[fila][getSigma().size() - 1].size() == 1) {
+                        //Este if se asegura de que si no esta vacio, el mismo no sea la unica transición posible, si lo es, se elimina
+                            aceptadaR.remove(i);
+                            i--;
+                            continue;
+
+                        }else{
+                        //Aqui empezaremos a mirar si podemos llegar a un estado de aceptacion con las transiciones lambda y procesando el simbolo
+
+                         ArrayList<String> estados2 = new ArrayList<>();
+                         estados2 = calcularLambdaClausura(pareja.substring(1, 3));
+                         estados2.remove(pareja.substring(1, 3));
+                         procIncompleto = (ArrayList<String>) aceptadaR.get(i).clone();
+                         aceptadaR.remove(i);
+                         i--;
+                         confirmadora(estados2,procIncompleto,columna);
+                         continue;
+                            
+                        }
+
+                      
+                          
+                      
+                        
+                    
 
                 } else {
 
@@ -1191,15 +1254,42 @@ public class AFN_Lambda {
             }
             pareja = rechazadaR.get(i).get(rechazadaR.get(i).size() - 2);
             //buscamos la posicion antes del "aceptada" y comprobamos si ya esta terminada o no
-            if (!pareja.substring(3, 5).equals(",]")) {
+                        if (!pareja.substring(3, 5).equals(",]")) {
                 //desde la posicion uno hasta la posicion 3(exclusivo) esta el estado y desde el 5 hasta el 6 (exclusivo)
                 fila = getPosEstado(pareja.substring(1, 3));
                 columna = getPosSimbolo(pareja.substring(5, 6));
-                if (getDelta()[fila][columna].isEmpty()) {
+                if (getDelta()[fila][columna].isEmpty()) {// Este if revisa si no se puede llegar a ningun lado con el estado y el simbolo
+                    if (getDelta()[fila][getSigma().size() - 1].isEmpty()) {//Este se asegura de que se pueda mover con transiciones lambda, si no, el procesamiento se elimina
 
-                    rechazadaR.remove(i);
-                    i--;
-                    continue;
+                        rechazadaR.remove(i);
+                            i--;
+                            continue;
+
+                    }else if (getDelta()[fila][getSigma().size() - 1].contains(pareja.substring(1, 3)) && getDelta()[fila][getSigma().size() - 1].size() == 1) {
+                        //Este if se asegura de que si no esta vacio, el mismo no sea la unica transición posible, si lo es, se elimina
+                            rechazadaR.remove(i);
+                            i--;
+                            continue;
+
+                        }else{
+                        //Aqui empezaremos a mirar si podemos llegar a un estado de aceptacion con las transiciones lambda y procesando el simbolo
+
+                         ArrayList<String> estados2 = new ArrayList<>();
+                         estados2 = calcularLambdaClausura(pareja.substring(1, 3));
+                         estados2.remove(pareja.substring(1, 3));
+                         procIncompleto = (ArrayList<String>) rechazadaR.get(i).clone();
+                         rechazadaR.remove(i);
+                         i--;
+                         confirmadora(estados2,procIncompleto,columna);
+                         continue;
+                            
+                        }
+
+                      
+                          
+                      
+                        
+                    
 
                 } else {
 
@@ -1421,7 +1511,7 @@ public class AFN_Lambda {
                 break;
             }
         }
-        
+
         while (!cadenas.isEmpty()) {
             String cadena = cadenas.remove(0);
             String salida = "";
@@ -1429,10 +1519,12 @@ public class AFN_Lambda {
             boolean resultado = computarTodosLosProcesamientos(cadena, this.q, 0, false, true, salida, indice, this.q);
             this.filtro();
             organizar();
-            eliminarRepetidas();
+            eliminarRepetidas();    
             procesoFinalAceptacion();
             procesoFinalNoAceptacion();
             eliminarRepetidas();
+            
+            
             if (!resultado) {
                 if (!aceptadaR.isEmpty()) {
                     resultado = true;

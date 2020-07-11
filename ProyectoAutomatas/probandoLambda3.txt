@@ -1,0 +1,25 @@
+
+aab
+[s0, aab]->[s0, ab]->[s0, b]->Aceptacion
+
+En total hay 14 procesamientos posibles.
+En total hay 4 procesamientos aceptados.
+En total hay 4 procesamientos rechazados.
+En total hay 6 procesamientos abortados.
+Si
+aa
+[s0, aa]->[s0, a]->Aceptacion
+
+En total hay 15 procesamientos posibles.
+En total hay 3 procesamientos aceptados.
+En total hay 1 procesamientos rechazados.
+En total hay 11 procesamientos abortados.
+Si
+aaa
+[s0, aaa]->[s0, aa]->[s0, a]->Aceptacion
+
+En total hay 22 procesamientos posibles.
+En total hay 3 procesamientos aceptados.
+En total hay 1 procesamientos rechazados.
+En total hay 18 procesamientos abortados.
+Si
