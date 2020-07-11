@@ -1,9 +1,0 @@
-
-aab
-[s0, aab]->[s0, b]->[s2, b]->[s1,]->No aceptacion
-
-En total hay 4 procesamientos posibles.
-En total hay 0 procesamientos aceptados.
-En total hay 2 procesamientos rechazados.
-En total hay 2 procesamientos abortados.
-No

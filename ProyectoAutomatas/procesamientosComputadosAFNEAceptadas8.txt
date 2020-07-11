@@ -1,5 +1,0 @@
-abab
-[s0, abab]->[s3, b]->[s1, b]->[s3,]->Aceptacion
-[s0, abab]->[s1, b]->[s3,]->Aceptacion
-[s0, abab]->[s3, b]->[s1, b]->[s3,]->[s1,]->Aceptacion
-[s0, abab]->[s1, b]->[s3,]->[s1,]->Aceptacion

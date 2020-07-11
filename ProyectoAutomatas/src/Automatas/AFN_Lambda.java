@@ -904,9 +904,8 @@ public class AFN_Lambda {
             for (int f = 0; f < aceptadaR.size(); f++) {
 
                 for (int h = 0; h < aceptadaR.get(f).size(); h++) {
-
                     if (aceptadaR.get(f).get(h).equals("Aceptacion")) {
-
+                        
                         bw.write(aceptadaR.get(f).get(h) + "\n");
                         System.out.print(aceptadaR.get(f).get(h));
                         System.out.println("");
@@ -1120,14 +1119,14 @@ public class AFN_Lambda {
                         procesamiento = (ArrayList<String>) procIncompleto.clone();
                         procesamiento.add("[" + estados.get(i) + ","+ this.getSigma().get(columna) +"]");
                         procesamiento.add("[" + getDelta()[fila][columna].get(j) + ",]");
-                        procesamiento.add("Aceptada");
+                        procesamiento.add("Aceptacion");
                         aceptadaR.add(procesamiento);
                     }else{
                         ArrayList<String> procesamiento = new ArrayList<>();
                         procesamiento = (ArrayList<String>) procIncompleto.clone();
                         procesamiento.add("[" + estados.get(i) + ","+ this.getSigma().get(columna) +"]");
                         procesamiento.add("[" + getDelta()[fila][columna].get(j) + ",]");
-                        procesamiento.add("No aceptada");
+                        procesamiento.add("No aceptacion");
                         rechazadaR.add(procesamiento);
                     }
                     
